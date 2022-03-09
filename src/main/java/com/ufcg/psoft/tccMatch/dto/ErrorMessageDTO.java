@@ -8,5 +8,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class ErrorMessageDTO { 
-    private String error;
+    public ErrorMessageDTO(String message) {
+		// TODO Auto-generated constructor stub
+	}
+
+	private String error;
 }
