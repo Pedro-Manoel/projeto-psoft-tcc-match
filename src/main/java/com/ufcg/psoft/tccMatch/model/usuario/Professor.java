@@ -22,20 +22,10 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Professor extends Usuario {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    public String nome;
-
-    public String email;
-
-    public String senha;
     
-	private String laboratorio;
+	private String laboratorios;
 	
-	private int quota;
+	private Integer quota;
 	
 	// private List<AreaEstudo> areasEstudo;
 	

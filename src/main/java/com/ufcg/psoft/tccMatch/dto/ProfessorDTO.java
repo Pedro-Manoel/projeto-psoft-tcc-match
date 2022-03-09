@@ -17,10 +17,12 @@ public class ProfessorDTO {
 
 	private String nome;
 	private String email;
-	private CaixaEmail caixaEmail;
-	private String laboratorio;
+    private String senha;
+	private String laboratorios;
 	private int quota;
-	private List<AreaEstudo> areasEstudo;
-	private List<SolicitacaoOrientacaoTCC> solicitacoesTCC;
-	private List<TemaTCC> temasTCC;
+
+    //private CaixaEmail caixaEmail;
+	//private List<AreaEstudo> areasEstudo;
+	//private List<SolicitacaoOrientacaoTCC> solicitacoesTCC;
+	//private List<TemaTCC> temasTCC;
 }
