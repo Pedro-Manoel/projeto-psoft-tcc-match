@@ -2,6 +2,7 @@ package com.ufcg.psoft.tccMatch.service.implementation;
 
 import com.ufcg.psoft.tccMatch.dto.AlunoDTO;
 import com.ufcg.psoft.tccMatch.exception.AlunoJaExisteException;
+import com.ufcg.psoft.tccMatch.exception.AlunoNaoExisteException;
 import com.ufcg.psoft.tccMatch.model.usuario.Aluno;
 import com.ufcg.psoft.tccMatch.repository.AlunoRepository;
 import com.ufcg.psoft.tccMatch.service.AlunoService;
@@ -22,11 +23,16 @@ public class AlunoServiceImpl implements AlunoService {
         aluno.setPeriodoPrevistoConclusao(alunoDTO.getPeriodoPrevistoConclusao());
         aluno.setMatricula(alunoDTO.getMatricula());
     }
-    
+
+    private Aluno getAluno (Long id) {
+        return alunoRepository.findById(id)
+            .orElseThrow(() -> new AlunoNaoExisteException(id));
+    }
+
     private void salvarAluno (Aluno aluno) {
         alunoRepository.save(aluno);
     }
-    
+
     public Aluno criarAluno(AlunoDTO alunoDTO) {
         if (alunoRepository.existsByEmail(alunoDTO.getEmail())) {
             throw new AlunoJaExisteException(alunoDTO.getEmail());
@@ -39,10 +45,26 @@ public class AlunoServiceImpl implements AlunoService {
         return aluno;
     }
 
-    
+
     public Aluno atualizarAluno(Long id, AlunoDTO alunoDTO) {
-        return null;
+        Aluno aluno = getAluno(id);
+
+        if (!aluno.getEmail().equals(alunoDTO.getEmail())) {
+            if (alunoRepository.existsByEmail(alunoDTO.getEmail())) {
+                throw new AlunoJaExisteException(alunoDTO.getEmail());
+            }
+        }
+
+        preencherAtributosAluno(aluno, alunoDTO);
+        salvarAluno(aluno);
+
+        return aluno;
     }
-    
-    public void removerAluno(Long id) {}
+
+
+    public void removerAluno(Long id) {
+        Aluno aluno = getAluno(id);
+
+        alunoRepository.delete(aluno);
+    }
 }
