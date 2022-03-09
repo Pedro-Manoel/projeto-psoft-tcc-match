@@ -1,11 +1,21 @@
 package com.ufcg.psoft.tccMatch.model;
 
+import com.ufcg.psoft.tccMatch.model.usuario.Usuario;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
+//@Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProblemaOrientacaoTCC {
 
 	@Id
@@ -14,31 +24,4 @@ public class ProblemaOrientacaoTCC {
 	
 	private Usuario ususario;
 	private String problema;
-	
-	
-	
-	
-	
-	
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public Usuario getUsusario() {
-		return ususario;
-	}
-	public void setUsusario(Usuario ususario) {
-		this.ususario = ususario;
-	}
-	public String getProblema() {
-		return problema;
-	}
-	public void setProblema(String problema) {
-		this.problema = problema;
-	}
-	
-	
-	
 }
