@@ -1,6 +1,7 @@
 package com.ufcg.psoft.tccMatch.controller;
 
 import com.ufcg.psoft.tccMatch.dto.AlunoDTO;
+import com.ufcg.psoft.tccMatch.dto.MessageDTO;
 import com.ufcg.psoft.tccMatch.model.usuario.Aluno;
 import com.ufcg.psoft.tccMatch.service.AlunoService;
 import lombok.AllArgsConstructor;
@@ -33,7 +34,10 @@ public class AlunoController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> removerAluno (@PathVariable("id") Long id) {
         alunoService.removerAluno(id);
+        MessageDTO messageDTO = new MessageDTO(
+            String.format("Aluno com id %s foi removido com sucesso do sistema", id)
+        );
 
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(messageDTO, HttpStatus.OK);
     }
 }
