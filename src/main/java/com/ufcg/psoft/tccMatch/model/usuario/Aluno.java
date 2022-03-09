@@ -1,5 +1,6 @@
-package com.ufcg.psoft.tccMatch.model;
+package com.ufcg.psoft.tccMatch.model.usuario;
 
+import com.ufcg.psoft.tccMatch.model.usuario.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,17 +11,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-//@Entity
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RespostaSolicitacaoOrientacaoTCC {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+public class Aluno extends Usuario {
+    private String matricula;
     
-	private boolean aceita;
+    private String periodoPrevistoConclusao;
+    
+	// private List<AreaEstudo> areasEstudo;
 	
-    private String mensagem;
+	// private List<TemaTCC> temasTCC;
 }
