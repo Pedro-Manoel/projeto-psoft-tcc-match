@@ -34,6 +34,7 @@ public class AlunoController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> removerAluno (@PathVariable("id") Long id) {
         alunoService.removerAluno(id);
+        
         MessageDTO messageDTO = new MessageDTO(
             String.format("Aluno com id %s foi removido com sucesso do sistema", id)
         );

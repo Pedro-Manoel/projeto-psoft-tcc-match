@@ -1,5 +1,6 @@
 package com.ufcg.psoft.tccMatch.controller;
 
+import com.ufcg.psoft.tccMatch.dto.MessageDTO;
 import com.ufcg.psoft.tccMatch.dto.ProfessorDTO;
 import com.ufcg.psoft.tccMatch.model.usuario.Professor;
 import com.ufcg.psoft.tccMatch.service.ProfessorService;
@@ -34,6 +35,10 @@ public class ProfessorController {
     public ResponseEntity<?> removerProfessor (@PathVariable("id") Long id) {
         professorService.removerProfessor(id);
 
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        MessageDTO messageDTO = new MessageDTO(
+            String.format("Professor com id %s foi removido com sucesso do sistema", id)
+        );
+
+        return new ResponseEntity<>(messageDTO, HttpStatus.OK);
     }
 }
