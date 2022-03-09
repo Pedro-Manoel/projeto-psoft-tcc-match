@@ -19,7 +19,7 @@ public class ProfessorDTO {
 	private String email;
     private String senha;
 	private String laboratorios;
-	private int quota;
+	private Integer quota;
 
     //private CaixaEmail caixaEmail;
 	//private List<AreaEstudo> areasEstudo;

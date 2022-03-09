@@ -2,6 +2,7 @@ package com.ufcg.psoft.tccMatch.controller;
 
 import com.ufcg.psoft.tccMatch.dto.MessageDTO;
 import com.ufcg.psoft.tccMatch.dto.ProfessorDTO;
+import com.ufcg.psoft.tccMatch.dto.QuotaProfessorDTO;
 import com.ufcg.psoft.tccMatch.model.usuario.Professor;
 import com.ufcg.psoft.tccMatch.service.ProfessorService;
 import lombok.AllArgsConstructor;
@@ -40,5 +41,12 @@ public class ProfessorController {
         );
 
         return new ResponseEntity<>(messageDTO, HttpStatus.OK);
+    }
+
+    @PatchMapping("/{id}/quota")
+    public ResponseEntity<?> atualizarQuotaProfessor (@PathVariable("id") Long id, @RequestBody QuotaProfessorDTO quotaProfessorDTO) {
+        Professor professor = professorService.atualizarQuotaProfessor(id, quotaProfessorDTO);
+
+        return new ResponseEntity<>(professor, HttpStatus.OK);
     }
 }
