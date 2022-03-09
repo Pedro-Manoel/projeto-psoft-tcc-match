@@ -1,6 +1,7 @@
 package com.ufcg.psoft.tccMatch.service.implementation;
 
 import com.ufcg.psoft.tccMatch.dto.ProfessorDTO;
+import com.ufcg.psoft.tccMatch.dto.QuotaProfessorDTO;
 import com.ufcg.psoft.tccMatch.exception.ProfessorJaExisteException;
 import com.ufcg.psoft.tccMatch.exception.ProfessorNaoExisteException;
 import com.ufcg.psoft.tccMatch.model.usuario.Professor;
@@ -66,5 +67,14 @@ public class ProfessorServiceImpl implements ProfessorService {
         Professor professor = getProfessor(id);
 
         professorRepository.delete(professor);
+    }
+    
+    public Professor atualizarQuotaProfessor(Long id, QuotaProfessorDTO quotaProfessorDTO) {
+        Professor professor = getProfessor(id);
+
+        professor.setQuota(quotaProfessorDTO.getQuota());
+        salvarProfessor(professor);
+
+        return professor;
     }
 }
