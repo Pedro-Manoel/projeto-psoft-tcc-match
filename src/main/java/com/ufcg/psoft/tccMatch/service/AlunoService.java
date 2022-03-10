@@ -9,4 +9,8 @@ public interface AlunoService {
     Aluno atualizarAluno (Long id, AlunoDTO alunoDTO);
 
     void removerAluno (Long id);
+
+    Aluno getAluno (Long id);
+
+    void salvarAluno (Aluno aluno);
 }

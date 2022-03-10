@@ -24,12 +24,12 @@ public class AlunoServiceImpl implements AlunoService {
         aluno.setMatricula(alunoDTO.getMatricula());
     }
 
-    private Aluno getAluno (Long id) {
+    public Aluno getAluno (Long id) {
         return alunoRepository.findById(id)
             .orElseThrow(() -> new AlunoNaoExisteException(id));
     }
 
-    private void salvarAluno (Aluno aluno) {
+    public void salvarAluno (Aluno aluno) {
         alunoRepository.save(aluno);
     }
 
