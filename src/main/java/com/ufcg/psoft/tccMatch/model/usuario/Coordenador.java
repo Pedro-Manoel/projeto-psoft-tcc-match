@@ -15,17 +15,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-//@Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class Coordenador{
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-	private List<TCC> tccs;
-	private List<ProblemaOrientacaoTCC> problemasOrientacaoTCC;
+@Entity
+public class Coordenador extends Usuario{
+    
+	//private List<TCC> tccs;
+	//private List<ProblemaOrientacaoTCC> problemasOrientacaoTCC;
 }
