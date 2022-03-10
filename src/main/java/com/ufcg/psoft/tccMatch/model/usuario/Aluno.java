@@ -1,15 +1,15 @@
 package com.ufcg.psoft.tccMatch.model.usuario;
 
+import com.ufcg.psoft.tccMatch.model.AreaEstudo;
 import com.ufcg.psoft.tccMatch.model.usuario.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.awt.geom.Area;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,7 +21,12 @@ public class Aluno extends Usuario {
     
     private String periodoPrevistoConclusao;
     
-	// private List<AreaEstudo> areasEstudo;
+    @OneToMany
+	private List<AreaEstudo> areasEstudo;
 	
 	// private List<TemaTCC> temasTCC;
+    
+    public void adicionarAreaEstudo(AreaEstudo areaEstudo) {
+        this.areasEstudo.add(areaEstudo);
+    }
 }
