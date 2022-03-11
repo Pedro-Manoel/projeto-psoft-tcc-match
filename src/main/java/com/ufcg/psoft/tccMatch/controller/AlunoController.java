@@ -3,10 +3,13 @@ package com.ufcg.psoft.tccMatch.controller;
 import com.ufcg.psoft.tccMatch.dto.AlunoDTO;
 import com.ufcg.psoft.tccMatch.dto.AreaEstudoDTO;
 import com.ufcg.psoft.tccMatch.dto.MessageDTO;
+import com.ufcg.psoft.tccMatch.dto.TemaTCCDTO;
 import com.ufcg.psoft.tccMatch.model.AreaEstudo;
+import com.ufcg.psoft.tccMatch.model.TemaTCC;
 import com.ufcg.psoft.tccMatch.model.usuario.Aluno;
 import com.ufcg.psoft.tccMatch.service.AlunoService;
 import com.ufcg.psoft.tccMatch.service.AreaEstudoService;
+import com.ufcg.psoft.tccMatch.service.TemaTCCService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +25,7 @@ import java.util.List;
 public class AlunoController {
     private final AlunoService alunoService;
     private final AreaEstudoService areaEstudoService;
+    private final TemaTCCService temaTCCService;
 
     @PostMapping
     public ResponseEntity<?> criarAluno (@RequestBody AlunoDTO alunoDTO) {
@@ -53,5 +57,12 @@ public class AlunoController {
         List<AreaEstudo> areasEstudo = areaEstudoService.selecionarAreasEstudoAluno(id ,areasEstudoDTO);
 
         return new ResponseEntity<>(areasEstudo, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/{id}/temastcc")
+    public ResponseEntity<?> criarTemaTCC (@PathVariable("id") Long id, @RequestBody TemaTCCDTO temaTCCDTO) {
+        TemaTCC temaTCC = temaTCCService.criarTemaTCC(id , temaTCCDTO);
+
+        return new ResponseEntity<>(temaTCC, HttpStatus.CREATED);
     }
 }

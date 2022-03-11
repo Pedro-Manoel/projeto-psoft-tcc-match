@@ -12,11 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ufcg.psoft.tccMatch.service.AlunoService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class AreaEstudoImpl implements AreaEstudoService {
+public class AreaEstudoServiceImpl implements AreaEstudoService {
     private AlunoService alunoService;
     private AreaEstudoRepository areaEstudoRepository;
     
@@ -60,4 +61,15 @@ public class AreaEstudoImpl implements AreaEstudoService {
         return areaEstudoRepository.getByNome(nome)
             .orElseThrow(() -> new AreaEstudoNaoExisteException(nome));
     }
+
+    public List<AreaEstudo> getAreasEstudo(List<AreaEstudoDTO> areasEstudoDTO) {
+        List<AreaEstudo> areasEstudos = new ArrayList<>();
+        for (AreaEstudoDTO areaEstudoDTO : areasEstudoDTO) {
+            AreaEstudo areaEstudo = getAreaEstudo(areaEstudoDTO.getNome());
+            areasEstudos.add(areaEstudo);
+        }
+
+        return areasEstudos;
+    }
+
 }
