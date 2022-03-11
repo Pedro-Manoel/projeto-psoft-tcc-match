@@ -8,12 +8,9 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-//@Entity
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor
@@ -24,11 +21,12 @@ public class TemaTCC {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	
+	@Column(unique = true)
 	private String titulo;
 	
 	private String descricao;
-	
+
+	@OneToMany
 	private List<AreaEstudo> areasEstudo;
 	
 	private String status;

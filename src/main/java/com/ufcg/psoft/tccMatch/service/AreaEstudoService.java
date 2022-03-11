@@ -12,4 +12,7 @@ public interface AreaEstudoService {
     List<AreaEstudo> selecionarAreasEstudoAluno (Long id,List<AreaEstudoDTO> areaEstudoDTO);
 
     List<AreaEstudo> selecionarAreasEstudoProfessor(Long id, List<AreaEstudoDTO> areaEstudoDTO);
-}
+
+    List<AreaEstudo> getAreasEstudo(List<AreaEstudoDTO> areasEstudoDTO);
+
+    }
