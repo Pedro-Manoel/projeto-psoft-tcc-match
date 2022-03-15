@@ -18,4 +18,11 @@ public class AppError {
                 HttpStatus.NOT_FOUND
         );
     }
+
+    public static ResponseEntity<ErrorMessageDTO> responseUnauthorized (RuntimeException exception) {
+        return new ResponseEntity<>(
+                new ErrorMessageDTO(exception.getMessage()),
+                HttpStatus.UNAUTHORIZED
+        );
+    }
 }
