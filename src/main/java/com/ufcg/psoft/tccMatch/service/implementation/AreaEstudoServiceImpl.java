@@ -6,8 +6,10 @@ import com.ufcg.psoft.tccMatch.exception.EntidadeNaoExisteException;
 import com.ufcg.psoft.tccMatch.mapper.AreaEstudoMapper;
 import com.ufcg.psoft.tccMatch.model.AreaEstudo;
 import com.ufcg.psoft.tccMatch.model.usuario.Aluno;
+import com.ufcg.psoft.tccMatch.model.usuario.UsuarioTCC;
 import com.ufcg.psoft.tccMatch.repository.AreaEstudoRepository;
 import com.ufcg.psoft.tccMatch.service.AreaEstudoService;
+import com.ufcg.psoft.tccMatch.service.UsuarioService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +28,7 @@ public class AreaEstudoServiceImpl implements AreaEstudoService {
 
     private final AreaEstudoMapper areaEstudoMapper = AreaEstudoMapper.INSTANCE;
 
-    private final AlunoService alunoService;
+    private final UsuarioService usuarioService;
 
     public AreaEstudoDTO criarAreaEstudo (AreaEstudoDTO areaEstudoDTO) {
         if (areaEstudoRepository.existsByNome(areaEstudoDTO.getNome())) {
@@ -39,17 +41,17 @@ public class AreaEstudoServiceImpl implements AreaEstudoService {
         return areaEstudoMapper.toDTO(areaEstudo);
     }
     
-    public List<AreaEstudo> selecionarAreasEstudoAluno(Long id, List<String> nomesAreasEstudo) {
-        Aluno aluno = alunoService.getAluno(id);
+    public List<AreaEstudo> selecionarAreasEstudoUsuarioTCC(Long id, List<String> nomesAreasEstudo) {
+        UsuarioTCC usuarioTCC = usuarioService.getUsuarioTCC(id);
 
         for (String nomeAreaEstudo : nomesAreasEstudo) {
             AreaEstudo areaEstudo = getAreaEstudo(nomeAreaEstudo);
-            aluno.adicionarAreaEstudo(areaEstudo);
+            usuarioTCC.adicionarAreaEstudo(areaEstudo);
         }
 
-        alunoService.salvarAluno(aluno);
+        usuarioService.salvarUsuario(usuarioTCC);
 
-        return aluno.getAreasEstudo();
+        return usuarioTCC.getAreasEstudo();
         
     }
 

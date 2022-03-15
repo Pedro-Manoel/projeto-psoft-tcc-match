@@ -16,12 +16,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TCC {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-
+public class TCC extends Model {
 	private AlunoDTO aluno;
 	
 	private ProfessorDTO professorDTO;
