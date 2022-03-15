@@ -1,5 +1,6 @@
 package com.ufcg.psoft.tccMatch.model.usuario;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ufcg.psoft.tccMatch.model.AreaEstudo;
 import com.ufcg.psoft.tccMatch.model.SolicitacaoOrientacaoTCC;
 import com.ufcg.psoft.tccMatch.model.TemaTCC;
@@ -21,15 +22,11 @@ import javax.persistence.Id;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Professor extends Usuario {
+public class Professor extends UsuarioTCC {
     
 	private String laboratorios;
 	
 	private Integer quota;
-	
-	// private List<AreaEstudo> areasEstudo;
-	
+
 	// private List<SolicitacaoOrientacaoTCC> solicitacoesTCC;
-	
-	// private List<TemaTCC> temasTCC;
 }

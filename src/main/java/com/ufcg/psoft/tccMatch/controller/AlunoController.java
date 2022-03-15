@@ -1,7 +1,6 @@
 package com.ufcg.psoft.tccMatch.controller;
 
-import com.ufcg.psoft.tccMatch.dto.AlunoDTO;
-import com.ufcg.psoft.tccMatch.dto.AreaEstudoDTO;
+import com.ufcg.psoft.tccMatch.dto.usuario.AlunoDTO;
 import com.ufcg.psoft.tccMatch.dto.MessageDTO;
 import com.ufcg.psoft.tccMatch.dto.TemaTCCDTO;
 import com.ufcg.psoft.tccMatch.model.AreaEstudo;
@@ -29,32 +28,28 @@ public class AlunoController {
 
     @PostMapping
     public ResponseEntity<?> criarAluno (@RequestBody AlunoDTO alunoDTO) {
-        Aluno aluno = alunoService.criarAluno(alunoDTO);
+        AlunoDTO alunoCriadoDTO = alunoService.criarAluno(alunoDTO);
 
-        return new ResponseEntity<>(aluno, HttpStatus.CREATED);
+        return new ResponseEntity<>(alunoCriadoDTO, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> atualizarAluno (@PathVariable("id") Long id, @RequestBody AlunoDTO alunoDTO) {
-        Aluno aluno = alunoService.atualizarAluno(id, alunoDTO);
+        AlunoDTO alunoAtualizadoDTO = alunoService.atualizarAluno(id, alunoDTO);
 
-        return new ResponseEntity<>(aluno, HttpStatus.OK);
+        return new ResponseEntity<>(alunoAtualizadoDTO, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> removerAluno (@PathVariable("id") Long id) {
-        alunoService.removerAluno(id);
-        
-        MessageDTO messageDTO = new MessageDTO(
-            String.format("Aluno com id %s foi removido com sucesso do sistema", id)
-        );
+        MessageDTO messageDTO = alunoService.removerAluno(id);
 
         return new ResponseEntity<>(messageDTO, HttpStatus.OK);
     }
 
     @PostMapping("/{id}/selecionarAreasEstudo")
-    public ResponseEntity<?> selecionarAreasEstudo (@PathVariable("id") Long id, @RequestBody List<AreaEstudoDTO> areasEstudoDTO) {
-        List<AreaEstudo> areasEstudo = areaEstudoService.selecionarAreasEstudoAluno(id ,areasEstudoDTO);
+    public ResponseEntity<?> selecionarAreasEstudo (@PathVariable("id") Long id, @RequestBody List<String> nomesAreasEstudo) {
+        List<AreaEstudo> areasEstudo = areaEstudoService.selecionarAreasEstudoAluno(id ,nomesAreasEstudo);
 
         return new ResponseEntity<>(areasEstudo, HttpStatus.CREATED);
     }

@@ -1,80 +1,81 @@
 package com.ufcg.psoft.tccMatch.service.implementation;
 
-import com.ufcg.psoft.tccMatch.dto.ProfessorDTO;
+import com.ufcg.psoft.tccMatch.dto.MessageDTO;
+import com.ufcg.psoft.tccMatch.dto.usuario.ProfessorDTO;
 import com.ufcg.psoft.tccMatch.dto.QuotaProfessorDTO;
-import com.ufcg.psoft.tccMatch.exception.ProfessorJaExisteException;
-import com.ufcg.psoft.tccMatch.exception.ProfessorNaoExisteException;
+import com.ufcg.psoft.tccMatch.exception.EntidadeJaExisteException;
+import com.ufcg.psoft.tccMatch.exception.EntidadeNaoExisteException;
+import com.ufcg.psoft.tccMatch.mapper.ProfessorMapper;
 import com.ufcg.psoft.tccMatch.model.usuario.Professor;
 import com.ufcg.psoft.tccMatch.repository.ProfessorRepository;
 import com.ufcg.psoft.tccMatch.service.ProfessorService;
+import com.ufcg.psoft.tccMatch.service.UsuarioService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class ProfessorServiceImpl implements ProfessorService {
 
-    private ProfessorRepository professorRepository;
+    private final ProfessorRepository professorRepository;
 
-    private void preencherAtributosProfessor (Professor professor, ProfessorDTO professorDTO) {
-        professor.setNome(professorDTO.getNome());
-        professor.setEmail(professorDTO.getEmail());
-        professor.setSenha(professorDTO.getSenha());
-        professor.setQuota(professorDTO.getQuota());
-        professor.setLaboratorios(professorDTO.getLaboratorios());
-        
-    }
+    private final ProfessorMapper professorMapper = ProfessorMapper.INSTANCE;
+
+    private final UsuarioService usuarioService;
 
     private Professor getProfessor (Long id) {
         return professorRepository.findById(id)
-            .orElseThrow(() -> new ProfessorNaoExisteException(id));
+                .orElseThrow(() -> new EntidadeNaoExisteException("Professor", "id", id.toString()));
     }
 
     private void salvarProfessor (Professor professor) {
         professorRepository.save(professor);
     }
     
-    public Professor criarProfessor(ProfessorDTO professorDTO) {
-        if (professorRepository.existsByEmail(professorDTO.getEmail())) {
-            throw new ProfessorJaExisteException(professorDTO.getEmail());
+    public ProfessorDTO criarProfessor(ProfessorDTO professorDTO) {
+        if (usuarioService.usuarioJaExiste(professorDTO)) {
+            throw new EntidadeJaExisteException("Professor", "email", professorDTO.getEmail());
         }
 
-        Professor professor = new Professor();
-        preencherAtributosProfessor(professor, professorDTO);
+        Professor professor = professorMapper.toEntity(professorDTO);
         salvarProfessor(professor);
 
-        return professor;
+        return professorMapper.toDTO(professor);
     }
     
-    public Professor atualizarProfessor(Long id, ProfessorDTO professorDTO) {
+    public ProfessorDTO atualizarProfessor(Long id, ProfessorDTO professorDTO) {
         Professor professor = getProfessor(id);
 
-        if (!professor.getEmail().equals(professorDTO.getEmail())) {
-            if (professorRepository.existsByEmail(professorDTO.getEmail())) {
-                throw new ProfessorJaExisteException(professorDTO.getEmail());
-            }
+        if (usuarioService.usuarioJaExiste(professor, professorDTO)) {
+            throw new EntidadeJaExisteException("Professor", "email", professorDTO.getEmail());
         }
 
-        preencherAtributosProfessor(professor, professorDTO);
-        salvarProfessor(professor);
+        Professor professorAtualizado = professorMapper.toEntity(professor, professorDTO);
+        salvarProfessor(professorAtualizado);
 
-        return professor;
+        return professorMapper.toDTO(professorAtualizado);
     }
 
    
-    public void removerProfessor(Long id) {
+    public MessageDTO removerProfessor(Long id) {
         Professor professor = getProfessor(id);
 
         professorRepository.delete(professor);
+
+        return new MessageDTO(
+                String.format("Professor com id %s foi removido com sucesso do sistema", id)
+        );
     }
     
-    public Professor atualizarQuotaProfessor(Long id, QuotaProfessorDTO quotaProfessorDTO) {
+    public ProfessorDTO atualizarQuotaProfessor(Long id, QuotaProfessorDTO quotaProfessorDTO) {
         Professor professor = getProfessor(id);
 
         professor.setQuota(quotaProfessorDTO.getQuota());
         salvarProfessor(professor);
 
-        return professor;
+        return professorMapper.toDTO(professor);
     }
 }

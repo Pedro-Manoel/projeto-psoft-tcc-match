@@ -1,7 +1,7 @@
 package com.ufcg.psoft.tccMatch.controller;
 
 import com.ufcg.psoft.tccMatch.dto.MessageDTO;
-import com.ufcg.psoft.tccMatch.dto.ProfessorDTO;
+import com.ufcg.psoft.tccMatch.dto.usuario.ProfessorDTO;
 import com.ufcg.psoft.tccMatch.dto.QuotaProfessorDTO;
 import com.ufcg.psoft.tccMatch.model.usuario.Professor;
 import com.ufcg.psoft.tccMatch.service.ProfessorService;
@@ -20,33 +20,29 @@ public class ProfessorController {
     
     @PostMapping
     public ResponseEntity<?> criarProfessor (@RequestBody ProfessorDTO professorDTO) {
-        Professor professor = professorService.criarProfessor(professorDTO);
+        ProfessorDTO professorCriadoDTO = professorService.criarProfessor(professorDTO);
 
-        return new ResponseEntity<>(professor, HttpStatus.CREATED);
+        return new ResponseEntity<>(professorCriadoDTO, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> atualizarProfessor (@PathVariable("id") Long id, @RequestBody ProfessorDTO professorDTO) {
-        Professor professor = professorService.atualizarProfessor(id, professorDTO);
+        ProfessorDTO professorAtualizadoDTO = professorService.atualizarProfessor(id, professorDTO);
 
-        return new ResponseEntity<>(professor, HttpStatus.OK);
+        return new ResponseEntity<>(professorAtualizadoDTO, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> removerProfessor (@PathVariable("id") Long id) {
-        professorService.removerProfessor(id);
-
-        MessageDTO messageDTO = new MessageDTO(
-            String.format("Professor com id %s foi removido com sucesso do sistema", id)
-        );
+        MessageDTO messageDTO = professorService.removerProfessor(id);
 
         return new ResponseEntity<>(messageDTO, HttpStatus.OK);
     }
 
     @PatchMapping("/{id}/quota")
     public ResponseEntity<?> atualizarQuotaProfessor (@PathVariable("id") Long id, @RequestBody QuotaProfessorDTO quotaProfessorDTO) {
-        Professor professor = professorService.atualizarQuotaProfessor(id, quotaProfessorDTO);
+        ProfessorDTO professorQuotaAtualizadaDTO = professorService.atualizarQuotaProfessor(id, quotaProfessorDTO);
 
-        return new ResponseEntity<>(professor, HttpStatus.OK);
+        return new ResponseEntity<>(professorQuotaAtualizadaDTO, HttpStatus.OK);
     }
 }

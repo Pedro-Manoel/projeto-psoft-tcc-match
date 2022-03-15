@@ -17,16 +17,13 @@ import java.util.List;
 @RequestMapping("/api/areasestudo")
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class AreaEstudoController {
+
     private final AreaEstudoService areaEstudoService;
     
     @PostMapping
     public ResponseEntity<?> criarAreaEstudo (@RequestBody AreaEstudoDTO areaEstudoDTO) {
-        AreaEstudo areaEstudo = areaEstudoService.criarAreaEstudo(areaEstudoDTO);
+        AreaEstudoDTO areaEstudoCriadaDTO = areaEstudoService.criarAreaEstudo(areaEstudoDTO);
 
-        return new ResponseEntity<>(areaEstudo, HttpStatus.CREATED);
+        return new ResponseEntity<>(areaEstudoCriadaDTO, HttpStatus.CREATED);
     }
-
-    
-    
-    
 }

@@ -17,7 +17,7 @@ public class TemaTCCDTO {
 
     private String descricao;
 
-    private List<AreaEstudoDTO> areasEstudo;
+    private List<String> areasEstudo;
 
     private String status;
 }

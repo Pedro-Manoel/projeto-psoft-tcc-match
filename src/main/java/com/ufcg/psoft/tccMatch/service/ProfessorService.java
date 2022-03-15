@@ -1,15 +1,16 @@
 package com.ufcg.psoft.tccMatch.service;
 
-import com.ufcg.psoft.tccMatch.dto.ProfessorDTO;
+import com.ufcg.psoft.tccMatch.dto.MessageDTO;
+import com.ufcg.psoft.tccMatch.dto.usuario.ProfessorDTO;
 import com.ufcg.psoft.tccMatch.dto.QuotaProfessorDTO;
 import com.ufcg.psoft.tccMatch.model.usuario.Professor;
 
 public interface ProfessorService {
-    Professor criarProfessor (ProfessorDTO professorDTO);
+    ProfessorDTO criarProfessor (ProfessorDTO professorDTO);
 
-    Professor atualizarProfessor (Long id, ProfessorDTO professorDTO);
+    ProfessorDTO atualizarProfessor (Long id, ProfessorDTO professorDTO);
 
-    void removerProfessor (Long id);
+    MessageDTO removerProfessor (Long id);
 
-    Professor atualizarQuotaProfessor(Long id, QuotaProfessorDTO quotaProfessorDTO);
+    ProfessorDTO atualizarQuotaProfessor(Long id, QuotaProfessorDTO quotaProfessorDTO);
 }

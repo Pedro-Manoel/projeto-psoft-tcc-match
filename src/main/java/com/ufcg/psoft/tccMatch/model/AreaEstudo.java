@@ -12,12 +12,7 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AreaEstudo {
-    
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
+public class AreaEstudo extends Model {
     @Column(unique = true)
 	private String nome;
 }

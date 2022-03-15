@@ -7,12 +7,9 @@ import com.ufcg.psoft.tccMatch.model.usuario.Aluno;
 import java.util.List;
 
 public interface AreaEstudoService {
-    AreaEstudo criarAreaEstudo (AreaEstudoDTO areaEstudoDTO);
+    AreaEstudoDTO criarAreaEstudo (AreaEstudoDTO areaEstudoDTO);
 
-    List<AreaEstudo> selecionarAreasEstudoAluno (Long id,List<AreaEstudoDTO> areaEstudoDTO);
+    List<AreaEstudo> selecionarAreasEstudoAluno (Long id, List<String> nomesAreasEstudo);
 
-    List<AreaEstudo> selecionarAreasEstudoProfessor(Long id, List<AreaEstudoDTO> areaEstudoDTO);
-
-    List<AreaEstudo> getAreasEstudo(List<AreaEstudoDTO> areasEstudoDTO);
-
-    }
+    List<AreaEstudo> getAreasEstudo(List<String> nomesAreasEstudo);
+}
