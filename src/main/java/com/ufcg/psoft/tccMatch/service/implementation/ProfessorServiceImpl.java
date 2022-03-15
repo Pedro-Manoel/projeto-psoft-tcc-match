@@ -12,6 +12,7 @@ import com.ufcg.psoft.tccMatch.service.ProfessorService;
 import com.ufcg.psoft.tccMatch.service.UsuarioService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,7 @@ public class ProfessorServiceImpl implements ProfessorService {
     private final ProfessorMapper professorMapper = ProfessorMapper.INSTANCE;
 
     private final UsuarioService usuarioService;
+    private final PasswordEncoder passwordEncoder;
 
     private Professor getProfessor (Long id) {
         return professorRepository.findById(id)
@@ -41,6 +43,8 @@ public class ProfessorServiceImpl implements ProfessorService {
         }
 
         Professor professor = professorMapper.toEntity(professorDTO);
+        String senhaCriptografada = passwordEncoder.encode(professorDTO.getSenha());
+        professor.setSenha(senhaCriptografada);
         salvarProfessor(professor);
 
         return professorMapper.toDTO(professor);
@@ -53,6 +57,8 @@ public class ProfessorServiceImpl implements ProfessorService {
             throw new EntidadeJaExisteException("Professor", "email", professorDTO.getEmail());
         }
 
+        String senhaCriptografada = passwordEncoder.encode(professorDTO.getSenha());
+        professorDTO.setSenha(senhaCriptografada);
         Professor professorAtualizado = professorMapper.toEntity(professor, professorDTO);
         salvarProfessor(professorAtualizado);
 
@@ -66,7 +72,7 @@ public class ProfessorServiceImpl implements ProfessorService {
         professorRepository.delete(professor);
 
         return new MessageDTO(
-                String.format("Professor com id %s foi removido com sucesso do sistema", id)
+                String.format("Professor com id <%s> foi removido com sucesso do sistema", id)
         );
     }
     

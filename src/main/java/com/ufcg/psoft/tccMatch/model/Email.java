@@ -18,12 +18,7 @@ import javax.persistence.Id;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Email {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
+public class Email extends Model {
 	private String remetente;
 	
 	private boolean lida;

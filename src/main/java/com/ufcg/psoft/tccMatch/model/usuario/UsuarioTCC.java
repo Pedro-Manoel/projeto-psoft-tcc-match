@@ -7,14 +7,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 // Escolher um nome melhor depois
 
-@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Getter
 @Setter
 @AllArgsConstructor

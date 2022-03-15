@@ -15,11 +15,7 @@ import javax.persistence.Id;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RespostaSolicitacaoOrientacaoTCC {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-    
+public class RespostaSolicitacaoOrientacaoTCC extends Model {
 	private boolean aceita;
 	
     private String mensagem;

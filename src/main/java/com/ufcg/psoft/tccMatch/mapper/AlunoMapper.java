@@ -10,6 +10,7 @@ import org.mapstruct.factory.Mappers;
 public interface AlunoMapper {
     AlunoMapper INSTANCE = Mappers.getMapper(AlunoMapper.class);
 
+    @Mapping(target = "senha", ignore = true)
     AlunoDTO toDTO (Aluno aluno);
 
     @Mapping(target = "id", ignore = true)
