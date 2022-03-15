@@ -1,26 +1,28 @@
 package com.ufcg.psoft.tccMatch.model.usuario;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ufcg.psoft.tccMatch.model.CaixaEmail;
 import com.ufcg.psoft.tccMatch.model.Model;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.JOINED)
 @Getter
 @Setter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public abstract class Usuario extends Model {
-	private String nome;
+	public String nome;
     
     @Column(unique = true)
-	private String email;
+	public String email;
     
-	private String senha;
-
-	public abstract String getAutoridade();
+	public String senha;
 
 	// public CaixaEmail caixaEmail;
 }

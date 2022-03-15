@@ -1,13 +1,21 @@
 package com.ufcg.psoft.tccMatch.model.usuario;
 
-import com.ufcg.psoft.tccMatch.security.util.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ufcg.psoft.tccMatch.model.AreaEstudo;
+import com.ufcg.psoft.tccMatch.model.SolicitacaoOrientacaoTCC;
+import com.ufcg.psoft.tccMatch.model.TemaTCC;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
-import javax.persistence.Transient;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 @Getter
@@ -19,9 +27,6 @@ public class Professor extends UsuarioTCC {
 	private String laboratorios;
 	
 	private Integer quota;
-
-	@Transient
-	public String getAutoridade() { return Role.USER_PROF; }
 
 	// private List<SolicitacaoOrientacaoTCC> solicitacoesTCC;
 }

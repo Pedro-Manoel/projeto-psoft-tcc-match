@@ -16,7 +16,12 @@ import javax.persistence.Id;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProblemaOrientacaoTCC extends Model {
+public class ProblemaOrientacaoTCC {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
 	private Usuario ususario;
 	private String problema;
 }

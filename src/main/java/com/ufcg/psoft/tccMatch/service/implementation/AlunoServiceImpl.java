@@ -11,7 +11,6 @@ import com.ufcg.psoft.tccMatch.service.AlunoService;
 import com.ufcg.psoft.tccMatch.service.UsuarioService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +24,6 @@ public class AlunoServiceImpl implements AlunoService {
     private final AlunoMapper alunoMapper = AlunoMapper.INSTANCE;
 
     private final UsuarioService usuarioService;
-    private final PasswordEncoder passwordEncoder;
 
     public Aluno getAluno (Long id) {
         return alunoRepository.findById(id)
@@ -42,9 +40,6 @@ public class AlunoServiceImpl implements AlunoService {
         }
 
         Aluno aluno = alunoMapper.toEntity(alunoDTO);
-        String senhaCriptografada = passwordEncoder.encode(alunoDTO.getSenha());
-        aluno.setSenha(senhaCriptografada);
-
         salvarAluno(aluno);
 
         return alunoMapper.toDTO(aluno);
@@ -57,8 +52,6 @@ public class AlunoServiceImpl implements AlunoService {
             throw new EntidadeJaExisteException("Aluno", "email", alunoDTO.getEmail());
         }
 
-        String senhaCriptografada = passwordEncoder.encode(alunoDTO.getSenha());
-        alunoDTO.setSenha(senhaCriptografada);
         Aluno alunoAtualizado = alunoMapper.toEntity(aluno, alunoDTO);
         salvarAluno(alunoAtualizado);
 
@@ -71,7 +64,7 @@ public class AlunoServiceImpl implements AlunoService {
         alunoRepository.delete(aluno);
 
         return new MessageDTO(
-                String.format("Aluno com id <%s> foi removido com sucesso do sistema", id)
+                String.format("Aluno com id %s foi removido com sucesso do sistema", id)
         );
     }
 }

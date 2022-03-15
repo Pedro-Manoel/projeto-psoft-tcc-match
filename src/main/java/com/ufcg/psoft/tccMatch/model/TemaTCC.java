@@ -15,7 +15,12 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TemaTCC extends Model{
+public class TemaTCC {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
 	@Column(unique = true)
 	private String titulo;
 	

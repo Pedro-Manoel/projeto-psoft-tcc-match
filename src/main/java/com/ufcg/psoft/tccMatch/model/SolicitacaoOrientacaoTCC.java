@@ -15,7 +15,12 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SolicitacaoOrientacaoTCC extends Model {
+public class SolicitacaoOrientacaoTCC {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
 	private AlunoDTO aluno;
     
 	private TemaTCC temaTCC;

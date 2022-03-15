@@ -17,6 +17,11 @@ import javax.persistence.Id;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CaixaEmail extends Model {
+public class CaixaEmail {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
 	private List<Email> emails;
 }
