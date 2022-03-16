@@ -4,8 +4,10 @@ import com.ufcg.psoft.tccMatch.dto.MessageDTO;
 import com.ufcg.psoft.tccMatch.dto.TemaTCCDTO;
 import com.ufcg.psoft.tccMatch.dto.usuario.ProfessorDTO;
 import com.ufcg.psoft.tccMatch.dto.QuotaProfessorDTO;
+import com.ufcg.psoft.tccMatch.model.AreaEstudo;
 import com.ufcg.psoft.tccMatch.model.TemaTCC;
 import com.ufcg.psoft.tccMatch.security.util.Role;
+import com.ufcg.psoft.tccMatch.service.AreaEstudoService;
 import com.ufcg.psoft.tccMatch.service.ProfessorService;
 import com.ufcg.psoft.tccMatch.service.TemaTCCService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -26,6 +29,7 @@ import javax.annotation.security.RolesAllowed;
 public class ProfessorController {
     private final ProfessorService professorService;
     private final TemaTCCService temaTCCService;
+    private final AreaEstudoService areaEstudoService;
 
     @PostMapping
     @Operation(summary = "Criar professor")
@@ -65,5 +69,13 @@ public class ProfessorController {
         TemaTCC temaTCC = temaTCCService.criarTemaTCC(id , temaTCCDTO);
 
         return new ResponseEntity<>(temaTCC, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/{id}/areasestudo")
+    @Operation(summary = "Selecionar áreas de estudo de professor")
+    public ResponseEntity<?> selecionarAreasEstudoAluno (@PathVariable("id") Long id, @RequestBody List<String> nomesAreasEstudo) {
+        List<AreaEstudo> areasEstudo = areaEstudoService.selecionarAreasEstudoUsuarioTCC(id, nomesAreasEstudo);
+
+        return new ResponseEntity<>(areasEstudo, HttpStatus.CREATED);
     }
 }
