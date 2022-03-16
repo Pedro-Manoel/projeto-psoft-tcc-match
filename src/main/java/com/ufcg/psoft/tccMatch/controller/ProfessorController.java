@@ -66,5 +66,4 @@ public class ProfessorController {
 
         return new ResponseEntity<>(temaTCC, HttpStatus.CREATED);
     }
-
 }
