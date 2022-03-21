@@ -36,4 +36,12 @@ public class UsuarioTcc extends Usuario {
             this.temasTcc.add(temaTcc);
         }
     }
+
+    public TemaTcc getTemaTcc (String tituloTemaTcc) {
+        return this.temasTcc
+                .stream()
+                .filter(temaTcc -> temaTcc.getTitulo().equals(tituloTemaTcc))
+                .findAny()
+                .orElse(null);
+    }
 }

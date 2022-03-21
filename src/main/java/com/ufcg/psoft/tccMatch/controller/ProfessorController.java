@@ -94,12 +94,20 @@ public class ProfessorController {
         return new ResponseEntity<>(temasTccProfessorDTO, HttpStatus.OK);
     }
 
-    @GetMapping("aluno/{id}")
+    @GetMapping("/aluno/{idAluno}")
     @Operation(summary = "Listar professores disponíveis para orientação")
-    public ResponseEntity<?> listarProfessoresDisponiveisOrientacao (@PathVariable("id") Long id) {
+    public ResponseEntity<?> listarProfessoresDisponiveisOrientacao (@PathVariable("idAluno") Long id) {
         Aluno aluno = alunoService.getAluno(id);
         List<ProfessorDTO> professoresDTO = professorService.listarProfessoresDisponiveisOrientacao(aluno.getAreasEstudo());
 
         return new ResponseEntity<>(professoresDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    @Operation(summary = "Listar solicitações de orientação de TCC para professor")
+    public ResponseEntity<?> listarSolicitacoesOrientacaoTcc (@PathVariable("id") Long id) {
+        List<SolicitacaoOrientacaoTccDTO> solicitacoesOrientacaoTccDTO = professorService.listarSolicitacoesOrientacaoTcc(id);
+
+        return new ResponseEntity<>(solicitacoesOrientacaoTccDTO, HttpStatus.OK);
     }
 }
