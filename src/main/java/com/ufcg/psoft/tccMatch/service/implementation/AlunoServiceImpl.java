@@ -1,19 +1,26 @@
 package com.ufcg.psoft.tccMatch.service.implementation;
 
 import com.ufcg.psoft.tccMatch.dto.MessageDTO;
+import com.ufcg.psoft.tccMatch.dto.TemaTccUsuarioDTO;
 import com.ufcg.psoft.tccMatch.dto.usuario.AlunoDTO;
 import com.ufcg.psoft.tccMatch.exception.EntidadeJaExisteException;
 import com.ufcg.psoft.tccMatch.exception.EntidadeNaoExisteException;
 import com.ufcg.psoft.tccMatch.mapper.AlunoMapper;
 import com.ufcg.psoft.tccMatch.model.usuario.Aluno;
+import com.ufcg.psoft.tccMatch.model.usuario.Professor;
+import com.ufcg.psoft.tccMatch.model.usuario.UsuarioTcc;
 import com.ufcg.psoft.tccMatch.repository.AlunoRepository;
 import com.ufcg.psoft.tccMatch.service.AlunoService;
+import com.ufcg.psoft.tccMatch.service.TemaTccService;
 import com.ufcg.psoft.tccMatch.service.UsuarioService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -23,6 +30,7 @@ public class AlunoServiceImpl implements AlunoService {
     private final AlunoRepository alunoRepository;
 
     private final UsuarioService usuarioService;
+    private final TemaTccService temaTccService;
     private final PasswordEncoder passwordEncoder;
 
     private final AlunoMapper alunoMapper;
@@ -73,5 +81,16 @@ public class AlunoServiceImpl implements AlunoService {
         return new MessageDTO(
                 String.format("Aluno com id <%s> foi removido com sucesso do sistema", id)
         );
+    }
+
+    public List<TemaTccUsuarioDTO> listarTemasTccAlunos() {
+        List<Aluno> alunos = alunoRepository.findAll();
+        List<TemaTccUsuarioDTO> temasTccAlunos = new ArrayList<>();
+
+        for (UsuarioTcc aluno : alunos) {
+            temasTccAlunos.addAll(temaTccService.listarTemasTccUsuario(aluno));
+        }
+
+        return temasTccAlunos;
     }
 }

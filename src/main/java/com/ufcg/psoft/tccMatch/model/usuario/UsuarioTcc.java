@@ -18,7 +18,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class UsuarioTcc extends Usuario {
+public class UsuarioTcc extends Usuario {
     @OneToMany
     private List<AreaEstudo> areasEstudo;
 

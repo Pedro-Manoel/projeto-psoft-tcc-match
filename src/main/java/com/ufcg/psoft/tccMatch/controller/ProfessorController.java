@@ -1,10 +1,7 @@
 package com.ufcg.psoft.tccMatch.controller;
 
-import com.ufcg.psoft.tccMatch.dto.AreaEstudoDTO;
-import com.ufcg.psoft.tccMatch.dto.MessageDTO;
-import com.ufcg.psoft.tccMatch.dto.TemaTccDTO;
+import com.ufcg.psoft.tccMatch.dto.*;
 import com.ufcg.psoft.tccMatch.dto.usuario.ProfessorDTO;
-import com.ufcg.psoft.tccMatch.dto.QuotaProfessorDTO;
 import com.ufcg.psoft.tccMatch.model.AreaEstudo;
 import com.ufcg.psoft.tccMatch.service.AreaEstudoService;
 import com.ufcg.psoft.tccMatch.service.ProfessorService;
@@ -76,5 +73,13 @@ public class ProfessorController {
         List<AreaEstudo> areasEstudo = areaEstudoService.selecionarAreasEstudoUsuarioTcc(id, areasEstudoDTO);
 
         return new ResponseEntity<>(areasEstudo, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/temastcc")
+    @Operation(summary = "Listar temas de TCC dos professores")
+    public ResponseEntity<?> listarTemasTcc () {
+        List<TemaTccUsuarioDTO> temasTccUsuariosDTO = professorService.listarTemasTccProfessores();
+
+        return new ResponseEntity<>(temasTccUsuariosDTO, HttpStatus.OK);
     }
 }

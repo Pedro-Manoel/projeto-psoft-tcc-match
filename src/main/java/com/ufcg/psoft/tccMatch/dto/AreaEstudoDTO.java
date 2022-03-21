@@ -10,9 +10,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AreaEstudoDTO {
-    @Schema(hidden = true)
-    private Long id;
-
+public class AreaEstudoDTO extends ModelDTO {
     private String nome;
 }
