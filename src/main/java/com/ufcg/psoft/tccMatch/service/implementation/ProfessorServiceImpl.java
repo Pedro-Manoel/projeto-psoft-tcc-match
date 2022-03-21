@@ -6,9 +6,11 @@ import com.ufcg.psoft.tccMatch.dto.usuario.UsuarioDTO;
 import com.ufcg.psoft.tccMatch.exception.EntidadeJaExisteException;
 import com.ufcg.psoft.tccMatch.exception.EntidadeNaoExisteException;
 import com.ufcg.psoft.tccMatch.mapper.ProfessorMapper;
+import com.ufcg.psoft.tccMatch.mapper.SolicitacaoOrientacaoTccMapper;
 import com.ufcg.psoft.tccMatch.mapper.TemaTccMapper;
 import com.ufcg.psoft.tccMatch.mapper.UsuarioMapper;
 import com.ufcg.psoft.tccMatch.model.AreaEstudo;
+import com.ufcg.psoft.tccMatch.model.SolicitacaoOrientacaoTcc;
 import com.ufcg.psoft.tccMatch.model.TemaTcc;
 import com.ufcg.psoft.tccMatch.model.usuario.Professor;
 import com.ufcg.psoft.tccMatch.model.usuario.UsuarioTcc;
@@ -41,13 +43,14 @@ public class ProfessorServiceImpl implements ProfessorService {
 
     private final ProfessorMapper professorMapper;
     private final UsuarioMapper usuarioMapper;
+    private final SolicitacaoOrientacaoTccMapper solicitacaoOrientacaoTccMapper;
 
-    private Professor getProfessor (Long id) {
+    public Professor getProfessor (Long id) {
         return professorRepository.findById(id)
                 .orElseThrow(() -> new EntidadeNaoExisteException("Professor", "id", id.toString()));
     }
 
-    private void salvarProfessor (Professor professor) {
+    public void salvarProfessor (Professor professor) {
         professorRepository.save(professor);
     }
     
@@ -129,6 +132,16 @@ public class ProfessorServiceImpl implements ProfessorService {
         }
 
         return professores;
+    }
 
+    /**
+     * Melhorar o retorno da função
+     * No lugar de retornar só o título do tema tcc retornar tambem seu id
+     */
+    public List<SolicitacaoOrientacaoTccDTO> listarSolicitacoesOrientacaoTcc (Long id) {
+        Professor professor = getProfessor(id);
+        List<SolicitacaoOrientacaoTcc> solicitacoesOrientacaoTcc = professor.getSolicitacoesOrientacaoTcc();
+
+        return solicitacaoOrientacaoTccMapper.toDTOs(solicitacoesOrientacaoTcc);
     }
 }

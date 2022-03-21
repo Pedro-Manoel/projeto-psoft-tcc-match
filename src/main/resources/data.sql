@@ -39,3 +39,19 @@ VALUES
     (6, 1), -- Aluno
     (7, 2); -- Aluno
 
+insert into TEMA_TCC(ID, DESCRICAO, STATUS, TITULO)
+values
+       (1, 'test', 'test', 'WEB'),
+       (2, 'test', 'test', 'IA'),
+       (3, 'test', 'test', 'MED');
+
+INSERT INTO TEMA_TCC_AREAS_ESTUDO(TEMA_TCC_ID, AREAS_ESTUDO_ID)
+VALUES
+    (1, 1),
+    (2, 2),
+    (3, 3);
+
+INSERT INTO USUARIO_TEMAS_TCC(USUARIO_TCC_ID, TEMAS_TCC_ID)
+VALUES
+       (1, 1);
+
