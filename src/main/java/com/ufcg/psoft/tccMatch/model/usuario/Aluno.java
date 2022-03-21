@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Aluno extends UsuarioTCC {
+public class Aluno extends UsuarioTcc {
     private String matricula;
     
     private String periodoPrevistoConclusao;

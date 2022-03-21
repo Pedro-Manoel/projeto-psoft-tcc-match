@@ -1,7 +1,7 @@
 package com.ufcg.psoft.tccMatch.service;
 
-import com.ufcg.psoft.tccMatch.model.ProblemaOrientacaoTCC;
+import com.ufcg.psoft.tccMatch.model.ProblemaOrientacaoTcc;
 
 public interface CoordenadorService {
-    void adicionarProblemaOrientacaoTCC (ProblemaOrientacaoTCC problemaOrientacaoTCC);
+    void adicionarProblemaOrientacaoTcc (ProblemaOrientacaoTcc problemaOrientacaoTcc);
 }

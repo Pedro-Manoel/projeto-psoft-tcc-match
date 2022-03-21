@@ -18,7 +18,7 @@ public class JwtTokenUtil {
     public String generateToken(MyUserDetail myUserDetail) {
         return Jwts
                 .builder()
-                .setSubject(String.format("%s,%s", myUserDetail.getId(), myUserDetail.getUsername()))
+                .setSubject(myUserDetail.getUsername())
                 .setIssuer(JWT_ISSUER)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + JWT_EXPIRATION_ONE_WEEK))
@@ -33,16 +33,7 @@ public class JwtTokenUtil {
                 .parseClaimsJws(token)
                 .getBody();
 
-        return claims.getSubject().split(",")[0];
-    }
-
-    public String getUserId(String token) {
-        Claims claims = Jwts.parser()
-                .setSigningKey(JWT_SECRET)
-                .parseClaimsJws(token)
-                .getBody();
-
-        return claims.getSubject().split(",")[1];
+        return claims.getSubject();
     }
 
     public boolean validateToken(String token) {

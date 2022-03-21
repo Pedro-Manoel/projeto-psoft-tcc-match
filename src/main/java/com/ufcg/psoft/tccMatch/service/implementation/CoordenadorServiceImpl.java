@@ -1,8 +1,7 @@
 package com.ufcg.psoft.tccMatch.service.implementation;
 
 import com.ufcg.psoft.tccMatch.exception.EntidadeNaoExisteException;
-import com.ufcg.psoft.tccMatch.model.ProblemaOrientacaoTCC;
-import com.ufcg.psoft.tccMatch.model.usuario.Aluno;
+import com.ufcg.psoft.tccMatch.model.ProblemaOrientacaoTcc;
 import com.ufcg.psoft.tccMatch.model.usuario.Coordenador;
 import com.ufcg.psoft.tccMatch.repository.CoordenadorRepository;
 import com.ufcg.psoft.tccMatch.service.CoordenadorService;
@@ -14,14 +13,15 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class CoordenadorServiceImpl implements CoordenadorService {
 
-    private final CoordenadorRepository coordenadorRepository;
     private final Long COORDENADOR_ID = 0L;
 
+    private final CoordenadorRepository coordenadorRepository;
+
     @Override
-    public void adicionarProblemaOrientacaoTCC(ProblemaOrientacaoTCC problemaOrientacaoTCC) {
+    public void adicionarProblemaOrientacaoTcc(ProblemaOrientacaoTcc problemaOrientacaoTcc) {
         Coordenador coordenador = getCoordenador();
 
-        coordenador.adicionarProblemaOrientacaoTCC(problemaOrientacaoTCC);
+        coordenador.adicionarProblemaOrientacaoTcc(problemaOrientacaoTcc);
         salvarCoordenador(coordenador);
     }
 

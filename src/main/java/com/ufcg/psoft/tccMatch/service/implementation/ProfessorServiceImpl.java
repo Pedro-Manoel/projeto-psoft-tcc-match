@@ -23,10 +23,10 @@ public class ProfessorServiceImpl implements ProfessorService {
 
     private final ProfessorRepository professorRepository;
 
-    private final ProfessorMapper professorMapper = ProfessorMapper.INSTANCE;
-
     private final UsuarioService usuarioService;
     private final PasswordEncoder passwordEncoder;
+
+    private final ProfessorMapper professorMapper;
 
     private Professor getProfessor (Long id) {
         return professorRepository.findById(id)
@@ -59,10 +59,10 @@ public class ProfessorServiceImpl implements ProfessorService {
 
         String senhaCriptografada = passwordEncoder.encode(professorDTO.getSenha());
         professorDTO.setSenha(senhaCriptografada);
-        Professor professorAtualizado = professorMapper.toEntity(professor, professorDTO);
-        salvarProfessor(professorAtualizado);
+        professorMapper.toUpdateEntity(professorDTO, professor);
+        salvarProfessor(professor);
 
-        return professorMapper.toDTO(professorAtualizado);
+        return professorMapper.toDTO(professor);
     }
 
    

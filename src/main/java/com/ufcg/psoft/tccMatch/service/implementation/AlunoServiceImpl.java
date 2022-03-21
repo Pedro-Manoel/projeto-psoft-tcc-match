@@ -22,10 +22,10 @@ public class AlunoServiceImpl implements AlunoService {
 
     private final AlunoRepository alunoRepository;
 
-    private final AlunoMapper alunoMapper = AlunoMapper.INSTANCE;
-
     private final UsuarioService usuarioService;
     private final PasswordEncoder passwordEncoder;
+
+    private final AlunoMapper alunoMapper;
 
     public Aluno getAluno (Long id) {
         return alunoRepository.findById(id)
@@ -59,10 +59,10 @@ public class AlunoServiceImpl implements AlunoService {
 
         String senhaCriptografada = passwordEncoder.encode(alunoDTO.getSenha());
         alunoDTO.setSenha(senhaCriptografada);
-        Aluno alunoAtualizado = alunoMapper.toEntity(aluno, alunoDTO);
-        salvarAluno(alunoAtualizado);
+        alunoMapper.toUpdateEntity(alunoDTO, aluno);
+        salvarAluno(aluno);
 
-        return alunoMapper.toDTO(alunoAtualizado);
+        return alunoMapper.toDTO(aluno);
     }
 
     public MessageDTO removerAluno(Long id) {

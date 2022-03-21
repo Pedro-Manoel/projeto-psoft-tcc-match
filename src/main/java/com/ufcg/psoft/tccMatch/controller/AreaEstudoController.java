@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping("/api/areasestudo")
-@Tag(name = "Área de estudo")
+@Tag(name = "Área Estudo")
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class AreaEstudoController {
 

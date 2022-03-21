@@ -2,7 +2,7 @@ package com.ufcg.psoft.tccMatch.service;
 
 import com.ufcg.psoft.tccMatch.dto.usuario.UsuarioDTO;
 import com.ufcg.psoft.tccMatch.model.usuario.Usuario;
-import com.ufcg.psoft.tccMatch.model.usuario.UsuarioTCC;
+import com.ufcg.psoft.tccMatch.model.usuario.UsuarioTcc;
 
 public interface UsuarioService {
     void salvarUsuario (Usuario usuario);
@@ -15,5 +15,5 @@ public interface UsuarioService {
 
     Usuario getUsuario(Long id);
 
-    UsuarioTCC getUsuarioTCC(Long id);
+    UsuarioTcc getUsuarioTcc(Long id);
 }

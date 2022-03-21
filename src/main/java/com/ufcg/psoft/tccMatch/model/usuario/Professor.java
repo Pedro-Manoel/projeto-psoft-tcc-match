@@ -14,7 +14,7 @@ import javax.persistence.Transient;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Professor extends UsuarioTCC {
+public class Professor extends UsuarioTcc {
     
 	private String laboratorios;
 	
@@ -23,5 +23,5 @@ public class Professor extends UsuarioTCC {
 	@Transient
 	public String getAutoridade() { return Role.USER_PROF; }
 
-	// private List<SolicitacaoOrientacaoTCC> solicitacoesTCC;
+	// private List<SolicitacaoOrientacaoTcc> solicitacoesTcc;
 }

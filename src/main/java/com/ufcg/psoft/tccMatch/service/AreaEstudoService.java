@@ -9,7 +9,7 @@ import java.util.List;
 public interface AreaEstudoService {
     AreaEstudoDTO criarAreaEstudo (AreaEstudoDTO areaEstudoDTO);
 
-    List<AreaEstudo> selecionarAreasEstudoUsuarioTCC(Long id, List<String> nomesAreasEstudo);
+    List<AreaEstudo> selecionarAreasEstudoUsuarioTcc(Long id, List<AreaEstudoDTO> areasEstudoDTO);
 
-    List<AreaEstudo> getAreasEstudo(List<String> nomesAreasEstudo);
+    List<AreaEstudo> getAreasEstudo(List<AreaEstudoDTO> areasEstudoDTO);
 }

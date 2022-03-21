@@ -5,15 +5,13 @@ import com.ufcg.psoft.tccMatch.exception.EntidadeJaExisteException;
 import com.ufcg.psoft.tccMatch.exception.EntidadeNaoExisteException;
 import com.ufcg.psoft.tccMatch.mapper.AreaEstudoMapper;
 import com.ufcg.psoft.tccMatch.model.AreaEstudo;
-import com.ufcg.psoft.tccMatch.model.usuario.Aluno;
-import com.ufcg.psoft.tccMatch.model.usuario.UsuarioTCC;
+import com.ufcg.psoft.tccMatch.model.usuario.UsuarioTcc;
 import com.ufcg.psoft.tccMatch.repository.AreaEstudoRepository;
 import com.ufcg.psoft.tccMatch.service.AreaEstudoService;
 import com.ufcg.psoft.tccMatch.service.UsuarioService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.ufcg.psoft.tccMatch.service.AlunoService;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -26,9 +24,9 @@ public class AreaEstudoServiceImpl implements AreaEstudoService {
 
     private final AreaEstudoRepository areaEstudoRepository;
 
-    private final AreaEstudoMapper areaEstudoMapper = AreaEstudoMapper.INSTANCE;
-
     private final UsuarioService usuarioService;
+
+    private final AreaEstudoMapper areaEstudoMapper;
 
     public AreaEstudoDTO criarAreaEstudo (AreaEstudoDTO areaEstudoDTO) {
         if (areaEstudoRepository.existsByNome(areaEstudoDTO.getNome())) {
@@ -41,17 +39,17 @@ public class AreaEstudoServiceImpl implements AreaEstudoService {
         return areaEstudoMapper.toDTO(areaEstudo);
     }
     
-    public List<AreaEstudo> selecionarAreasEstudoUsuarioTCC(Long id, List<String> nomesAreasEstudo) {
-        UsuarioTCC usuarioTCC = usuarioService.getUsuarioTCC(id);
+    public List<AreaEstudo> selecionarAreasEstudoUsuarioTcc(Long id, List<AreaEstudoDTO> areasEstudoDTO) {
+        UsuarioTcc usuarioTcc = usuarioService.getUsuarioTcc(id);
 
-        for (String nomeAreaEstudo : nomesAreasEstudo) {
-            AreaEstudo areaEstudo = getAreaEstudo(nomeAreaEstudo);
-            usuarioTCC.adicionarAreaEstudo(areaEstudo);
+        for (AreaEstudoDTO areaEstudoDTO : areasEstudoDTO) {
+            AreaEstudo areaEstudo = getAreaEstudo(areaEstudoDTO.getNome());
+            usuarioTcc.adicionarAreaEstudo(areaEstudo);
         }
 
-        usuarioService.salvarUsuario(usuarioTCC);
+        usuarioService.salvarUsuario(usuarioTcc);
 
-        return usuarioTCC.getAreasEstudo();
+        return usuarioTcc.getAreasEstudo();
         
     }
 
@@ -64,11 +62,11 @@ public class AreaEstudoServiceImpl implements AreaEstudoService {
             .orElseThrow(() -> new EntidadeNaoExisteException("Área de estudo", "nome", nome));
     }
 
-    public List<AreaEstudo> getAreasEstudo(List<String> nomesAreasEstudo) {
+    public List<AreaEstudo> getAreasEstudo(List<AreaEstudoDTO> areasEstudoDTO) {
         List<AreaEstudo> areasEstudos = new ArrayList<>();
 
-        for (String nomeAreaEstudo : nomesAreasEstudo) {
-            AreaEstudo areaEstudo = getAreaEstudo(nomeAreaEstudo);
+        for (AreaEstudoDTO areaEstudoDTO : areasEstudoDTO) {
+            AreaEstudo areaEstudo = getAreaEstudo(areaEstudoDTO.getNome());
             areasEstudos.add(areaEstudo);
         }
 

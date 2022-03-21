@@ -15,6 +15,6 @@ public class ProfessorDTO extends UsuarioDTO {
 
     //private CaixaEmail caixaEmail;
 	//private List<AreaEstudo> areasEstudo;
-	//private List<SolicitacaoOrientacaoTCC> solicitacoesTCC;
-	//private List<TemaTCC> temasTCC;
+	//private List<SolicitacaoOrientacaoTcc> solicitacoesTcc;
+	//private List<TemaTcc> temasTcc;
 }

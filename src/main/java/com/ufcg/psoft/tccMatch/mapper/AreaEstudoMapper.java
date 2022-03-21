@@ -8,8 +8,6 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface AreaEstudoMapper {
-    AreaEstudoMapper INSTANCE = Mappers.getMapper(AreaEstudoMapper.class);
-
     AreaEstudoDTO toDTO (AreaEstudo areaEstudo);
 
     @Mapping(target = "id", ignore = true)

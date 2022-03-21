@@ -21,10 +21,10 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class AutenticacaoServiceImpl implements AutenticacaoService {
 
-    private final AuthenticationManager authenticationManager;
-    private final JwtTokenUtil jwtTokenUtil;
     private final JwtUserDetailsService jwtUserDetailsService;
     private final UsuarioService usuarioService;
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenUtil jwtTokenUtil;
 
     @Override
     public TokenDTO autenticar(LoginDTO loginDTO) {

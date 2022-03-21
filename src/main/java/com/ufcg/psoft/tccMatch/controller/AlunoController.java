@@ -1,29 +1,21 @@
 package com.ufcg.psoft.tccMatch.controller;
 
+import com.ufcg.psoft.tccMatch.dto.AreaEstudoDTO;
+import com.ufcg.psoft.tccMatch.dto.TemaTccDTO;
 import com.ufcg.psoft.tccMatch.dto.usuario.AlunoDTO;
 import com.ufcg.psoft.tccMatch.dto.MessageDTO;
-import com.ufcg.psoft.tccMatch.dto.TemaTCCDTO;
 import com.ufcg.psoft.tccMatch.model.AreaEstudo;
-import com.ufcg.psoft.tccMatch.model.TemaTCC;
-import com.ufcg.psoft.tccMatch.model.usuario.Aluno;
-import com.ufcg.psoft.tccMatch.security.util.MyUserDetail;
-import com.ufcg.psoft.tccMatch.security.util.Role;
 import com.ufcg.psoft.tccMatch.service.AlunoService;
 import com.ufcg.psoft.tccMatch.service.AreaEstudoService;
-import com.ufcg.psoft.tccMatch.service.TemaTCCService;
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import com.ufcg.psoft.tccMatch.service.TemaTccService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 @RestController
@@ -32,9 +24,10 @@ import java.util.List;
 @Tag(name = "Aluno")
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class AlunoController {
+
     private final AlunoService alunoService;
     private final AreaEstudoService areaEstudoService;
-    private final TemaTCCService temaTCCService;
+    private final TemaTccService temaTccService;
 
     @PostMapping
     @Operation(summary = "Criar aluno")
@@ -62,17 +55,17 @@ public class AlunoController {
 
     @PostMapping("/{id}/areasestudo")
     @Operation(summary = "Selecionar áreas de estudo de aluno")
-    public ResponseEntity<?> selecionarAreasEstudoAluno (@PathVariable("id") Long id, @RequestBody List<String> nomesAreasEstudo) {
-        List<AreaEstudo> areasEstudo = areaEstudoService.selecionarAreasEstudoUsuarioTCC(id, nomesAreasEstudo);
+    public ResponseEntity<?> selecionarAreasEstudoAluno (@PathVariable("id") Long id, @RequestBody List<AreaEstudoDTO> areasEstudoDTO) {
+        List<AreaEstudo> areasEstudo = areaEstudoService.selecionarAreasEstudoUsuarioTcc(id, areasEstudoDTO);
 
         return new ResponseEntity<>(areasEstudo, HttpStatus.CREATED);
     }
 
     @PostMapping("/{id}/temastcc")
     @Operation(summary = "Criar tema de TCC de aluno")
-    public ResponseEntity<?> criarTemaTCC (@PathVariable("id") Long id, @RequestBody TemaTCCDTO temaTCCDTO) {
-        TemaTCC temaTCC = temaTCCService.criarTemaTCC(id , temaTCCDTO);
+    public ResponseEntity<?> criarTemaTcc (@PathVariable("id") Long id, @RequestBody TemaTccDTO temaTccDTO) {
+        TemaTccDTO temaTccCriadoDTO = temaTccService.criarTemaTcc(id , temaTccDTO);
 
-        return new ResponseEntity<>(temaTCC, HttpStatus.CREATED);
+        return new ResponseEntity<>(temaTccCriadoDTO, HttpStatus.CREATED);
     }
 }

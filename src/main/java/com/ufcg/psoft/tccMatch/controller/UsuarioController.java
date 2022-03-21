@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class UsuarioController {
 
-    private AutenticacaoService autenticacaoService;
+    private final AutenticacaoService autenticacaoService;
 
     @PostMapping("/login")
     @Operation(summary = "Fazer login de usuário")

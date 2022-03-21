@@ -1,7 +1,6 @@
 package com.ufcg.psoft.tccMatch.model.usuario;
 
-import com.ufcg.psoft.tccMatch.model.ProblemaOrientacaoTCC;
-import com.ufcg.psoft.tccMatch.model.TemaTCC;
+import com.ufcg.psoft.tccMatch.model.ProblemaOrientacaoTcc;
 import com.ufcg.psoft.tccMatch.security.util.Role;
 
 import javax.persistence.CascadeType;
@@ -13,14 +12,14 @@ import java.util.List;
 @Entity
 public class Coordenador extends Usuario{
 
-    //@Transient
+    @Transient
     public String getAutoridade() { return Role.USER_ADMIN; }
 
-    //private List<TCC> tccs;
+    //private List<Tcc> tccs;
     @OneToMany (cascade = CascadeType.ALL)
-	private List<ProblemaOrientacaoTCC> problemasOrientacaoTCC;
+	private List<ProblemaOrientacaoTcc> problemasOrientacaoTcc;
 
-    public void adicionarProblemaOrientacaoTCC(ProblemaOrientacaoTCC problemaOrientacaoTCC) {
-        problemasOrientacaoTCC.add(problemaOrientacaoTCC);
+    public void adicionarProblemaOrientacaoTcc(ProblemaOrientacaoTcc problemaOrientacaoTcc) {
+        problemasOrientacaoTcc.add(problemaOrientacaoTcc);
     }
 }
