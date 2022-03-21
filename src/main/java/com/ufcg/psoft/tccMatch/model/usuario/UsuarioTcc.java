@@ -19,10 +19,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UsuarioTcc extends Usuario {
-    @OneToMany
+    @ManyToMany
     private List<AreaEstudo> areasEstudo;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<TemaTcc> temasTcc;
 
     public void adicionarAreaEstudo(AreaEstudo areaEstudo) {

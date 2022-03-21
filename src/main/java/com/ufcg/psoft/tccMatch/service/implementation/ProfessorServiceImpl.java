@@ -1,13 +1,14 @@
 package com.ufcg.psoft.tccMatch.service.implementation;
 
-import com.ufcg.psoft.tccMatch.dto.MessageDTO;
-import com.ufcg.psoft.tccMatch.dto.TemaTccDTO;
-import com.ufcg.psoft.tccMatch.dto.TemaTccUsuarioDTO;
+import com.ufcg.psoft.tccMatch.dto.*;
 import com.ufcg.psoft.tccMatch.dto.usuario.ProfessorDTO;
-import com.ufcg.psoft.tccMatch.dto.QuotaProfessorDTO;
+import com.ufcg.psoft.tccMatch.dto.usuario.UsuarioDTO;
 import com.ufcg.psoft.tccMatch.exception.EntidadeJaExisteException;
 import com.ufcg.psoft.tccMatch.exception.EntidadeNaoExisteException;
 import com.ufcg.psoft.tccMatch.mapper.ProfessorMapper;
+import com.ufcg.psoft.tccMatch.mapper.TemaTccMapper;
+import com.ufcg.psoft.tccMatch.mapper.UsuarioMapper;
+import com.ufcg.psoft.tccMatch.model.AreaEstudo;
 import com.ufcg.psoft.tccMatch.model.TemaTcc;
 import com.ufcg.psoft.tccMatch.model.usuario.Professor;
 import com.ufcg.psoft.tccMatch.model.usuario.UsuarioTcc;
@@ -15,6 +16,7 @@ import com.ufcg.psoft.tccMatch.repository.ProfessorRepository;
 import com.ufcg.psoft.tccMatch.service.ProfessorService;
 import com.ufcg.psoft.tccMatch.service.TemaTccService;
 import com.ufcg.psoft.tccMatch.service.UsuarioService;
+import io.jsonwebtoken.lang.Collections;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,9 +36,11 @@ public class ProfessorServiceImpl implements ProfessorService {
 
     private final UsuarioService usuarioService;
     private final TemaTccService temaTccService;
+    private final TemaTccMapper temaTccMapper;
     private final PasswordEncoder passwordEncoder;
 
     private final ProfessorMapper professorMapper;
+    private final UsuarioMapper usuarioMapper;
 
     private Professor getProfessor (Long id) {
         return professorRepository.findById(id)
@@ -105,5 +109,26 @@ public class ProfessorServiceImpl implements ProfessorService {
         }
 
         return temasTccProfessores;
+    }
+
+    public List<TemaTccDTO> listarTemasTccProfessor(Long id) {
+        Professor professor = getProfessor(id);
+        List<TemaTcc> temasTccProfessore = professor.getTemasTcc();
+
+        return temaTccMapper.toDTOs(temasTccProfessore);
+    }
+
+    public List<ProfessorDTO> listarProfessoresDisponiveisOrientacao (List<AreaEstudo> areasEstudo) {
+        List<Professor> professoresComQuota = professorRepository.findByQuotaGreaterThanEqual(1);
+        List<ProfessorDTO> professores = new ArrayList<>();
+
+        for (Professor professorComQuota : professoresComQuota) {
+            if (Collections.containsAny(professorComQuota.getAreasEstudo(), areasEstudo)) {
+                professores.add(professorMapper.toDTO(professorComQuota));
+            }
+        }
+
+        return professores;
+
     }
 }

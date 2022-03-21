@@ -3,6 +3,8 @@ package com.ufcg.psoft.tccMatch.controller;
 import com.ufcg.psoft.tccMatch.dto.*;
 import com.ufcg.psoft.tccMatch.dto.usuario.ProfessorDTO;
 import com.ufcg.psoft.tccMatch.model.AreaEstudo;
+import com.ufcg.psoft.tccMatch.model.usuario.Aluno;
+import com.ufcg.psoft.tccMatch.service.AlunoService;
 import com.ufcg.psoft.tccMatch.service.AreaEstudoService;
 import com.ufcg.psoft.tccMatch.service.ProfessorService;
 import com.ufcg.psoft.tccMatch.service.TemaTccService;
@@ -26,6 +28,7 @@ public class ProfessorController {
     private final ProfessorService professorService;
     private final TemaTccService temaTccService;
     private final AreaEstudoService areaEstudoService;
+    private final AlunoService alunoService;
 
     @PostMapping
     @Operation(summary = "Criar professor")
@@ -77,9 +80,26 @@ public class ProfessorController {
 
     @GetMapping("/temastcc")
     @Operation(summary = "Listar temas de TCC dos professores")
-    public ResponseEntity<?> listarTemasTcc () {
-        List<TemaTccUsuarioDTO> temasTccUsuariosDTO = professorService.listarTemasTccProfessores();
+    public ResponseEntity<?> listarTemasTccProfessores () {
+        List<TemaTccUsuarioDTO> temasTccProfessoresDTO = professorService.listarTemasTccProfessores();
 
-        return new ResponseEntity<>(temasTccUsuariosDTO, HttpStatus.OK);
+        return new ResponseEntity<>(temasTccProfessoresDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("{id}/temastcc")
+    @Operation(summary = "Listar temas de TCC de professor")
+    public ResponseEntity<?> listarTemasTccProfessor (@PathVariable("id") Long id) {
+        List<TemaTccDTO> temasTccProfessorDTO = professorService.listarTemasTccProfessor(id);
+
+        return new ResponseEntity<>(temasTccProfessorDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("aluno/{id}")
+    @Operation(summary = "Listar professores disponíveis para orientação")
+    public ResponseEntity<?> listarProfessoresDisponiveisOrientacao (@PathVariable("id") Long id) {
+        Aluno aluno = alunoService.getAluno(id);
+        List<ProfessorDTO> professoresDTO = professorService.listarProfessoresDisponiveisOrientacao(aluno.getAreasEstudo());
+
+        return new ResponseEntity<>(professoresDTO, HttpStatus.OK);
     }
 }

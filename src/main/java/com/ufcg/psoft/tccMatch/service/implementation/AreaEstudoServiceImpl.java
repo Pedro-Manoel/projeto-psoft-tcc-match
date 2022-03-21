@@ -38,7 +38,10 @@ public class AreaEstudoServiceImpl implements AreaEstudoService {
 
         return areaEstudoMapper.toDTO(areaEstudo);
     }
-    
+
+    // BUG: Caso o usuário tenha seleciona mais de 1 área em algum momento depois selecinou menos
+    // áreas que tinha antes, deve se apagar as áreas que ele não mandou na solicitação e que estão
+    // no cadastro dele
     public List<AreaEstudo> selecionarAreasEstudoUsuarioTcc(Long id, List<AreaEstudoDTO> areasEstudoDTO) {
         UsuarioTcc usuarioTcc = usuarioService.getUsuarioTcc(id);
 

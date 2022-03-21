@@ -1,10 +1,7 @@
 package com.ufcg.psoft.tccMatch.model.usuario;
 
 import com.ufcg.psoft.tccMatch.security.util.Role;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Transient;
@@ -12,6 +9,7 @@ import javax.persistence.Transient;
 @Entity
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class Professor extends UsuarioTcc {
