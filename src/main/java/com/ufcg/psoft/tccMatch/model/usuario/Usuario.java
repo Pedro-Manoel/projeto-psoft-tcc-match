@@ -12,7 +12,7 @@ import javax.persistence.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class Usuario extends Model {
+public class Usuario extends Model {
 	private String nome;
     
     @Column(unique = true)
@@ -20,7 +20,9 @@ public abstract class Usuario extends Model {
     
 	private String senha;
 
-	public abstract String getAutoridade();
+	public String getAutoridade() {
+		return null;
+	}
 
 	// public CaixaEmail caixaEmail;
 }

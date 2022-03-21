@@ -2,6 +2,7 @@ package com.ufcg.psoft.tccMatch.controller;
 
 import com.ufcg.psoft.tccMatch.dto.AreaEstudoDTO;
 import com.ufcg.psoft.tccMatch.dto.TemaTccDTO;
+import com.ufcg.psoft.tccMatch.dto.TemaTccUsuarioDTO;
 import com.ufcg.psoft.tccMatch.dto.usuario.AlunoDTO;
 import com.ufcg.psoft.tccMatch.dto.MessageDTO;
 import com.ufcg.psoft.tccMatch.model.AreaEstudo;
@@ -67,5 +68,13 @@ public class AlunoController {
         TemaTccDTO temaTccCriadoDTO = temaTccService.criarTemaTcc(id , temaTccDTO);
 
         return new ResponseEntity<>(temaTccCriadoDTO, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/temastcc")
+    @Operation(summary = "Listar temas de TCC dos alunos")
+    public ResponseEntity<?> listarTemasTcc () {
+        List<TemaTccUsuarioDTO> temasTccUsuariosDTO = alunoService.listarTemasTccAlunos();
+
+        return new ResponseEntity<>(temasTccUsuariosDTO, HttpStatus.OK);
     }
 }

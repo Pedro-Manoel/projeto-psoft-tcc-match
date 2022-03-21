@@ -1,20 +1,29 @@
 package com.ufcg.psoft.tccMatch.service.implementation;
 
 import com.ufcg.psoft.tccMatch.dto.MessageDTO;
+import com.ufcg.psoft.tccMatch.dto.TemaTccDTO;
+import com.ufcg.psoft.tccMatch.dto.TemaTccUsuarioDTO;
 import com.ufcg.psoft.tccMatch.dto.usuario.ProfessorDTO;
 import com.ufcg.psoft.tccMatch.dto.QuotaProfessorDTO;
 import com.ufcg.psoft.tccMatch.exception.EntidadeJaExisteException;
 import com.ufcg.psoft.tccMatch.exception.EntidadeNaoExisteException;
 import com.ufcg.psoft.tccMatch.mapper.ProfessorMapper;
+import com.ufcg.psoft.tccMatch.model.TemaTcc;
 import com.ufcg.psoft.tccMatch.model.usuario.Professor;
+import com.ufcg.psoft.tccMatch.model.usuario.UsuarioTcc;
 import com.ufcg.psoft.tccMatch.repository.ProfessorRepository;
 import com.ufcg.psoft.tccMatch.service.ProfessorService;
+import com.ufcg.psoft.tccMatch.service.TemaTccService;
 import com.ufcg.psoft.tccMatch.service.UsuarioService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -24,6 +33,7 @@ public class ProfessorServiceImpl implements ProfessorService {
     private final ProfessorRepository professorRepository;
 
     private final UsuarioService usuarioService;
+    private final TemaTccService temaTccService;
     private final PasswordEncoder passwordEncoder;
 
     private final ProfessorMapper professorMapper;
@@ -83,5 +93,17 @@ public class ProfessorServiceImpl implements ProfessorService {
         salvarProfessor(professor);
 
         return professorMapper.toDTO(professor);
+    }
+
+    public List<TemaTccUsuarioDTO> listarTemasTccProfessores() {
+        List<Professor> professores = professorRepository.findAll();
+        List<TemaTccUsuarioDTO> temasTccProfessores = new ArrayList<>();
+
+
+        for (UsuarioTcc professor : professores) {
+            temasTccProfessores.addAll(temaTccService.listarTemasTccUsuario(professor));
+        }
+
+        return temasTccProfessores;
     }
 }

@@ -14,13 +14,13 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TemaTcc extends Model{
+public class  TemaTcc extends Model{
 	@Column(unique = true)
 	private String titulo;
 	
 	private String descricao;
 
-	@OneToMany
+	@ManyToMany // Verificar depois se OneToMany funciona usando uuid
 	private List<AreaEstudo> areasEstudo;
 	
 	private String status;

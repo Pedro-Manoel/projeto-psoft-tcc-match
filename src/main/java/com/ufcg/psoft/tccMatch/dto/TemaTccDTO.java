@@ -1,5 +1,6 @@
 package com.ufcg.psoft.tccMatch.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TemaTccDTO {
+public class TemaTccDTO extends ModelDTO {
     private String titulo;
 
     private String descricao;

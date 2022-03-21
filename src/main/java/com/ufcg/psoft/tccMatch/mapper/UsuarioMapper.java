@@ -1,20 +1,17 @@
 package com.ufcg.psoft.tccMatch.mapper;
 
 import com.ufcg.psoft.tccMatch.dto.usuario.AlunoDTO;
+import com.ufcg.psoft.tccMatch.dto.usuario.UsuarioDTO;
 import com.ufcg.psoft.tccMatch.model.usuario.Aluno;
+import com.ufcg.psoft.tccMatch.model.usuario.Usuario;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.factory.Mappers;
 
 @Mapper
-public interface AlunoMapper {
+public interface UsuarioMapper {
     @Mapping(target = "senha", ignore = true)
-    AlunoDTO toDTO (Aluno aluno);
+    UsuarioDTO toDTO (Usuario usuario);
 
     @Mapping(target = "id", ignore = true)
-    Aluno toEntity (AlunoDTO alunoDTO);
-
-    @Mapping(target = "id", ignore = true)
-    void toUpdateEntity (AlunoDTO alunoDTO, @MappingTarget Aluno aluno);
+    Usuario toEntity (UsuarioDTO usuarioDTO);
 }
