@@ -65,4 +65,17 @@ public class OrientacaoTccController {
 
         return new ResponseEntity<>(orinetacoesTccDTO, HttpStatus.CREATED);
     }
+
+    // aqui para baixo
+
+    @GetMapping()
+    @Operation(summary = "Listar Orientações de TCC")
+    public ResponseEntity<?> listarOrientacaoTccEmCursoPorSemestre (
+            @RequestParam(defaultValue = "false") Boolean finalizada,
+            @RequestParam(defaultValue = "2022") String semestre
+    ) {
+        List<OrientacaoTccDTO> orinetacoesTccDTO =  tccService.listarOrientacoesTcc(finalizada, semestre);
+
+        return new ResponseEntity<>(orinetacoesTccDTO, HttpStatus.CREATED);
+    }
 }
