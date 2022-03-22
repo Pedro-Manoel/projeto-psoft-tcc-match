@@ -9,7 +9,7 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper(uses = { UsuarioMapper.class })
+@Mapper(uses = { UsuarioMapper.class, RespostaSolicitacaoOrientacaoTccMapper.class })
 public interface SolicitacaoOrientacaoTccMapper {
     @Mapping(target = "temaTcc", source = "solicitacaoOrientacaoTcc.temaTcc.titulo")
     SolicitacaoOrientacaoTccDTO toDTO (SolicitacaoOrientacaoTcc solicitacaoOrientacaoTcc);

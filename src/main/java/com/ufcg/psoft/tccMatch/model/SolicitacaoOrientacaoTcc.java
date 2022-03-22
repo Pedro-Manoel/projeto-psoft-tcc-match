@@ -7,10 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -24,8 +21,18 @@ public class SolicitacaoOrientacaoTcc extends Model {
     @OneToOne
 	private TemaTcc temaTcc;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private RespostaSolicitacaoOrientacaoTcc resposta;
 
-    public boolean emAndamento () { return this.resposta != null; }
+    private boolean vinculadaComTcc;
+
+    public boolean isAceita () {
+        if (this.resposta == null) {
+            return false;
+        } else {
+            return resposta.isAceita();
+        }
+
+        // return !emAndamento() && resposta.isAceita();
+    }
  }

@@ -1,5 +1,6 @@
 package com.ufcg.psoft.tccMatch.model.usuario;
 
+import com.ufcg.psoft.tccMatch.exception.EntidadeNaoExisteException;
 import com.ufcg.psoft.tccMatch.model.SolicitacaoOrientacaoTcc;
 import com.ufcg.psoft.tccMatch.model.TemaTcc;
 import com.ufcg.psoft.tccMatch.security.util.Role;
@@ -30,16 +31,46 @@ public class Professor extends UsuarioTcc {
 		this.solicitacoesOrientacaoTcc.add(solicitacaoOrientacaoTcc);
 	}
 
-	public boolean existeSolicitacaoOrientacaoTcc(Aluno aluno, TemaTcc temaTcc) {
+	/**
+	 * Posso cria uma nova solicitação desde que não exista nenhuma solicitação minha que não esta vinculada
+	 * a alguma orientação de TCC ou que já foi negada
+	 *
+	 * Precisa melhorar a lógica
+	 *
+	 */
+	public boolean solicitacaoEmAndamento(Aluno aluno, TemaTcc temaTcc) {
 		return this.solicitacoesOrientacaoTcc
 				.stream()
 				.anyMatch(solicitacaoOrientacaoTcc ->
-						solicitacaoOrientacaoTcc.getAluno().equals(aluno) &&
-								solicitacaoOrientacaoTcc.getTemaTcc().equals(temaTcc) &&
-								!solicitacaoOrientacaoTcc.emAndamento()
+						(solicitacaoOrientacaoTcc.getAluno().equals(aluno) &&
+								solicitacaoOrientacaoTcc.getTemaTcc().equals(temaTcc)) &&
+								!solicitacaoOrientacaoTcc.isAceita()
+
 				);
+
+		/*
+
+				return this.solicitacoesOrientacaoTcc
+				.stream()
+				.anyMatch(solicitacaoOrientacaoTcc ->
+						(solicitacaoOrientacaoTcc.getAluno().equals(aluno) &&
+								solicitacaoOrientacaoTcc.getTemaTcc().equals(temaTcc)) &&
+								(solicitacaoOrientacaoTcc.isAceita() &&
+								!solicitacaoOrientacaoTcc.isVinculadaComTcc())
+
+				);
+		 */
+
 	}
 
 	@Transient
 	public String getAutoridade() { return Role.USER_PROF; }
+
+	public SolicitacaoOrientacaoTcc getSolicitacaoOrientacao(Long id) {
+		return this.solicitacoesOrientacaoTcc
+				.stream()
+				.filter(solicitacaoOrientacaoTcc -> solicitacaoOrientacaoTcc.getId().equals(id))
+				.findAny()
+				.orElseThrow(() -> new EntidadeNaoExisteException("Solicitação de orientação de TCC", "id", id.toString()));
+	}
 }

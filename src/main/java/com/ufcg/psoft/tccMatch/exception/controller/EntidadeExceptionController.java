@@ -1,11 +1,6 @@
 package com.ufcg.psoft.tccMatch.exception.controller;
 
-import com.ufcg.psoft.tccMatch.exception.EntidadeJaExisteException;
-import com.ufcg.psoft.tccMatch.exception.EntidadeNaoExisteException;
-import com.ufcg.psoft.tccMatch.exception.SolicitacaoOrientacaoTccEmAndamentoException;
-import com.ufcg.psoft.tccMatch.exception.TemaTccInvalidoProfessorException;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
+import com.ufcg.psoft.tccMatch.exception.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,13 +17,18 @@ public class EntidadeExceptionController {
         return AppError.responseNotFound(exception);
     }
 
-    @ExceptionHandler(SolicitacaoOrientacaoTccEmAndamentoException.class)
-    public ResponseEntity<?> handleException(SolicitacaoOrientacaoTccEmAndamentoException exception){
+    @ExceptionHandler(SolicitacaoOrientacaoTccInvalidaException.class)
+    public ResponseEntity<?> handleException(SolicitacaoOrientacaoTccInvalidaException exception){
         return AppError.responseBadRequest(exception);
     }
 
     @ExceptionHandler(TemaTccInvalidoProfessorException.class)
     public ResponseEntity<?> handleException(TemaTccInvalidoProfessorException exception){
+        return AppError.responseBadRequest(exception);
+    }
+
+    @ExceptionHandler(SolicitacaoOrientacaoTccNaoAceitaException.class)
+    public ResponseEntity<?> handleException(SolicitacaoOrientacaoTccNaoAceitaException exception){
         return AppError.responseBadRequest(exception);
     }
 }
