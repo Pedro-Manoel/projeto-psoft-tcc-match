@@ -27,4 +27,6 @@ public interface ProfessorService {
     List<ProfessorDTO> listarProfessoresDisponiveisOrientacao (List<AreaEstudo> areasEstudo);
 
     List<SolicitacaoOrientacaoTccDTO> listarSolicitacoesOrientacaoTcc (Long id);
+
+    SolicitacaoOrientacaoTccDTO responderSolicitacaoOrientacaoTcc(Long id, Long idSolicitacao,  RespostaSolicitacaoOrientacaoTccDTO respostaSolicitacaoOrientacaoTccDTO);
 }

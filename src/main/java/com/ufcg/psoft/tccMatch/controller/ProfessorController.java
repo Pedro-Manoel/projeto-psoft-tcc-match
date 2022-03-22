@@ -109,5 +109,17 @@ public class ProfessorController {
         List<SolicitacaoOrientacaoTccDTO> solicitacoesOrientacaoTccDTO = professorService.listarSolicitacoesOrientacaoTcc(id);
 
         return new ResponseEntity<>(solicitacoesOrientacaoTccDTO, HttpStatus.OK);
+
+        // SolicitacaoOrientacaoTccDTO responderSolicitacaoOrientacaoTcc(Long id, Long idSolicitacao, RespostaSolicitacaoOrientacaoTccDTO respostaSolicitacaoOrientacaoTccDTO)
+    }
+
+    @PostMapping("/{id}/solicitacao/{idSolicitacao}")
+    @Operation(summary = "Responder solicitação de orientação de TCC para professor")
+    public ResponseEntity<?> listarSolicitacoesOrientacaoTcc (@PathVariable("id") Long id, @PathVariable("idSolicitacao") Long idSolicitacao, @RequestBody RespostaSolicitacaoOrientacaoTccDTO respostaSolicitacaoOrientacaoTccDTO) {
+        SolicitacaoOrientacaoTccDTO solicitacaoOrientacaoTccDTO = professorService.responderSolicitacaoOrientacaoTcc(id, idSolicitacao, respostaSolicitacaoOrientacaoTccDTO);
+
+        return new ResponseEntity<>(solicitacaoOrientacaoTccDTO, HttpStatus.OK);
+
+
     }
 }

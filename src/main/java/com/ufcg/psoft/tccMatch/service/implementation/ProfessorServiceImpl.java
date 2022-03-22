@@ -5,11 +5,9 @@ import com.ufcg.psoft.tccMatch.dto.usuario.ProfessorDTO;
 import com.ufcg.psoft.tccMatch.dto.usuario.UsuarioDTO;
 import com.ufcg.psoft.tccMatch.exception.EntidadeJaExisteException;
 import com.ufcg.psoft.tccMatch.exception.EntidadeNaoExisteException;
-import com.ufcg.psoft.tccMatch.mapper.ProfessorMapper;
-import com.ufcg.psoft.tccMatch.mapper.SolicitacaoOrientacaoTccMapper;
-import com.ufcg.psoft.tccMatch.mapper.TemaTccMapper;
-import com.ufcg.psoft.tccMatch.mapper.UsuarioMapper;
+import com.ufcg.psoft.tccMatch.mapper.*;
 import com.ufcg.psoft.tccMatch.model.AreaEstudo;
+import com.ufcg.psoft.tccMatch.model.RespostaSolicitacaoOrientacaoTcc;
 import com.ufcg.psoft.tccMatch.model.SolicitacaoOrientacaoTcc;
 import com.ufcg.psoft.tccMatch.model.TemaTcc;
 import com.ufcg.psoft.tccMatch.model.usuario.Professor;
@@ -44,6 +42,7 @@ public class ProfessorServiceImpl implements ProfessorService {
     private final ProfessorMapper professorMapper;
     private final UsuarioMapper usuarioMapper;
     private final SolicitacaoOrientacaoTccMapper solicitacaoOrientacaoTccMapper;
+    private final RespostaSolicitacaoOrientacaoTccMapper respostaSolicitacaoOrientacaoTccMapper;
 
     public Professor getProfessor (Long id) {
         return professorRepository.findById(id)
@@ -143,5 +142,19 @@ public class ProfessorServiceImpl implements ProfessorService {
         List<SolicitacaoOrientacaoTcc> solicitacoesOrientacaoTcc = professor.getSolicitacoesOrientacaoTcc();
 
         return solicitacaoOrientacaoTccMapper.toDTOs(solicitacoesOrientacaoTcc);
+    }
+
+    public SolicitacaoOrientacaoTccDTO responderSolicitacaoOrientacaoTcc(Long id, Long idSolicitacao, RespostaSolicitacaoOrientacaoTccDTO respostaSolicitacaoOrientacaoTccDTO) {
+        Professor professor = getProfessor(id);
+        SolicitacaoOrientacaoTcc solicitacaoOrientacaoTcc = professor.getSolicitacaoOrientacao(idSolicitacao);
+
+        RespostaSolicitacaoOrientacaoTcc respostaSolicitacaoOrientacaoTcc =
+                respostaSolicitacaoOrientacaoTccMapper.toEntity(respostaSolicitacaoOrientacaoTccDTO);
+
+        solicitacaoOrientacaoTcc.setResposta(respostaSolicitacaoOrientacaoTcc);
+
+        salvarProfessor(professor);
+
+        return solicitacaoOrientacaoTccMapper.toDTO(solicitacaoOrientacaoTcc);
     }
 }
