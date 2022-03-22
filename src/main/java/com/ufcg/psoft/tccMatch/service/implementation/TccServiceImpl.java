@@ -120,4 +120,11 @@ public class TccServiceImpl implements TccService {
 
         return orientacaoTccMapper.toDTOs(orientacoesTcc);
     }
+
+    public List<OrientacaoTccDTO> listarOrientacoesTcc (Boolean concluida, String semestre) {
+        List<OrientacaoTcc> orientacoesTcc =
+                orientacaoTccRepository.findByConcluidaAndSemestre(concluida, semestre);
+
+        return orientacaoTccMapper.toDTOs(orientacoesTcc);
+    }
 }

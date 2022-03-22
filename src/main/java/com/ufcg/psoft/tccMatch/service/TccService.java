@@ -17,4 +17,6 @@ public interface TccService {
     OrientacaoTccDTO finalizarOrientacaoTcc (Long id);
 
     List<OrientacaoTccDTO> listarOrientacoesTccEmCursoProfessor (Professor professor);
+
+    List<OrientacaoTccDTO> listarOrientacoesTcc (Boolean concluida, String semestre);
 }
