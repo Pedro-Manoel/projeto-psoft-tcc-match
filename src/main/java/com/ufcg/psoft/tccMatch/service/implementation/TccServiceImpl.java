@@ -21,6 +21,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
+/**
+ * No lugar de coordenador ter uma lista de orientaçãoTcc e ProblemasRoeintacaoTcc
+ * é melhor eles não existirem e só trabalhar com os repositorios
+ *
+ */
+
 @Service
 @Transactional
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -85,5 +93,31 @@ public class TccServiceImpl implements TccService {
         coordenadorService.salvarCoordenador(coordenador);
 
         return orientacaoTccMapper.toDTO(orientacaoTcc);
+    }
+
+    public OrientacaoTcc getOrientacaoTcc (Long id) {
+        return orientacaoTccRepository.findById(id)
+                .orElseThrow(() -> new EntidadeNaoExisteException("Orientação de TCC", "id", id.toString()));
+    }
+
+    public OrientacaoTccDTO finalizarOrientacaoTcc (Long id) {
+        OrientacaoTcc orientacaoTcc = getOrientacaoTcc(id);
+
+        if (orientacaoTcc.isConcluida()) {
+            throw new OrientacaoTccJaFinalizadaException(id);
+        }
+
+        orientacaoTcc.finalizar();
+        salvarOrientacaoTcc(orientacaoTcc);
+
+        System.out.println(orientacaoTcc.isConcluida());
+
+        return orientacaoTccMapper.toDTO(orientacaoTcc);
+    }
+
+    public List<OrientacaoTccDTO> listarOrientacoesTccEmCursoProfessor (Professor professor) {
+        List<OrientacaoTcc> orientacoesTcc = orientacaoTccRepository.findByConcluidaIsFalseAndTccProfessor_Id(professor.getId());
+
+        return orientacaoTccMapper.toDTOs(orientacoesTcc);
     }
 }

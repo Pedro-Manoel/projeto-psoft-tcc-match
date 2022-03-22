@@ -17,4 +17,6 @@ public class OrientacaoTccDTO extends ModelDTO {
     private Long idSolicitacao;
 
     private String semestre;
+
+    private boolean concluida;
 }

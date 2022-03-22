@@ -7,8 +7,14 @@ import com.ufcg.psoft.tccMatch.model.OrientacaoTcc;
 import com.ufcg.psoft.tccMatch.model.usuario.Aluno;
 import com.ufcg.psoft.tccMatch.model.usuario.Professor;
 
+import java.util.List;
+
 public interface TccService {
     MessageDTO solicitarOrientacao(Aluno aluno, SolicitacaoOrientacaoTccDTO solicitacaoOrientacaoTccDTO);
 
     OrientacaoTccDTO criarOrientacaoTcc (Professor professor, OrientacaoTccDTO orientacaoTccDTO);
+
+    OrientacaoTccDTO finalizarOrientacaoTcc (Long id);
+
+    List<OrientacaoTccDTO> listarOrientacoesTccEmCursoProfessor (Professor professor);
 }

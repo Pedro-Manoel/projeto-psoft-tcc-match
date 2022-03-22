@@ -25,4 +25,6 @@ public class OrientacaoTcc extends Model {
 	private String semestre;
 	
 	private boolean concluida;
+
+	public void finalizar() { this.concluida = true; }
 }
