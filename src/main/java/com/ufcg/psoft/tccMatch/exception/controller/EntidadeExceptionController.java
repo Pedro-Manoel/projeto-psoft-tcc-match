@@ -31,4 +31,9 @@ public class EntidadeExceptionController {
     public ResponseEntity<?> handleException(SolicitacaoOrientacaoTccNaoAceitaException exception){
         return AppError.responseBadRequest(exception);
     }
+
+    @ExceptionHandler(OrientacaoTccJaFinalizadaException.class)
+    public ResponseEntity<?> handleException(OrientacaoTccJaFinalizadaException exception){
+        return AppError.responseBadRequest(exception);
+    }
 }

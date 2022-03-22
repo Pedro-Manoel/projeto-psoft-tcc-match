@@ -15,4 +15,6 @@ public interface OrientacaoTccMapper {
 
     @Mapping(target = "id", ignore = true)
     OrientacaoTcc toEntity (OrientacaoTccDTO orientacaoTccDTO);
+
+    List<OrientacaoTccDTO> toDTOs (List<OrientacaoTcc> orientacoesTcc);
 }

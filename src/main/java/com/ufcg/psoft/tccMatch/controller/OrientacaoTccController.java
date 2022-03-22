@@ -18,6 +18,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/api/orientacoestcc")
@@ -45,5 +47,22 @@ public class OrientacaoTccController {
         OrientacaoTccDTO orientacaoTccCriadaDTO = tccService.criarOrientacaoTcc(professor, orientacaoTccDTO);
 
         return new ResponseEntity<>(orientacaoTccCriadaDTO, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/{id}/finalizar")
+    @Operation(summary = "Finalizar Orientação de TCC")
+    public ResponseEntity<?> finalizarOrientacaoTcc (@PathVariable("id") Long id) {
+        OrientacaoTccDTO orientacaoTccFinalizadaDTO = tccService.finalizarOrientacaoTcc(id);
+
+        return new ResponseEntity<>(orientacaoTccFinalizadaDTO, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/professor/{id}")
+    @Operation(summary = "Listar Orientações de TCC em curso do professor")
+    public ResponseEntity<?> listarOrientacaoTccEmCursoProfessor (@PathVariable("id") Long id) {
+        Professor professor = professorService.getProfessor(id);
+        List<OrientacaoTccDTO> orinetacoesTccDTO =  tccService.listarOrientacoesTccEmCursoProfessor(professor);
+
+        return new ResponseEntity<>(orinetacoesTccDTO, HttpStatus.CREATED);
     }
 }
