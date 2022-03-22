@@ -1,13 +1,18 @@
 package com.ufcg.psoft.tccMatch.controller;
 
 import com.ufcg.psoft.tccMatch.dto.*;
+import com.ufcg.psoft.tccMatch.dto.message.MessageDTO;
+import com.ufcg.psoft.tccMatch.dto.tcc.TemaTccDTO;
+import com.ufcg.psoft.tccMatch.dto.tcc.TemaTccUsuarioDTO;
 import com.ufcg.psoft.tccMatch.dto.usuario.ProfessorDTO;
-import com.ufcg.psoft.tccMatch.model.AreaEstudo;
+import com.ufcg.psoft.tccMatch.dto.usuario.UsuarioDTO;
 import com.ufcg.psoft.tccMatch.model.usuario.Aluno;
-import com.ufcg.psoft.tccMatch.service.AlunoService;
-import com.ufcg.psoft.tccMatch.service.AreaEstudoService;
-import com.ufcg.psoft.tccMatch.service.ProfessorService;
-import com.ufcg.psoft.tccMatch.service.TemaTccService;
+import com.ufcg.psoft.tccMatch.model.usuario.Professor;
+import com.ufcg.psoft.tccMatch.model.usuario.UsuarioTcc;
+import com.ufcg.psoft.tccMatch.service.*;
+import com.ufcg.psoft.tccMatch.service.tcc.TemaTccService;
+import com.ufcg.psoft.tccMatch.service.usuario.AlunoService;
+import com.ufcg.psoft.tccMatch.service.usuario.ProfessorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -16,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -26,9 +32,9 @@ import java.util.List;
 public class ProfessorController {
 
     private final ProfessorService professorService;
-    private final TemaTccService temaTccService;
-    private final AreaEstudoService areaEstudoService;
     private final AlunoService alunoService;
+    private final AreaEstudoService areaEstudoService;
+    private final TemaTccService temaTccService;
 
     @PostMapping
     @Operation(summary = "Criar professor")
@@ -62,64 +68,53 @@ public class ProfessorController {
         return new ResponseEntity<>(professorQuotaAtualizadaDTO, HttpStatus.OK);
     }
 
-    @PostMapping("/{id}/temastcc")
-    @Operation(summary = "Criar tema de TCC de professor")
-    public ResponseEntity<?> criarTemaTcc (@PathVariable("id") Long id, @RequestBody TemaTccDTO temaTccDTO) {
-        TemaTccDTO temaTccCriadoDTO = temaTccService.criarTemaTcc(id , temaTccDTO);
-
-        return new ResponseEntity<>(temaTccCriadoDTO, HttpStatus.CREATED);
-    }
-
     @PostMapping("/{id}/areasestudo")
     @Operation(summary = "Selecionar áreas de estudo de professor")
-    public ResponseEntity<?> selecionarAreasEstudoAluno (@PathVariable("id") Long id, @RequestBody List<AreaEstudoDTO> areasEstudoDTO) {
-        List<AreaEstudo> areasEstudo = areaEstudoService.selecionarAreasEstudoUsuarioTcc(id, areasEstudoDTO);
+    public ResponseEntity<?> selecionarAreasEstudoProfessor (@PathVariable("id") Long id, @RequestBody List<AreaEstudoDTO> areasEstudoDTO) {
+        Professor professor = professorService.getProfessor(id);
 
-        return new ResponseEntity<>(areasEstudo, HttpStatus.CREATED);
+        List<AreaEstudoDTO> areasEstudoSelecionadasDTO = areaEstudoService.selecionarAreasEstudoUsuario(professor, areasEstudoDTO);
+
+        return new ResponseEntity<>(areasEstudoSelecionadasDTO, HttpStatus.CREATED);
     }
 
-    @GetMapping("/temastcc")
-    @Operation(summary = "Listar temas de TCC dos professores")
-    public ResponseEntity<?> listarTemasTccProfessores () {
-        List<TemaTccUsuarioDTO> temasTccProfessoresDTO = professorService.listarTemasTccProfessores();
+    @PostMapping("/{id}/temastcc")
+    @Operation(summary = "Criar tema de TCC de professor")
+    public ResponseEntity<?> criarTemaTccProfessor (@PathVariable("id") Long id, @RequestBody TemaTccDTO temaTccDTO) {
+        Professor professor = professorService.getProfessor(id);
 
-        return new ResponseEntity<>(temasTccProfessoresDTO, HttpStatus.OK);
+        TemaTccDTO temaTccCriadoDTO = temaTccService.criarTemaTccUsuario(professor, temaTccDTO);
+
+        return new ResponseEntity<>(temaTccCriadoDTO, HttpStatus.CREATED);
     }
 
     @GetMapping("{id}/temastcc")
     @Operation(summary = "Listar temas de TCC de professor")
     public ResponseEntity<?> listarTemasTccProfessor (@PathVariable("id") Long id) {
-        List<TemaTccDTO> temasTccProfessorDTO = professorService.listarTemasTccProfessor(id);
+        Professor professor = professorService.getProfessor(id);
+
+        List<TemaTccDTO> temasTccProfessorDTO = temaTccService.listarTemasTccUsuario(professor);
 
         return new ResponseEntity<>(temasTccProfessorDTO, HttpStatus.OK);
     }
 
+    @GetMapping("/temastcc")
+    @Operation(summary = "Listar temas de TCC dos professores")
+    public ResponseEntity<?> listarTemasTccProfessores () {
+        List<Professor> professores = professorService.getProfessores();
+        List<UsuarioTcc> usuariosTcc = Collections.unmodifiableList(professores);
+
+        List<TemaTccUsuarioDTO> temasTccProfessoresDTO = temaTccService.listarTemasTccUsuarios(usuariosTcc);
+
+        return new ResponseEntity<>(temasTccProfessoresDTO, HttpStatus.OK);
+    }
+
     @GetMapping("/aluno/{idAluno}")
-    @Operation(summary = "Listar professores disponíveis para orientação")
+    @Operation(summary = "Listar professores disponíveis para orientação de TCC")
     public ResponseEntity<?> listarProfessoresDisponiveisOrientacao (@PathVariable("idAluno") Long id) {
         Aluno aluno = alunoService.getAluno(id);
-        List<ProfessorDTO> professoresDTO = professorService.listarProfessoresDisponiveisOrientacao(aluno.getAreasEstudo());
+        List<UsuarioDTO> professoresDTO = professorService.listarProfessoresDisponiveisOrientacaoTcc(aluno.getAreasEstudo());
 
         return new ResponseEntity<>(professoresDTO, HttpStatus.OK);
-    }
-
-    @GetMapping("/{id}")
-    @Operation(summary = "Listar solicitações de orientação de TCC para professor")
-    public ResponseEntity<?> listarSolicitacoesOrientacaoTcc (@PathVariable("id") Long id) {
-        List<SolicitacaoOrientacaoTccDTO> solicitacoesOrientacaoTccDTO = professorService.listarSolicitacoesOrientacaoTcc(id);
-
-        return new ResponseEntity<>(solicitacoesOrientacaoTccDTO, HttpStatus.OK);
-
-        // SolicitacaoOrientacaoTccDTO responderSolicitacaoOrientacaoTcc(Long id, Long idSolicitacao, RespostaSolicitacaoOrientacaoTccDTO respostaSolicitacaoOrientacaoTccDTO)
-    }
-
-    @PostMapping("/{id}/solicitacao/{idSolicitacao}")
-    @Operation(summary = "Responder solicitação de orientação de TCC para professor")
-    public ResponseEntity<?> listarSolicitacoesOrientacaoTcc (@PathVariable("id") Long id, @PathVariable("idSolicitacao") Long idSolicitacao, @RequestBody RespostaSolicitacaoOrientacaoTccDTO respostaSolicitacaoOrientacaoTccDTO) {
-        SolicitacaoOrientacaoTccDTO solicitacaoOrientacaoTccDTO = professorService.responderSolicitacaoOrientacaoTcc(id, idSolicitacao, respostaSolicitacaoOrientacaoTccDTO);
-
-        return new ResponseEntity<>(solicitacaoOrientacaoTccDTO, HttpStatus.OK);
-
-
     }
 }

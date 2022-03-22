@@ -1,20 +1,18 @@
 package com.ufcg.psoft.tccMatch.security.service.Implementation;
 
-import com.ufcg.psoft.tccMatch.model.usuario.Usuario;
 import com.ufcg.psoft.tccMatch.security.dto.LoginDTO;
-import com.ufcg.psoft.tccMatch.exception.EntidadeNaoExisteException;
-import com.ufcg.psoft.tccMatch.security.exception.LoginInvalidoException;
+import com.ufcg.psoft.tccMatch.error.exception.EntidadeNaoExisteException;
+import com.ufcg.psoft.tccMatch.security.error.exception.LoginInvalidoException;
 import com.ufcg.psoft.tccMatch.security.util.JwtTokenUtil;
 import com.ufcg.psoft.tccMatch.security.dto.TokenDTO;
 import com.ufcg.psoft.tccMatch.security.service.AutenticacaoService;
 import com.ufcg.psoft.tccMatch.security.util.MyUserDetail;
-import com.ufcg.psoft.tccMatch.service.UsuarioService;
+import com.ufcg.psoft.tccMatch.service.usuario.UsuarioService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -1,9 +1,7 @@
 package com.ufcg.psoft.tccMatch.security.util;
 
-import com.ufcg.psoft.tccMatch.model.usuario.Usuario;
-import com.ufcg.psoft.tccMatch.security.exception.TokenInvalidoException;
+import com.ufcg.psoft.tccMatch.security.error.exception.TokenInvalidoException;
 import io.jsonwebtoken.*;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;

@@ -4,7 +4,8 @@ import com.ufcg.psoft.tccMatch.dto.AreaEstudoDTO;
 import com.ufcg.psoft.tccMatch.model.AreaEstudo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
+
+import java.util.List;
 
 @Mapper
 public interface AreaEstudoMapper {
@@ -12,4 +13,6 @@ public interface AreaEstudoMapper {
 
     @Mapping(target = "id", ignore = true)
     AreaEstudo toEntity (AreaEstudoDTO areaEstudoDTO);
+
+    List<AreaEstudoDTO> toDTOs (List<AreaEstudo> areasEstudo);
 }

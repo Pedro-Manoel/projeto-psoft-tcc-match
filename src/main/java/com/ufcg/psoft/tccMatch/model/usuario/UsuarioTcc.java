@@ -1,7 +1,7 @@
 package com.ufcg.psoft.tccMatch.model.usuario;
 
 import com.ufcg.psoft.tccMatch.model.AreaEstudo;
-import com.ufcg.psoft.tccMatch.model.TemaTcc;
+import com.ufcg.psoft.tccMatch.model.tcc.TemaTcc;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,18 +18,12 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UsuarioTcc extends Usuario {
+public abstract class UsuarioTcc extends Usuario {
     @ManyToMany
     private List<AreaEstudo> areasEstudo;
 
     @ManyToMany(cascade = CascadeType.ALL)
     private List<TemaTcc> temasTcc;
-
-    public void adicionarAreaEstudo(AreaEstudo areaEstudo) {
-        if (!this.areasEstudo.contains(areaEstudo)) {
-            this.areasEstudo.add(areaEstudo);
-        }
-    }
 
     public void adicionarTemaTcc(TemaTcc temaTcc) {
         if (!this.temasTcc.contains(temaTcc)) {

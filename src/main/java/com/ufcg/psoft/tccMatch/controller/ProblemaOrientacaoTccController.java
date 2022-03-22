@@ -1,8 +1,7 @@
 package com.ufcg.psoft.tccMatch.controller;
 
-import com.ufcg.psoft.tccMatch.dto.ProblemaOrientacaoTccDTO;
-import com.ufcg.psoft.tccMatch.model.ProblemaOrientacaoTcc;
-import com.ufcg.psoft.tccMatch.service.ProblemaOrientacaoTccService;
+import com.ufcg.psoft.tccMatch.dto.tcc.ProblemaOrientacaoTccDTO;
+import com.ufcg.psoft.tccMatch.service.tcc.ProblemaOrientacaoTccService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -21,9 +20,9 @@ public class ProblemaOrientacaoTccController {
     private final ProblemaOrientacaoTccService problemaOrientacaoTccService;
 
     @PostMapping("/{id}")
-    @Operation(summary = "Reportar Problema de Orientação de TCC")
+    @Operation(summary = "Reportar problema de orientação de TCC")
     public ResponseEntity<?> reportarProblemaTcc (@PathVariable("id") Long id, @RequestBody ProblemaOrientacaoTccDTO problemaOrientacaoTccDTO) {
-        ProblemaOrientacaoTcc problemaOrientacaoTcc = problemaOrientacaoTccService.reportarProblema(id, problemaOrientacaoTccDTO);
+        ProblemaOrientacaoTccDTO problemaOrientacaoTcc = problemaOrientacaoTccService.reportarProblemaOrientacaoTcc(id, problemaOrientacaoTccDTO);
 
         return new ResponseEntity<>(problemaOrientacaoTcc, HttpStatus.CREATED);
     }

@@ -16,23 +16,9 @@ import java.util.Map;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ModelDTO {
+public abstract class ModelDTO {
     @Hidden
     private Long id;
-
-    private Map<String, Object> properties;
-
-    public ModelDTO () { this.properties = new HashMap<>(); }
-
-    public void addPropertie (String propertie, Object value) {
-        this.properties.put(propertie, value);
-    }
-
-    @JsonAnyGetter
-    @Hidden
-    public Map<String, Object> getProperties () { return this.properties; }
-
-    @Hidden
-    public void setProperties (Map<String, Object> map) { this.properties = map; }
 }

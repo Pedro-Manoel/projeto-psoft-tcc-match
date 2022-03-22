@@ -1,21 +1,21 @@
 package com.ufcg.psoft.tccMatch.service.implementation;
 
 import com.ufcg.psoft.tccMatch.dto.AreaEstudoDTO;
-import com.ufcg.psoft.tccMatch.exception.EntidadeJaExisteException;
-import com.ufcg.psoft.tccMatch.exception.EntidadeNaoExisteException;
+import com.ufcg.psoft.tccMatch.error.exception.EntidadeJaExisteException;
+import com.ufcg.psoft.tccMatch.error.exception.EntidadeNaoExisteException;
 import com.ufcg.psoft.tccMatch.mapper.AreaEstudoMapper;
 import com.ufcg.psoft.tccMatch.model.AreaEstudo;
 import com.ufcg.psoft.tccMatch.model.usuario.UsuarioTcc;
 import com.ufcg.psoft.tccMatch.repository.AreaEstudoRepository;
 import com.ufcg.psoft.tccMatch.service.AreaEstudoService;
-import com.ufcg.psoft.tccMatch.service.UsuarioService;
+import com.ufcg.psoft.tccMatch.service.usuario.UsuarioService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -28,6 +28,10 @@ public class AreaEstudoServiceImpl implements AreaEstudoService {
 
     private final AreaEstudoMapper areaEstudoMapper;
 
+    private void salvarAreaEstudo (AreaEstudo areaEstudo) {
+        areaEstudoRepository.save(areaEstudo);
+    }
+
     public AreaEstudoDTO criarAreaEstudo (AreaEstudoDTO areaEstudoDTO) {
         if (areaEstudoRepository.existsByNome(areaEstudoDTO.getNome())) {
             throw new EntidadeJaExisteException("Área de estudo", "nome", areaEstudoDTO.getNome());
@@ -39,40 +43,24 @@ public class AreaEstudoServiceImpl implements AreaEstudoService {
         return areaEstudoMapper.toDTO(areaEstudo);
     }
 
-    // BUG: Caso o usuário tenha seleciona mais de 1 área em algum momento depois selecinou menos
-    // áreas que tinha antes, deve se apagar as áreas que ele não mandou na solicitação e que estão
-    // no cadastro dele
-    public List<AreaEstudo> selecionarAreasEstudoUsuarioTcc(Long id, List<AreaEstudoDTO> areasEstudoDTO) {
-        UsuarioTcc usuarioTcc = usuarioService.getUsuarioTcc(id);
-
-        for (AreaEstudoDTO areaEstudoDTO : areasEstudoDTO) {
-            AreaEstudo areaEstudo = getAreaEstudo(areaEstudoDTO.getNome());
-            usuarioTcc.adicionarAreaEstudo(areaEstudo);
-        }
-
-        usuarioService.salvarUsuario(usuarioTcc);
-
-        return usuarioTcc.getAreasEstudo();
-        
-    }
-
-    private void salvarAreaEstudo (AreaEstudo areaEstudo) {
-        areaEstudoRepository.save(areaEstudo);
-    }
-
     private AreaEstudo getAreaEstudo (String nome) {
         return areaEstudoRepository.getByNome(nome)
-            .orElseThrow(() -> new EntidadeNaoExisteException("Área de estudo", "nome", nome));
+                .orElseThrow(() -> new EntidadeNaoExisteException("Área de estudo", "nome", nome));
     }
 
-    public List<AreaEstudo> getAreasEstudo(List<AreaEstudoDTO> areasEstudoDTO) {
-        List<AreaEstudo> areasEstudos = new ArrayList<>();
+    public List<AreaEstudo> getAreasEstudo (List<AreaEstudoDTO> areasEstudoDTO) {
+        return areasEstudoDTO
+                .stream()
+                .map(areaEstudoDTO -> getAreaEstudo(areaEstudoDTO.getNome()))
+                .collect(Collectors.toList());
+    }
 
-        for (AreaEstudoDTO areaEstudoDTO : areasEstudoDTO) {
-            AreaEstudo areaEstudo = getAreaEstudo(areaEstudoDTO.getNome());
-            areasEstudos.add(areaEstudo);
-        }
+    public List<AreaEstudoDTO> selecionarAreasEstudoUsuario (UsuarioTcc usuarioTcc, List<AreaEstudoDTO> areasEstudoDTO) {
+        List<AreaEstudo> areasEstudo = getAreasEstudo(areasEstudoDTO);
 
-        return areasEstudos;
+        usuarioTcc.setAreasEstudo(areasEstudo);
+        usuarioService.salvarUsuario(usuarioTcc);
+
+        return areaEstudoMapper.toDTOs(areasEstudo);
     }
 }
