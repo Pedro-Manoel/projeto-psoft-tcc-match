@@ -1,7 +1,7 @@
 package com.ufcg.psoft.tccMatch.security.filter;
 
-import com.ufcg.psoft.tccMatch.exception.EntidadeNaoExisteException;
-import com.ufcg.psoft.tccMatch.security.exception.TokenInvalidoException;
+import com.ufcg.psoft.tccMatch.error.exception.EntidadeNaoExisteException;
+import com.ufcg.psoft.tccMatch.security.error.exception.TokenInvalidoException;
 import com.ufcg.psoft.tccMatch.security.util.JwtTokenUtil;
 import com.ufcg.psoft.tccMatch.security.service.Implementation.JwtUserDetailsService;
 import com.ufcg.psoft.tccMatch.security.util.MyUserDetail;
@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;

@@ -1,8 +1,7 @@
 package com.ufcg.psoft.tccMatch.model.usuario;
 
-import com.ufcg.psoft.tccMatch.exception.EntidadeNaoExisteException;
-import com.ufcg.psoft.tccMatch.model.SolicitacaoOrientacaoTcc;
-import com.ufcg.psoft.tccMatch.model.TemaTcc;
+import com.ufcg.psoft.tccMatch.error.exception.EntidadeNaoExisteException;
+import com.ufcg.psoft.tccMatch.model.tcc.SolicitacaoOrientacaoTcc;
 import com.ufcg.psoft.tccMatch.security.util.Role;
 import lombok.*;
 
@@ -24,6 +23,14 @@ public class Professor extends UsuarioTcc {
 	
 	private Integer quota;
 
+	public void diminuirQuotaEmUm() {
+		this.quota -= 1;
+	}
+
+	public boolean isDisponivelOrientacao() {
+		return this.quota >= 1;
+	}
+
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<SolicitacaoOrientacaoTcc> solicitacoesOrientacaoTcc;
 
@@ -38,15 +45,46 @@ public class Professor extends UsuarioTcc {
 	 * Precisa melhorar a lógica
 	 *
 	 */
-	public boolean solicitacaoEmAndamento(Aluno aluno, TemaTcc temaTcc) {
+	public boolean solicitacaoJaEstaEmAndamento(SolicitacaoOrientacaoTcc solicitacaoOrientacaoTcc) {
+		boolean verificacao = false;
+
+		for (SolicitacaoOrientacaoTcc solicitacaoOrientacaoTccProfessor : this.solicitacoesOrientacaoTcc) {
+			if (solicitacaoOrientacaoTcc.equals(solicitacaoOrientacaoTccProfessor)) {
+				if (solicitacaoOrientacaoTccProfessor.isRespondida()) {
+					if (solicitacaoOrientacaoTccProfessor.isAceita()) {
+						verificacao = !solicitacaoOrientacaoTccProfessor.isVinculadaComTcc();
+					} else {
+						verificacao = false;
+					}
+				} else {
+					verificacao = true;
+				}
+			}
+		}
+
+		return verificacao;
+	}
+
+	@Transient
+	public String getAutoridade() { return Role.USER_PROF; }
+
+	public SolicitacaoOrientacaoTcc getSolicitacaoOrientacao(Long id) {
 		return this.solicitacoesOrientacaoTcc
 				.stream()
-				.anyMatch(solicitacaoOrientacaoTcc ->
-						(solicitacaoOrientacaoTcc.getAluno().equals(aluno) &&
-								solicitacaoOrientacaoTcc.getTemaTcc().equals(temaTcc)) &&
-								!solicitacaoOrientacaoTcc.isAceita()
+				.filter(solicitacaoOrientacaoTcc -> solicitacaoOrientacaoTcc.getId().equals(id))
+				.findAny()
+				.orElseThrow(() -> new EntidadeNaoExisteException("Solicitação de orientação de TCC", "id", id.toString()));
+	}
+}
 
-				);
+//		return this.solicitacoesOrientacaoTcc
+//				.stream()
+//				.anyMatch(solicitacaoOrientacaoTcc ->
+//						(solicitacaoOrientacaoTcc.getAluno().equals(aluno) &&
+//								solicitacaoOrientacaoTcc.getTemaTcc().equals(temaTcc)) &&
+//								!solicitacaoOrientacaoTcc.isAceita()
+//
+//				);
 
 		/*
 
@@ -61,16 +99,3 @@ public class Professor extends UsuarioTcc {
 				);
 		 */
 
-	}
-
-	@Transient
-	public String getAutoridade() { return Role.USER_PROF; }
-
-	public SolicitacaoOrientacaoTcc getSolicitacaoOrientacao(Long id) {
-		return this.solicitacoesOrientacaoTcc
-				.stream()
-				.filter(solicitacaoOrientacaoTcc -> solicitacaoOrientacaoTcc.getId().equals(id))
-				.findAny()
-				.orElseThrow(() -> new EntidadeNaoExisteException("Solicitação de orientação de TCC", "id", id.toString()));
-	}
-}

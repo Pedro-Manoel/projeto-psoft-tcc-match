@@ -2,13 +2,11 @@ package com.ufcg.psoft.tccMatch.security.service.Implementation;
 
 import com.ufcg.psoft.tccMatch.model.usuario.Usuario;
 import com.ufcg.psoft.tccMatch.security.util.MyUserDetail;
-import com.ufcg.psoft.tccMatch.service.UsuarioService;
+import com.ufcg.psoft.tccMatch.service.usuario.UsuarioService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 

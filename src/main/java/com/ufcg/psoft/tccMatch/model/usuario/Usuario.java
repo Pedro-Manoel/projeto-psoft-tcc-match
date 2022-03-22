@@ -1,6 +1,8 @@
 package com.ufcg.psoft.tccMatch.model.usuario;
 
 import com.ufcg.psoft.tccMatch.model.Model;
+import com.ufcg.psoft.tccMatch.model.email.CaixaEmail;
+import com.ufcg.psoft.tccMatch.security.util.Role;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,7 +14,7 @@ import javax.persistence.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Usuario extends Model {
+public abstract class Usuario extends Model {
 	private String nome;
     
     @Column(unique = true)
@@ -20,9 +22,8 @@ public class Usuario extends Model {
     
 	private String senha;
 
-	public String getAutoridade() {
-		return null;
-	}
+//	@OneToOne
+//	public CaixaEmail caixaEmail;
 
-	// public CaixaEmail caixaEmail;
+	public String getAutoridade() { return Role.USER; }
 }

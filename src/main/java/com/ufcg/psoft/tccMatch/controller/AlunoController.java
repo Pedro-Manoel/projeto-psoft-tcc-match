@@ -1,14 +1,15 @@
 package com.ufcg.psoft.tccMatch.controller;
 
 import com.ufcg.psoft.tccMatch.dto.AreaEstudoDTO;
-import com.ufcg.psoft.tccMatch.dto.TemaTccDTO;
-import com.ufcg.psoft.tccMatch.dto.TemaTccUsuarioDTO;
+import com.ufcg.psoft.tccMatch.dto.tcc.TemaTccDTO;
+import com.ufcg.psoft.tccMatch.dto.tcc.TemaTccUsuarioDTO;
 import com.ufcg.psoft.tccMatch.dto.usuario.AlunoDTO;
-import com.ufcg.psoft.tccMatch.dto.MessageDTO;
-import com.ufcg.psoft.tccMatch.model.AreaEstudo;
-import com.ufcg.psoft.tccMatch.service.AlunoService;
+import com.ufcg.psoft.tccMatch.dto.message.MessageDTO;
+import com.ufcg.psoft.tccMatch.model.usuario.Aluno;
+import com.ufcg.psoft.tccMatch.model.usuario.UsuarioTcc;
+import com.ufcg.psoft.tccMatch.service.usuario.AlunoService;
 import com.ufcg.psoft.tccMatch.service.AreaEstudoService;
-import com.ufcg.psoft.tccMatch.service.TemaTccService;
+import com.ufcg.psoft.tccMatch.service.tcc.TemaTccService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -57,24 +59,31 @@ public class AlunoController {
     @PostMapping("/{id}/areasestudo")
     @Operation(summary = "Selecionar áreas de estudo de aluno")
     public ResponseEntity<?> selecionarAreasEstudoAluno (@PathVariable("id") Long id, @RequestBody List<AreaEstudoDTO> areasEstudoDTO) {
-        List<AreaEstudo> areasEstudo = areaEstudoService.selecionarAreasEstudoUsuarioTcc(id, areasEstudoDTO);
+        Aluno aluno = alunoService.getAluno(id);
 
-        return new ResponseEntity<>(areasEstudo, HttpStatus.CREATED);
+        List<AreaEstudoDTO> areasEstudoSelecionadasDTO = areaEstudoService.selecionarAreasEstudoUsuario(aluno, areasEstudoDTO);
+
+        return new ResponseEntity<>(areasEstudoSelecionadasDTO, HttpStatus.CREATED);
     }
 
     @PostMapping("/{id}/temastcc")
     @Operation(summary = "Criar tema de TCC de aluno")
-    public ResponseEntity<?> criarTemaTcc (@PathVariable("id") Long id, @RequestBody TemaTccDTO temaTccDTO) {
-        TemaTccDTO temaTccCriadoDTO = temaTccService.criarTemaTcc(id , temaTccDTO);
+    public ResponseEntity<?> criarTemaTccAluno (@PathVariable("id") Long id, @RequestBody TemaTccDTO temaTccDTO) {
+        Aluno aluno = alunoService.getAluno(id);
+
+        TemaTccDTO temaTccCriadoDTO = temaTccService.criarTemaTccUsuario(aluno, temaTccDTO);
 
         return new ResponseEntity<>(temaTccCriadoDTO, HttpStatus.CREATED);
     }
 
     @GetMapping("/temastcc")
     @Operation(summary = "Listar temas de TCC dos alunos")
-    public ResponseEntity<?> listarTemasTcc () {
-        List<TemaTccUsuarioDTO> temasTccUsuariosDTO = alunoService.listarTemasTccAlunos();
+    public ResponseEntity<?> listarTemasTccAlunos () {
+        List<Aluno> alunos = alunoService.getAlunos();
+        List<UsuarioTcc> usuariosTcc = Collections.unmodifiableList(alunos);
 
-        return new ResponseEntity<>(temasTccUsuariosDTO, HttpStatus.OK);
+        List<TemaTccUsuarioDTO> temasTccAlunosDTO = temaTccService.listarTemasTccUsuarios(usuariosTcc);
+
+        return new ResponseEntity<>(temasTccAlunosDTO, HttpStatus.OK);
     }
 }
