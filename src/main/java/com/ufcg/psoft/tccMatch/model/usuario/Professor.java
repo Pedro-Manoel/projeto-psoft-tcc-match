@@ -42,14 +42,16 @@ public class Professor extends UsuarioTcc {
 		boolean verificacao = false;
 
 		for (SolicitacaoOrientacaoTcc solicitacaoOrientacaoTccProfessor : this.solicitacoesOrientacaoTcc) {
-			if (
-					solicitacaoOrientacaoTcc.equals(solicitacaoOrientacaoTccProfessor) &&
-					solicitacaoOrientacaoTccProfessor.isRespondida() &&
-					solicitacaoOrientacaoTccProfessor.isAceita()
-			) {
-				verificacao = !solicitacaoOrientacaoTccProfessor.isVinculadaComTcc();
-			} else {
-				verificacao = false;
+			if (solicitacaoOrientacaoTcc.equals(solicitacaoOrientacaoTccProfessor)) {
+				if (solicitacaoOrientacaoTccProfessor.isRespondida()) {
+					if (solicitacaoOrientacaoTccProfessor.isAceita()) {
+						verificacao = !solicitacaoOrientacaoTccProfessor.isVinculadaComTcc();
+					} else {
+						verificacao = false;
+					}
+				} else {
+					verificacao = true;
+				}
 			}
 		}
 
