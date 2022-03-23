@@ -2,13 +2,17 @@ package com.ufcg.psoft.tccMatch.controller;
 
 import com.ufcg.psoft.tccMatch.dto.*;
 import com.ufcg.psoft.tccMatch.dto.message.MessageDTO;
+import com.ufcg.psoft.tccMatch.dto.tcc.ManifestacaoOrientacaoTccDTO;
 import com.ufcg.psoft.tccMatch.dto.tcc.TemaTccDTO;
 import com.ufcg.psoft.tccMatch.dto.tcc.TemaTccUsuarioDTO;
 import com.ufcg.psoft.tccMatch.dto.usuario.ProfessorDTO;
 import com.ufcg.psoft.tccMatch.dto.usuario.UsuarioDTO;
+import com.ufcg.psoft.tccMatch.model.tcc.TemaTcc;
 import com.ufcg.psoft.tccMatch.model.usuario.Aluno;
 import com.ufcg.psoft.tccMatch.model.usuario.Professor;
 import com.ufcg.psoft.tccMatch.model.usuario.UsuarioTcc;
+import com.ufcg.psoft.tccMatch.notification.event.ManifestacaoOrientacaoTemaTccAlunoEvent;
+import com.ufcg.psoft.tccMatch.notification.event.TemaTccProfessorCriadoEvent;
 import com.ufcg.psoft.tccMatch.service.*;
 import com.ufcg.psoft.tccMatch.service.tcc.TemaTccService;
 import com.ufcg.psoft.tccMatch.service.usuario.AlunoService;
@@ -17,6 +21,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +40,8 @@ public class ProfessorController {
     private final AlunoService alunoService;
     private final AreaEstudoService areaEstudoService;
     private final TemaTccService temaTccService;
+
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     @PostMapping
     @Operation(summary = "Criar professor")
@@ -84,6 +91,9 @@ public class ProfessorController {
         Professor professor = professorService.getProfessor(id);
 
         TemaTccDTO temaTccCriadoDTO = temaTccService.criarTemaTccUsuario(professor, temaTccDTO);
+        TemaTcc temaTcc = temaTccService.getTemaTcc(temaTccCriadoDTO.getId());
+
+        applicationEventPublisher.publishEvent(new TemaTccProfessorCriadoEvent(this, temaTcc));
 
         return new ResponseEntity<>(temaTccCriadoDTO, HttpStatus.CREATED);
     }
@@ -116,5 +126,19 @@ public class ProfessorController {
         List<UsuarioDTO> professoresDTO = professorService.listarProfessoresDisponiveisOrientacaoTcc(aluno.getAreasEstudo());
 
         return new ResponseEntity<>(professoresDTO, HttpStatus.OK);
+    }
+
+    @PostMapping("/{id}/tematccaluno")
+    @Operation(summary = "Manifestar interesse em orientar um tema de TCC de aluno")
+    public ResponseEntity<?> manifestarInteresseOrientarTemaTCCAluno (@PathVariable("id") Long idProfessor, @RequestBody ManifestacaoOrientacaoTccDTO manifestacaoOrientacaoTccDTO) {
+        Professor professor = professorService.getProfessor(idProfessor);
+        Aluno aluno = alunoService.getAluno(manifestacaoOrientacaoTccDTO.getIdAluno());
+        TemaTcc temaTcc = aluno.getTemaTcc(manifestacaoOrientacaoTccDTO.getTituloTemaTcc());
+
+        applicationEventPublisher.publishEvent(new ManifestacaoOrientacaoTemaTccAlunoEvent(this, professor, aluno, temaTcc));
+
+        MessageDTO messageDTO = new MessageDTO("Manifestação de interesse notificada com sucesso para o aluno solicitado");
+
+        return new ResponseEntity<>(messageDTO, HttpStatus.OK);
     }
 }

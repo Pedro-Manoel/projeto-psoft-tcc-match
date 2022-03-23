@@ -2,11 +2,14 @@ package com.ufcg.psoft.tccMatch.controller;
 
 import com.ufcg.psoft.tccMatch.dto.tcc.RespostaSolicitacaoOrientacaoTccDTO;
 import com.ufcg.psoft.tccMatch.dto.tcc.SolicitacaoOrientacaoTccDTO;
+import com.ufcg.psoft.tccMatch.notification.event.SolicitacaoOrientacaoTccCriadaEvent;
+import com.ufcg.psoft.tccMatch.notification.event.TemaTccProfessorCriadoEvent;
 import com.ufcg.psoft.tccMatch.service.tcc.SolicitacaoOrientacaoTccService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +24,8 @@ import java.util.List;
 public class SolicitacaoOrientacaoTccController {
 
     private final SolicitacaoOrientacaoTccService solicitacaoOrientacaoTccService;
+
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     @PostMapping("/{idAluno}")
     @Operation(summary = "Solicitar Orientação de TCC a professor")

@@ -1,7 +1,7 @@
 package com.ufcg.psoft.tccMatch.model.usuario;
 
 import com.ufcg.psoft.tccMatch.model.Model;
-import com.ufcg.psoft.tccMatch.model.email.CaixaEmail;
+import com.ufcg.psoft.tccMatch.notification.model.CaixaEmail;
 import com.ufcg.psoft.tccMatch.security.util.Role;
 import lombok.*;
 
@@ -13,7 +13,6 @@ import javax.persistence.*;
 @Setter
 @ToString
 @AllArgsConstructor
-@NoArgsConstructor
 public abstract class Usuario extends Model {
 	private String nome;
     
@@ -22,8 +21,10 @@ public abstract class Usuario extends Model {
     
 	private String senha;
 
-//	@OneToOne
-//	public CaixaEmail caixaEmail;
+	@OneToOne(cascade = CascadeType.ALL)
+	public CaixaEmail caixaEmail;
+
+	public Usuario() { this.caixaEmail = new CaixaEmail(); }
 
 	public String getAutoridade() { return Role.USER; }
 }

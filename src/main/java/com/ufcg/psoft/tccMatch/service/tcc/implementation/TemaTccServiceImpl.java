@@ -3,10 +3,12 @@ package com.ufcg.psoft.tccMatch.service.tcc.implementation;
 import com.ufcg.psoft.tccMatch.dto.tcc.TemaTccDTO;
 import com.ufcg.psoft.tccMatch.dto.tcc.TemaTccUsuarioDTO;
 import com.ufcg.psoft.tccMatch.error.exception.EntidadeJaExisteException;
+import com.ufcg.psoft.tccMatch.error.exception.EntidadeNaoExisteException;
 import com.ufcg.psoft.tccMatch.mapper.tcc.TemaTccMapper;
 import com.ufcg.psoft.tccMatch.mapper.usuario.UsuarioMapper;
 import com.ufcg.psoft.tccMatch.model.AreaEstudo;
 import com.ufcg.psoft.tccMatch.model.tcc.TemaTcc;
+import com.ufcg.psoft.tccMatch.model.usuario.Professor;
 import com.ufcg.psoft.tccMatch.model.usuario.UsuarioTcc;
 import com.ufcg.psoft.tccMatch.repository.tcc.TemaTccRepository;
 import com.ufcg.psoft.tccMatch.service.AreaEstudoService;
@@ -35,6 +37,11 @@ public class TemaTccServiceImpl implements TemaTccService {
 
     private void salvarTemaTcc (TemaTcc temaTcc) {
         temaTccRepository.save(temaTcc);
+    }
+
+    public TemaTcc getTemaTcc (Long id) {
+        return temaTccRepository.findById(id)
+                .orElseThrow(() -> new EntidadeNaoExisteException("Tema de TCC", "id", id.toString()));
     }
 
     public TemaTccDTO criarTemaTccUsuario (UsuarioTcc usuarioTcc, TemaTccDTO temaTccDTO) {

@@ -5,6 +5,7 @@ import com.ufcg.psoft.tccMatch.dto.usuario.AlunoDTO;
 import com.ufcg.psoft.tccMatch.error.exception.EntidadeJaExisteException;
 import com.ufcg.psoft.tccMatch.error.exception.EntidadeNaoExisteException;
 import com.ufcg.psoft.tccMatch.mapper.usuario.AlunoMapper;
+import com.ufcg.psoft.tccMatch.model.AreaEstudo;
 import com.ufcg.psoft.tccMatch.model.usuario.Aluno;
 import com.ufcg.psoft.tccMatch.repository.usuario.AlunoRepository;
 import com.ufcg.psoft.tccMatch.service.usuario.AlunoService;
@@ -35,6 +36,10 @@ public class AlunoServiceImpl implements AlunoService {
     }
 
     public List<Aluno> getAlunos () { return alunoRepository.findAll(); }
+
+    public List<Aluno> getAlunos (AreaEstudo areaEstudo) {
+        return alunoRepository.findByAreasEstudoContains(areaEstudo);
+    }
 
     public void salvarAluno (Aluno aluno) {
         alunoRepository.save(aluno);
