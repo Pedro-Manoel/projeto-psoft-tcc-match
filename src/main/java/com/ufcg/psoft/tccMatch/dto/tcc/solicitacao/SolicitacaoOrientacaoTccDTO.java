@@ -1,6 +1,7 @@
-package com.ufcg.psoft.tccMatch.dto.tcc;
+package com.ufcg.psoft.tccMatch.dto.tcc.solicitacao;
 
 import com.ufcg.psoft.tccMatch.dto.ModelDTO;
+import com.ufcg.psoft.tccMatch.dto.tcc.tema.TemaTccDTO;
 import com.ufcg.psoft.tccMatch.dto.usuario.UsuarioDTO;
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.AllArgsConstructor;

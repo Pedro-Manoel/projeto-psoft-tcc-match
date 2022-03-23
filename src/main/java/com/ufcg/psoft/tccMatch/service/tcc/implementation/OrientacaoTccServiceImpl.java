@@ -15,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -35,11 +37,11 @@ public class OrientacaoTccServiceImpl implements OrientacaoTccService {
                 .orElseThrow(() -> new EntidadeNaoExisteException("Orientação de TCC", "id", id.toString()));
     }
 
-    public OrientacaoTccDTO criarOrientacaoTcc (Long idProfessor, OrientacaoTccDTO orientacaoTccDTO) {
-        Professor professor = professorService.getProfessor(idProfessor);
+    public OrientacaoTccDTO criarOrientacaoTcc (OrientacaoTccDTO orientacaoTccDTO) {
+        Professor professor = professorService.getProfessor(orientacaoTccDTO.getIdProfessor());
 
         if (!professor.isDisponivelOrientacao()) {
-            throw new ProfessorNaoDisponivelOrientacaoTccException(idProfessor);
+            throw new ProfessorNaoDisponivelOrientacaoTccException(professor.getId());
         }
 
         SolicitacaoOrientacaoTcc solicitacaoOrientacaoTcc = professor.getSolicitacaoOrientacao(orientacaoTccDTO.getIdSolicitacao());
@@ -94,5 +96,41 @@ public class OrientacaoTccServiceImpl implements OrientacaoTccService {
                 orientacaoTccRepository.findByConcluidaAndSemestre(concluida, semestre);
 
         return orientacaoTccMapper.toDTOs(orientacoesTcc);
+    }
+
+    /**
+     * {
+     *     semestre: 2018
+     * }
+     */
+    public void gerarRelatorio () {
+        List<OrientacaoTcc> orientacoesTcc = orientacaoTccRepository.findAll();
+
+        Map<String, Object> semestreMap = new HashMap<>();
+        Map<String, Integer> valoresMap = new HashMap<>();
+
+        String finalizadas = "f";
+        String emCurso = "e";
+        String total = "t";
+
+        valoresMap.put(finalizadas, 1);
+        valoresMap.put(emCurso, 1);
+        valoresMap.put(total, 1);
+
+        for (OrientacaoTcc orientacaoTcc : orientacoesTcc) {
+            String semestre = orientacaoTcc.getSemestre();
+
+            if (semestreMap.containsKey(semestre)) {
+                if (orientacaoTcc.isConcluida()) {
+                    valoresMap.put(finalizadas, valoresMap.get(finalizadas) + 1);
+                } else {
+                    valoresMap.put(finalizadas, valoresMap.get(finalizadas) + 1);
+                }
+            } else {
+                semestreMap.put(semestre, valoresMap);
+            }
+        }
+
+        System.out.println(semestreMap.toString());
     }
 }

@@ -1,6 +1,6 @@
 package com.ufcg.psoft.tccMatch.mapper.tcc;
 
-import com.ufcg.psoft.tccMatch.dto.tcc.RespostaSolicitacaoOrientacaoTccDTO;
+import com.ufcg.psoft.tccMatch.dto.tcc.solicitacao.RespostaSolicitacaoOrientacaoTccDTO;
 import com.ufcg.psoft.tccMatch.model.tcc.RespostaSolicitacaoOrientacaoTcc;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

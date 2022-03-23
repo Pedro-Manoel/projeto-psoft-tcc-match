@@ -1,4 +1,4 @@
-package com.ufcg.psoft.tccMatch.dto.tcc;
+package com.ufcg.psoft.tccMatch.dto.tcc.solicitacao;
 
 import com.ufcg.psoft.tccMatch.dto.ModelDTO;
 import lombok.AllArgsConstructor;
@@ -10,8 +10,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ManifestacaoOrientacaoTccDTO extends ModelDTO {
-    private Long idAluno;
+public class RespostaSolicitacaoOrientacaoTccDTO extends ModelDTO {
+    private boolean aceita;
 
-    private String tituloTemaTcc;
+    private String mensagem;
 }

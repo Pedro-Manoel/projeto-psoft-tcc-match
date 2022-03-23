@@ -6,7 +6,7 @@ import com.ufcg.psoft.tccMatch.model.tcc.OrientacaoTcc;
 import java.util.List;
 
 public interface OrientacaoTccService {
-    OrientacaoTccDTO criarOrientacaoTcc (Long idProfessor, OrientacaoTccDTO orientacaoTccDTO);
+    OrientacaoTccDTO criarOrientacaoTcc (OrientacaoTccDTO orientacaoTccDTO);
 
     OrientacaoTcc getOrientacaoTcc (Long id);
 
@@ -15,4 +15,6 @@ public interface OrientacaoTccService {
     List<OrientacaoTccDTO> listarOrientacoesTccEmCursoProfessor (Long id);
 
     List<OrientacaoTccDTO> listarOrientacoesTcc (Boolean concluida, String semestre);
+
+    void gerarRelatorio ();
 }

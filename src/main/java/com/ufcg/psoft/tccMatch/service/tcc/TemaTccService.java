@@ -1,7 +1,7 @@
 package com.ufcg.psoft.tccMatch.service.tcc;
 
-import com.ufcg.psoft.tccMatch.dto.tcc.TemaTccDTO;
-import com.ufcg.psoft.tccMatch.dto.tcc.TemaTccUsuarioDTO;
+import com.ufcg.psoft.tccMatch.dto.tcc.tema.TemaTccDTO;
+import com.ufcg.psoft.tccMatch.dto.tcc.tema.TemaTccUsuarioDTO;
 import com.ufcg.psoft.tccMatch.model.tcc.TemaTcc;
 import com.ufcg.psoft.tccMatch.model.usuario.UsuarioTcc;
 

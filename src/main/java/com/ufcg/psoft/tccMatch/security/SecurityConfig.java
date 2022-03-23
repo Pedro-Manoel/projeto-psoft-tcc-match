@@ -1,7 +1,7 @@
 package com.ufcg.psoft.tccMatch.security;
 
 import com.ufcg.psoft.tccMatch.security.filter.JwtTokenFilter;
-import com.ufcg.psoft.tccMatch.security.util.ResponseError;
+import com.ufcg.psoft.tccMatch.security.util.UnauthorizedErrorResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -55,15 +55,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().disable()
 
                 .authorizeHttpRequests()
-//                .antMatchers("/api/alunos/**").permitAll()
-//                .antMatchers("/api/usuarios/login/**").permitAll()
-//                .antMatchers("/api/**").authenticated()
+                .antMatchers("/api/usuarios/login/**").permitAll()
+                .antMatchers("/api/**").authenticated()
                 .anyRequest().permitAll()
                 .and()
 
                 .exceptionHandling()
                 .authenticationEntryPoint((request, response, ex) -> {
-                    ResponseError.config(response, "Acesso negado");
+                    UnauthorizedErrorResponse.mount(response, "Acesso negado");
                 })
                 .and()
 
@@ -72,7 +71,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .headers().frameOptions().sameOrigin();
 
-        httpSecurity.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        httpSecurity
+                .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }
 

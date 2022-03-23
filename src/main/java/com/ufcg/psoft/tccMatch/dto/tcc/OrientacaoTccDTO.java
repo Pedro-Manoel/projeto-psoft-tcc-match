@@ -16,9 +16,12 @@ public class OrientacaoTccDTO extends ModelDTO {
     @Hidden
     private TccDTO tcc;
 
+    private Long idProfessor;
+
     private Long idSolicitacao;
 
     private String semestre;
 
+    @Hidden
     private boolean concluida;
 }

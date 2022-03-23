@@ -11,8 +11,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.List;
 
-// Escolher um nome melhor depois
-
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Getter
@@ -32,11 +30,19 @@ public abstract class UsuarioTcc extends Usuario {
         }
     }
 
-    public TemaTcc getTemaTcc (String tituloTemaTcc) {
+    public TemaTcc getTemaTcc (Long id) {
         return this.temasTcc
                 .stream()
-                .filter(temaTcc -> temaTcc.getTitulo().equals(tituloTemaTcc))
+                .filter(temaTcc -> temaTcc.getId().equals(id))
                 .findAny()
-                .orElseThrow(() -> new TemaTccInvalidoUsuarioException(tituloTemaTcc));
+                .orElseThrow(() -> new TemaTccInvalidoUsuarioException("id", id.toString()));
+    }
+
+    public TemaTcc getTemaTcc (String titulo) {
+        return this.temasTcc
+                .stream()
+                .filter(temaTcc -> temaTcc.getTitulo().equals(titulo))
+                .findAny()
+                .orElseThrow(() -> new TemaTccInvalidoUsuarioException("título", titulo));
     }
 }

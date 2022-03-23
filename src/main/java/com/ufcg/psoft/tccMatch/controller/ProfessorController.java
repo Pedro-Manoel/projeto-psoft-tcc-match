@@ -2,22 +2,24 @@ package com.ufcg.psoft.tccMatch.controller;
 
 import com.ufcg.psoft.tccMatch.dto.*;
 import com.ufcg.psoft.tccMatch.dto.message.MessageDTO;
-import com.ufcg.psoft.tccMatch.dto.tcc.ManifestacaoOrientacaoTccDTO;
-import com.ufcg.psoft.tccMatch.dto.tcc.TemaTccDTO;
-import com.ufcg.psoft.tccMatch.dto.tcc.TemaTccUsuarioDTO;
+import com.ufcg.psoft.tccMatch.dto.tcc.tema.TemaTccDTO;
+import com.ufcg.psoft.tccMatch.dto.tcc.tema.TemaTccUsuarioDTO;
 import com.ufcg.psoft.tccMatch.dto.usuario.ProfessorDTO;
+import com.ufcg.psoft.tccMatch.dto.usuario.QuotaProfessorDTO;
 import com.ufcg.psoft.tccMatch.dto.usuario.UsuarioDTO;
 import com.ufcg.psoft.tccMatch.model.tcc.TemaTcc;
 import com.ufcg.psoft.tccMatch.model.usuario.Aluno;
 import com.ufcg.psoft.tccMatch.model.usuario.Professor;
 import com.ufcg.psoft.tccMatch.model.usuario.UsuarioTcc;
-import com.ufcg.psoft.tccMatch.notification.event.ManifestacaoOrientacaoTemaTccAlunoEvent;
 import com.ufcg.psoft.tccMatch.notification.event.TemaTccProfessorCriadoEvent;
+import com.ufcg.psoft.tccMatch.security.service.AutenticacaoService;
+import com.ufcg.psoft.tccMatch.security.util.Role;
 import com.ufcg.psoft.tccMatch.service.*;
 import com.ufcg.psoft.tccMatch.service.tcc.TemaTccService;
 import com.ufcg.psoft.tccMatch.service.usuario.AlunoService;
 import com.ufcg.psoft.tccMatch.service.usuario.ProfessorService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.Collections;
 import java.util.List;
 
@@ -33,6 +36,7 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("/api/professores")
 @Tag(name = "Professor")
+@SecurityRequirement(name = "bearerAuth")
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class ProfessorController {
 
@@ -40,10 +44,12 @@ public class ProfessorController {
     private final AlunoService alunoService;
     private final AreaEstudoService areaEstudoService;
     private final TemaTccService temaTccService;
+    private final AutenticacaoService autenticacaoService;
 
     private final ApplicationEventPublisher applicationEventPublisher;
 
     @PostMapping
+    @RolesAllowed(Role.USER_ADMIN)
     @Operation(summary = "Criar professor")
     public ResponseEntity<?> criarProfessor (@RequestBody ProfessorDTO professorDTO) {
         ProfessorDTO professorCriadoDTO = professorService.criarProfessor(professorDTO);
@@ -52,6 +58,7 @@ public class ProfessorController {
     }
 
     @PutMapping("/{id}")
+    @RolesAllowed(Role.USER_ADMIN)
     @Operation(summary = "Atualizar professor")
     public ResponseEntity<?> atualizarProfessor (@PathVariable("id") Long id, @RequestBody ProfessorDTO professorDTO) {
         ProfessorDTO professorAtualizadoDTO = professorService.atualizarProfessor(id, professorDTO);
@@ -60,6 +67,7 @@ public class ProfessorController {
     }
 
     @DeleteMapping("/{id}")
+    @RolesAllowed(Role.USER_ADMIN)
     @Operation(summary = "Remover professor")
     public ResponseEntity<?> removerProfessor (@PathVariable("id") Long id) {
         MessageDTO messageDTO = professorService.removerProfessor(id);
@@ -67,17 +75,21 @@ public class ProfessorController {
         return new ResponseEntity<>(messageDTO, HttpStatus.OK);
     }
 
-    @PatchMapping("/{id}/quota")
+    @PatchMapping("/in/quota")
+    @RolesAllowed(Role.USER_PROF)
     @Operation(summary = "Atualizar quota de professor")
-    public ResponseEntity<?> atualizarQuotaProfessor (@PathVariable("id") Long id, @RequestBody QuotaProfessorDTO quotaProfessorDTO) {
+    public ResponseEntity<?> atualizarQuotaProfessor (@RequestBody QuotaProfessorDTO quotaProfessorDTO) {
+        Long id = autenticacaoService.getIdUsuarioAutenticado();
         ProfessorDTO professorQuotaAtualizadaDTO = professorService.atualizarQuotaProfessor(id, quotaProfessorDTO);
 
         return new ResponseEntity<>(professorQuotaAtualizadaDTO, HttpStatus.OK);
     }
 
-    @PostMapping("/{id}/areasestudo")
+    @PostMapping("/in/areasestudo")
+    @RolesAllowed(Role.USER_PROF)
     @Operation(summary = "Selecionar áreas de estudo de professor")
-    public ResponseEntity<?> selecionarAreasEstudoProfessor (@PathVariable("id") Long id, @RequestBody List<AreaEstudoDTO> areasEstudoDTO) {
+    public ResponseEntity<?> selecionarAreasEstudoProfessor (@RequestBody List<AreaEstudoDTO> areasEstudoDTO) {
+        Long id = autenticacaoService.getIdUsuarioAutenticado();
         Professor professor = professorService.getProfessor(id);
 
         List<AreaEstudoDTO> areasEstudoSelecionadasDTO = areaEstudoService.selecionarAreasEstudoUsuario(professor, areasEstudoDTO);
@@ -85,9 +97,11 @@ public class ProfessorController {
         return new ResponseEntity<>(areasEstudoSelecionadasDTO, HttpStatus.CREATED);
     }
 
-    @PostMapping("/{id}/temastcc")
+    @PostMapping("/in/temastcc")
+    @RolesAllowed(Role.USER_PROF)
     @Operation(summary = "Criar tema de TCC de professor")
-    public ResponseEntity<?> criarTemaTccProfessor (@PathVariable("id") Long id, @RequestBody TemaTccDTO temaTccDTO) {
+    public ResponseEntity<?> criarTemaTccProfessor (@RequestBody TemaTccDTO temaTccDTO) {
+        Long id = autenticacaoService.getIdUsuarioAutenticado();
         Professor professor = professorService.getProfessor(id);
 
         TemaTccDTO temaTccCriadoDTO = temaTccService.criarTemaTccUsuario(professor, temaTccDTO);
@@ -98,9 +112,11 @@ public class ProfessorController {
         return new ResponseEntity<>(temaTccCriadoDTO, HttpStatus.CREATED);
     }
 
-    @GetMapping("{id}/temastcc")
+    @GetMapping("/in/temastcc")
+    @RolesAllowed(Role.USER_PROF)
     @Operation(summary = "Listar temas de TCC de professor")
-    public ResponseEntity<?> listarTemasTccProfessor (@PathVariable("id") Long id) {
+    public ResponseEntity<?> listarTemasTccProfessor () {
+        Long id = autenticacaoService.getIdUsuarioAutenticado();
         Professor professor = professorService.getProfessor(id);
 
         List<TemaTccDTO> temasTccProfessorDTO = temaTccService.listarTemasTccUsuario(professor);
@@ -109,6 +125,7 @@ public class ProfessorController {
     }
 
     @GetMapping("/temastcc")
+    @RolesAllowed(Role.USER_ALUNO)
     @Operation(summary = "Listar temas de TCC dos professores")
     public ResponseEntity<?> listarTemasTccProfessores () {
         List<Professor> professores = professorService.getProfessores();
@@ -119,26 +136,14 @@ public class ProfessorController {
         return new ResponseEntity<>(temasTccProfessoresDTO, HttpStatus.OK);
     }
 
-    @GetMapping("/aluno/{idAluno}")
+    @GetMapping()
+    @RolesAllowed(Role.USER_ALUNO)
     @Operation(summary = "Listar professores disponíveis para orientação de TCC")
-    public ResponseEntity<?> listarProfessoresDisponiveisOrientacao (@PathVariable("idAluno") Long id) {
+    public ResponseEntity<?> listarProfessoresDisponiveisOrientacao () {
+        Long id = autenticacaoService.getIdUsuarioAutenticado();
         Aluno aluno = alunoService.getAluno(id);
         List<UsuarioDTO> professoresDTO = professorService.listarProfessoresDisponiveisOrientacaoTcc(aluno.getAreasEstudo());
 
         return new ResponseEntity<>(professoresDTO, HttpStatus.OK);
-    }
-
-    @PostMapping("/{id}/tematccaluno")
-    @Operation(summary = "Manifestar interesse em orientar um tema de TCC de aluno")
-    public ResponseEntity<?> manifestarInteresseOrientarTemaTCCAluno (@PathVariable("id") Long idProfessor, @RequestBody ManifestacaoOrientacaoTccDTO manifestacaoOrientacaoTccDTO) {
-        Professor professor = professorService.getProfessor(idProfessor);
-        Aluno aluno = alunoService.getAluno(manifestacaoOrientacaoTccDTO.getIdAluno());
-        TemaTcc temaTcc = aluno.getTemaTcc(manifestacaoOrientacaoTccDTO.getTituloTemaTcc());
-
-        applicationEventPublisher.publishEvent(new ManifestacaoOrientacaoTemaTccAlunoEvent(this, professor, aluno, temaTcc));
-
-        MessageDTO messageDTO = new MessageDTO("Manifestação de interesse notificada com sucesso para o aluno solicitado");
-
-        return new ResponseEntity<>(messageDTO, HttpStatus.OK);
     }
 }

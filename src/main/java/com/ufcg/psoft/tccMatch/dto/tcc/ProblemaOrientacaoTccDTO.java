@@ -16,9 +16,6 @@ public class ProblemaOrientacaoTccDTO extends ModelDTO {
     @Hidden
     private UsuarioDTO usuario;
 
-    @Hidden
-    private OrientacaoTccDTO orientacaoTcc;
-
     private Long idOrientacaoTcc;
 
     private String problema;

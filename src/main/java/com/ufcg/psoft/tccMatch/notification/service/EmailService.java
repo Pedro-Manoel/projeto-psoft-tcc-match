@@ -7,7 +7,7 @@ import com.ufcg.psoft.tccMatch.notification.model.Email;
 import java.util.List;
 
 public interface EmailService {
-    void enviarEmail(Usuario usuario, Email email);
+    void enviarEmail(Usuario usuario, String mensagem);
 
     List<EmailDTO> consultarCaixaEmail(Usuario usuario);
 }

@@ -2,6 +2,7 @@ package com.ufcg.psoft.tccMatch.security.util;
 
 import com.ufcg.psoft.tccMatch.security.error.exception.TokenInvalidoException;
 import io.jsonwebtoken.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -9,9 +10,14 @@ import java.util.Date;
 @Component
 public class JwtTokenUtil {
 
-    private final Integer JWT_EXPIRATION_ONE_WEEK = 7 * 24 * 60 * 60 * 1000;
-    private final String JWT_SECRET = "zdtlD3JK56m6wTTgsNFhqzjqP";
-    private final String JWT_ISSUER = "com.ufcg.psoft.tccMatch";
+    @Value("${jwt_secret}")
+    private String JWT_SECRET;
+
+    @Value("${jwt_issuer}")
+    private String JWT_ISSUER;
+
+    @Value("${jwt_expiration_one_week}")
+    private Integer JWT_EXPIRATION;
 
     public String generateToken(MyUserDetail myUserDetail) {
         return Jwts
@@ -19,7 +25,7 @@ public class JwtTokenUtil {
                 .setSubject(myUserDetail.getUsername())
                 .setIssuer(JWT_ISSUER)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + JWT_EXPIRATION_ONE_WEEK))
+                .setExpiration(new Date(System.currentTimeMillis() + JWT_EXPIRATION))
                 .signWith(SignatureAlgorithm.HS256, JWT_SECRET)
                 .compact();
     }

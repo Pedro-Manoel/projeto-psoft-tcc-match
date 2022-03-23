@@ -1,6 +1,7 @@
 package com.ufcg.psoft.tccMatch.dto.tcc;
 
 import com.ufcg.psoft.tccMatch.dto.ModelDTO;
+import com.ufcg.psoft.tccMatch.dto.tcc.tema.TemaTccDTO;
 import com.ufcg.psoft.tccMatch.dto.usuario.UsuarioDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

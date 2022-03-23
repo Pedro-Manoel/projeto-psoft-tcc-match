@@ -1,6 +1,7 @@
 package com.ufcg.psoft.tccMatch.model.usuario;
 
 import com.ufcg.psoft.tccMatch.error.exception.EntidadeNaoExisteException;
+import com.ufcg.psoft.tccMatch.error.exception.SolicitacaoOrientacaoTccInvalidaProfessorException;
 import com.ufcg.psoft.tccMatch.model.tcc.SolicitacaoOrientacaoTcc;
 import com.ufcg.psoft.tccMatch.security.util.Role;
 import lombok.*;
@@ -14,7 +15,6 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class Professor extends UsuarioTcc {
@@ -38,64 +38,32 @@ public class Professor extends UsuarioTcc {
 		this.solicitacoesOrientacaoTcc.add(solicitacaoOrientacaoTcc);
 	}
 
-	/**
-	 * Posso cria uma nova solicitação desde que não exista nenhuma solicitação minha que não esta vinculada
-	 * a alguma orientação de TCC ou que já foi negada
-	 *
-	 * Precisa melhorar a lógica
-	 *
-	 */
 	public boolean solicitacaoJaEstaEmAndamento(SolicitacaoOrientacaoTcc solicitacaoOrientacaoTcc) {
 		boolean verificacao = false;
 
 		for (SolicitacaoOrientacaoTcc solicitacaoOrientacaoTccProfessor : this.solicitacoesOrientacaoTcc) {
-			if (solicitacaoOrientacaoTcc.equals(solicitacaoOrientacaoTccProfessor)) {
-				if (solicitacaoOrientacaoTccProfessor.isRespondida()) {
-					if (solicitacaoOrientacaoTccProfessor.isAceita()) {
-						verificacao = !solicitacaoOrientacaoTccProfessor.isVinculadaComTcc();
-					} else {
-						verificacao = false;
-					}
-				} else {
-					verificacao = true;
-				}
+			if (
+					solicitacaoOrientacaoTcc.equals(solicitacaoOrientacaoTccProfessor) &&
+					solicitacaoOrientacaoTccProfessor.isRespondida() &&
+					solicitacaoOrientacaoTccProfessor.isAceita()
+			) {
+				verificacao = !solicitacaoOrientacaoTccProfessor.isVinculadaComTcc();
+			} else {
+				verificacao = false;
 			}
 		}
 
 		return verificacao;
 	}
 
-	@Transient
-	public String getAutoridade() { return Role.USER_PROF; }
-
 	public SolicitacaoOrientacaoTcc getSolicitacaoOrientacao(Long id) {
 		return this.solicitacoesOrientacaoTcc
 				.stream()
 				.filter(solicitacaoOrientacaoTcc -> solicitacaoOrientacaoTcc.getId().equals(id))
 				.findAny()
-				.orElseThrow(() -> new EntidadeNaoExisteException("Solicitação de orientação de TCC", "id", id.toString()));
+				.orElseThrow(() -> new SolicitacaoOrientacaoTccInvalidaProfessorException("id", id.toString()));
 	}
+
+	public String getAutoridade() { return Role.USER_PROF; }
 }
-
-//		return this.solicitacoesOrientacaoTcc
-//				.stream()
-//				.anyMatch(solicitacaoOrientacaoTcc ->
-//						(solicitacaoOrientacaoTcc.getAluno().equals(aluno) &&
-//								solicitacaoOrientacaoTcc.getTemaTcc().equals(temaTcc)) &&
-//								!solicitacaoOrientacaoTcc.isAceita()
-//
-//				);
-
-		/*
-
-				return this.solicitacoesOrientacaoTcc
-				.stream()
-				.anyMatch(solicitacaoOrientacaoTcc ->
-						(solicitacaoOrientacaoTcc.getAluno().equals(aluno) &&
-								solicitacaoOrientacaoTcc.getTemaTcc().equals(temaTcc)) &&
-								(solicitacaoOrientacaoTcc.isAceita() &&
-								!solicitacaoOrientacaoTcc.isVinculadaComTcc())
-
-				);
-		 */
 
