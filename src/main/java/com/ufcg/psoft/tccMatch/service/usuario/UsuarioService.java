@@ -13,5 +13,7 @@ public interface UsuarioService {
 
     Usuario getUsuario(String email);
 
+    Usuario getUsuario(Long id);
+
     UsuarioTcc getUsuarioTcc(Long id);
 }

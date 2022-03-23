@@ -38,6 +38,11 @@ public class UsuarioServiceImpl implements UsuarioService {
                 .orElseThrow(() -> new EntidadeNaoExisteException("Usuário", "email", email));
     }
 
+    public Usuario getUsuario(Long id) {
+        return usuarioRepository.findById(id)
+                .orElseThrow(() -> new EntidadeNaoExisteException("Usuário", "id", id.toString()));
+    }
+
     public UsuarioTcc getUsuarioTcc(Long id) {
         return usuarioTccRepository.findById(id)
                 .orElseThrow(() -> new EntidadeNaoExisteException("Usuário", "id", id.toString()));

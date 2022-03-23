@@ -4,7 +4,7 @@ import com.ufcg.psoft.tccMatch.dto.tcc.RespostaSolicitacaoOrientacaoTccDTO;
 import com.ufcg.psoft.tccMatch.dto.tcc.SolicitacaoOrientacaoTccDTO;
 import com.ufcg.psoft.tccMatch.error.exception.SolicitacaoOrientacaoTccInvalidaException;
 import com.ufcg.psoft.tccMatch.error.exception.SolicitacaoOrientacaoTccJaRespondidaException;
-import com.ufcg.psoft.tccMatch.error.exception.TemaTccInvalidoProfessorException;
+import com.ufcg.psoft.tccMatch.error.exception.TemaTccInvalidoUsuarioException;
 import com.ufcg.psoft.tccMatch.mapper.tcc.RespostaSolicitacaoOrientacaoTccMapper;
 import com.ufcg.psoft.tccMatch.mapper.tcc.SolicitacaoOrientacaoTccMapper;
 import com.ufcg.psoft.tccMatch.model.tcc.RespostaSolicitacaoOrientacaoTcc;
@@ -12,6 +12,7 @@ import com.ufcg.psoft.tccMatch.model.tcc.SolicitacaoOrientacaoTcc;
 import com.ufcg.psoft.tccMatch.model.tcc.TemaTcc;
 import com.ufcg.psoft.tccMatch.model.usuario.Aluno;
 import com.ufcg.psoft.tccMatch.model.usuario.Professor;
+import com.ufcg.psoft.tccMatch.notification.event.SolicitacaoOrientacaoTccCriadaEvent;
 import com.ufcg.psoft.tccMatch.repository.tcc.SolicitacaoOrientacaoTccRepository;
 import com.ufcg.psoft.tccMatch.service.usuario.AlunoService;
 import com.ufcg.psoft.tccMatch.service.usuario.ProfessorService;
@@ -19,6 +20,7 @@ import com.ufcg.psoft.tccMatch.service.tcc.SolicitacaoOrientacaoTccService;
 import com.ufcg.psoft.tccMatch.service.usuario.UsuarioService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +37,8 @@ public class SolicitacaoOrientacaoTccServiceImpl implements SolicitacaoOrientaca
     private final AlunoService alunoService;
     private final UsuarioService usuarioService;
 
+    private final ApplicationEventPublisher applicationEventPublisher;
+
     private final SolicitacaoOrientacaoTccMapper solicitacaoOrientacaoTccMapper;
     private final RespostaSolicitacaoOrientacaoTccMapper respostaSolicitacaoOrientacaoTccMapper;
 
@@ -46,10 +50,6 @@ public class SolicitacaoOrientacaoTccServiceImpl implements SolicitacaoOrientaca
         Aluno aluno = alunoService.getAluno(idAluno);
         Professor professor = professorService.getProfessor(solicitacaoOrientacaoTccDTO.getIdProfessor());
         TemaTcc temaTcc = professor.getTemaTcc(solicitacaoOrientacaoTccDTO.getTituloTemaTcc());
-
-        if (temaTcc == null) {
-            throw new TemaTccInvalidoProfessorException(solicitacaoOrientacaoTccDTO.getTituloTemaTcc());
-        }
 
         SolicitacaoOrientacaoTcc solicitacaoOrientacaoTcc = new SolicitacaoOrientacaoTcc();
         solicitacaoOrientacaoTcc.setAluno(aluno);
@@ -63,6 +63,8 @@ public class SolicitacaoOrientacaoTccServiceImpl implements SolicitacaoOrientaca
 
         professor.adicionarSolicitacaoOrientacaoTcc(solicitacaoOrientacaoTcc);
         usuarioService.salvarUsuario(professor);
+
+        applicationEventPublisher.publishEvent(new SolicitacaoOrientacaoTccCriadaEvent(this, professor, solicitacaoOrientacaoTcc));
 
         return solicitacaoOrientacaoTccMapper.toDTO(solicitacaoOrientacaoTcc);
     }

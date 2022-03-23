@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class TccExceptionController {
-    @ExceptionHandler(TemaTccInvalidoProfessorException.class)
-    public ResponseEntity<?> handleException(TemaTccInvalidoProfessorException exception){
+    @ExceptionHandler(TemaTccInvalidoUsuarioException.class)
+    public ResponseEntity<?> handleException(TemaTccInvalidoUsuarioException exception){
         return AppError.responseBadRequest(exception);
     }
 

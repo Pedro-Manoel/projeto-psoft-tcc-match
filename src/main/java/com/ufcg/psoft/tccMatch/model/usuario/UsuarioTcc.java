@@ -1,5 +1,6 @@
 package com.ufcg.psoft.tccMatch.model.usuario;
 
+import com.ufcg.psoft.tccMatch.error.exception.TemaTccInvalidoUsuarioException;
 import com.ufcg.psoft.tccMatch.model.AreaEstudo;
 import com.ufcg.psoft.tccMatch.model.tcc.TemaTcc;
 import lombok.AllArgsConstructor;
@@ -36,6 +37,6 @@ public abstract class UsuarioTcc extends Usuario {
                 .stream()
                 .filter(temaTcc -> temaTcc.getTitulo().equals(tituloTemaTcc))
                 .findAny()
-                .orElse(null);
+                .orElseThrow(() -> new TemaTccInvalidoUsuarioException(tituloTemaTcc));
     }
 }
