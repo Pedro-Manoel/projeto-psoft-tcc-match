@@ -10,9 +10,8 @@ import org.springframework.security.core.GrantedAuthority;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Role implements GrantedAuthority {
+public abstract class Role implements GrantedAuthority {
 
-    public static final String USER = "ROLE_USER";
     public static final String USER_ADMIN = "ROLE_USER_ADMIN";
     public static final String USER_ALUNO = "ROLE_USER_ALUNO";
     public static final String USER_PROF = "ROLE_USER_PROF";

@@ -18,6 +18,5 @@ public class Aluno extends UsuarioTcc {
     
     private String periodoPrevistoConclusao;
 
-    @Transient
     public String getAutoridade() { return Role.USER_ALUNO; }
 }

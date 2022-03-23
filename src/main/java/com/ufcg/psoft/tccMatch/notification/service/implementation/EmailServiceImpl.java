@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +25,11 @@ public class EmailServiceImpl implements EmailService {
 
     private final EmailMapper emailMapper;
 
-    public void enviarEmail(Usuario usuario, Email email) {
+    public void enviarEmail(Usuario usuario, String mensagem) {
+        Email email = new Email();
+        email.setMensagem(mensagem);
+        email.setData(new Date());
+
         usuario.getCaixaEmail().adicionarEmail(email);
 
         usuarioService.salvarUsuario(usuario);

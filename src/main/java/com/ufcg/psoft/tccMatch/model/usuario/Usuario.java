@@ -26,5 +26,5 @@ public abstract class Usuario extends Model {
 
 	public Usuario() { this.caixaEmail = new CaixaEmail(); }
 
-	public String getAutoridade() { return Role.USER; }
+	public abstract String getAutoridade();
 }

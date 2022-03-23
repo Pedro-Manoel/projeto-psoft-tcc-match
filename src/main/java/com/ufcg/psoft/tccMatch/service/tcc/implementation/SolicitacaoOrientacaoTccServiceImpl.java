@@ -1,10 +1,9 @@
 package com.ufcg.psoft.tccMatch.service.tcc.implementation;
 
-import com.ufcg.psoft.tccMatch.dto.tcc.RespostaSolicitacaoOrientacaoTccDTO;
-import com.ufcg.psoft.tccMatch.dto.tcc.SolicitacaoOrientacaoTccDTO;
+import com.ufcg.psoft.tccMatch.dto.tcc.solicitacao.RespostaSolicitacaoOrientacaoTccDTO;
+import com.ufcg.psoft.tccMatch.dto.tcc.solicitacao.SolicitacaoOrientacaoTccDTO;
 import com.ufcg.psoft.tccMatch.error.exception.SolicitacaoOrientacaoTccInvalidaException;
 import com.ufcg.psoft.tccMatch.error.exception.SolicitacaoOrientacaoTccJaRespondidaException;
-import com.ufcg.psoft.tccMatch.error.exception.TemaTccInvalidoUsuarioException;
 import com.ufcg.psoft.tccMatch.mapper.tcc.RespostaSolicitacaoOrientacaoTccMapper;
 import com.ufcg.psoft.tccMatch.mapper.tcc.SolicitacaoOrientacaoTccMapper;
 import com.ufcg.psoft.tccMatch.model.tcc.RespostaSolicitacaoOrientacaoTcc;
@@ -12,6 +11,7 @@ import com.ufcg.psoft.tccMatch.model.tcc.SolicitacaoOrientacaoTcc;
 import com.ufcg.psoft.tccMatch.model.tcc.TemaTcc;
 import com.ufcg.psoft.tccMatch.model.usuario.Aluno;
 import com.ufcg.psoft.tccMatch.model.usuario.Professor;
+import com.ufcg.psoft.tccMatch.notification.event.SolicitacaoOrientacaoTccAceitaEvent;
 import com.ufcg.psoft.tccMatch.notification.event.SolicitacaoOrientacaoTccCriadaEvent;
 import com.ufcg.psoft.tccMatch.repository.tcc.SolicitacaoOrientacaoTccRepository;
 import com.ufcg.psoft.tccMatch.service.usuario.AlunoService;
@@ -96,6 +96,10 @@ public class SolicitacaoOrientacaoTccServiceImpl implements SolicitacaoOrientaca
         solicitacaoOrientacaoTcc.setResposta(respostaSolicitacaoOrientacaoTcc);
 
         usuarioService.salvarUsuario(professor);
+
+        if (solicitacaoOrientacaoTcc.isAceita()) {
+            applicationEventPublisher.publishEvent(new SolicitacaoOrientacaoTccAceitaEvent(this, solicitacaoOrientacaoTcc));
+        }
 
         return solicitacaoOrientacaoTccMapper.toDTO(solicitacaoOrientacaoTcc);
     }

@@ -1,14 +1,13 @@
 package com.ufcg.psoft.tccMatch.service.tcc.implementation;
 
-import com.ufcg.psoft.tccMatch.dto.tcc.TemaTccDTO;
-import com.ufcg.psoft.tccMatch.dto.tcc.TemaTccUsuarioDTO;
+import com.ufcg.psoft.tccMatch.dto.tcc.tema.TemaTccDTO;
+import com.ufcg.psoft.tccMatch.dto.tcc.tema.TemaTccUsuarioDTO;
 import com.ufcg.psoft.tccMatch.error.exception.EntidadeJaExisteException;
 import com.ufcg.psoft.tccMatch.error.exception.EntidadeNaoExisteException;
 import com.ufcg.psoft.tccMatch.mapper.tcc.TemaTccMapper;
 import com.ufcg.psoft.tccMatch.mapper.usuario.UsuarioMapper;
 import com.ufcg.psoft.tccMatch.model.AreaEstudo;
 import com.ufcg.psoft.tccMatch.model.tcc.TemaTcc;
-import com.ufcg.psoft.tccMatch.model.usuario.Professor;
 import com.ufcg.psoft.tccMatch.model.usuario.UsuarioTcc;
 import com.ufcg.psoft.tccMatch.repository.tcc.TemaTccRepository;
 import com.ufcg.psoft.tccMatch.service.AreaEstudoService;

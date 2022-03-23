@@ -42,4 +42,14 @@ public class TccExceptionController {
     public ResponseEntity<?> handleException(SolicitacaoOrientacaoTccJaVinculadaComTccException exception){
         return AppError.responseBadRequest(exception);
     }
+
+    @ExceptionHandler(SolicitacaoOrientacaoTccInvalidaProfessorException.class)
+    public ResponseEntity<?> handleException(SolicitacaoOrientacaoTccInvalidaProfessorException exception){
+        return AppError.responseBadRequest(exception);
+    }
+
+    @ExceptionHandler(OrientacaoTccUsuarioNaoVinculadoException.class)
+    public ResponseEntity<?> handleException(OrientacaoTccUsuarioNaoVinculadoException exception){
+        return AppError.responseBadRequest(exception);
+    }
 }

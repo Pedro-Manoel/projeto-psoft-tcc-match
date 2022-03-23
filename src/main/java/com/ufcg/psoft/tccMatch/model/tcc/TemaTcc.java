@@ -22,7 +22,7 @@ public class  TemaTcc extends Model {
 	
 	private String descricao;
 
-	@ManyToMany // Verificar depois se OneToMany funciona usando uuid
+	@ManyToMany
 	private List<AreaEstudo> areasEstudo;
 	
 	private String status;

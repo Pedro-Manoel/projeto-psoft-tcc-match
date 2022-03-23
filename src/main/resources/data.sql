@@ -19,13 +19,13 @@ values
        (7);
 insert into usuario(DTYPE, ID, EMAIL, NOME, SENHA, MATRICULA, PERIODO_PREVISTO_CONCLUSAO, LABORATORIOS, QUOTA, CAIXA_EMAIL_ID)
     values
-           ('Professor', 1, 'test1', 'Fubica', '123', null, null, 'lab1', 0, 1),
-           ('Professor', 2, 'test2', 'Fubica', '123', null, null, 'lab1', 1, 2),
-           ('Professor', 3, 'test3', 'Fubica', '123', null, null, 'lab1', 2, 3),
-           ('Professor', 4, 'test4', 'Fubica', '123', null, null, 'lab1', 3, 4),
-           ('Professor', 5, 'test5', 'Fubica', '123', null, null, 'lab1', 4, 5),
-           ('Aluno', 6, 'test6', 'Fubica', '123', 'xxx', '2060', null, null, 6),
-           ('Aluno', 7, 'test7', 'Fubica', '123', 'xxx', '2060', null, null, 7);
+           ('Professor', 1, 'test1', 'Fubica', '$2a$10$gGyVw6y8gRFfPijsjns9M.cYuOv.iAubA73u1IvUbmc/lUrRpUSmu', null, null, 'lab1', 0, 1),
+           ('Professor', 2, 'test2', 'Fubica', '$2a$10$gGyVw6y8gRFfPijsjns9M.cYuOv.iAubA73u1IvUbmc/lUrRpUSmu', null, null, 'lab1', 1, 2),
+           ('Professor', 3, 'test3', 'Fubica', '$2a$10$gGyVw6y8gRFfPijsjns9M.cYuOv.iAubA73u1IvUbmc/lUrRpUSmu', null, null, 'lab1', 2, 3),
+           ('Professor', 4, 'test4', 'Fubica', '$2a$10$gGyVw6y8gRFfPijsjns9M.cYuOv.iAubA73u1IvUbmc/lUrRpUSmu', null, null, 'lab1', 3, 4),
+           ('Professor', 5, 'test5', 'Fubica', '$2a$10$gGyVw6y8gRFfPijsjns9M.cYuOv.iAubA73u1IvUbmc/lUrRpUSmu', null, null, 'lab1', 4, 5),
+           ('Aluno', 6, 'test6', 'Fubica', '$2a$10$gGyVw6y8gRFfPijsjns9M.cYuOv.iAubA73u1IvUbmc/lUrRpUSmu', 'xxx', '2060', null, null, 6),
+           ('Aluno', 7, 'test7', 'Fubica', '$2a$10$gGyVw6y8gRFfPijsjns9M.cYuOv.iAubA73u1IvUbmc/lUrRpUSmu', 'xxx', '2060', null, null, 7);
 
 insert into AREA_ESTUDO (ID, NOME)
 values

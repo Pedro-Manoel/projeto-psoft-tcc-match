@@ -1,4 +1,4 @@
-package com.ufcg.psoft.tccMatch.dto.tcc;
+package com.ufcg.psoft.tccMatch.dto.tcc.tema;
 
 import com.ufcg.psoft.tccMatch.dto.AreaEstudoDTO;
 import com.ufcg.psoft.tccMatch.dto.ModelDTO;

@@ -5,7 +5,7 @@ import com.ufcg.psoft.tccMatch.security.error.exception.TokenInvalidoException;
 import com.ufcg.psoft.tccMatch.security.util.JwtTokenUtil;
 import com.ufcg.psoft.tccMatch.security.service.Implementation.JwtUserDetailsService;
 import com.ufcg.psoft.tccMatch.security.util.MyUserDetail;
-import com.ufcg.psoft.tccMatch.security.util.ResponseError;
+import com.ufcg.psoft.tccMatch.security.util.UnauthorizedErrorResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -60,10 +60,10 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 }
             }
         } catch (TokenInvalidoException ex) {
-            ResponseError.config(response, ex.getMessage());
+            UnauthorizedErrorResponse.mount(response, ex.getMessage());
             return;
         } catch (EntidadeNaoExisteException ex) {
-            ResponseError.config(response, "O usuário que consta no token não existe no sistema");
+            UnauthorizedErrorResponse.mount(response, "O usuário que consta no token não existe no sistema");
             return;
         }
 
