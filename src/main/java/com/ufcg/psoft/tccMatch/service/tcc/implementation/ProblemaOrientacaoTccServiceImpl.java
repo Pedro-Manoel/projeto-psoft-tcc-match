@@ -77,10 +77,11 @@ public class ProblemaOrientacaoTccServiceImpl implements ProblemaOrientacaoTccSe
             }
         }
 
-        RelatorioProblemaOrientacaoTccDTO relatorio = new RelatorioProblemaOrientacaoTccDTO();
         RelatorioProblemaOrientacaoTccUsuarioDTO relatorioAluno = gerarRelatorioUsuario(problemasOrientacaoTccAluno);
         RelatorioProblemaOrientacaoTccUsuarioDTO relatorioProfessor = gerarRelatorioUsuario(problemasOrientacaoTccProfessor);
-        
+
+        RelatorioProblemaOrientacaoTccDTO relatorio = new RelatorioProblemaOrientacaoTccDTO();
+        relatorio.setSemestre(semestre);
         relatorio.setTotalProblemas(relatorioAluno.getTotalProblemas() + relatorioProfessor.getTotalProblemas());
         relatorio.setAlunos(relatorioAluno);
         relatorio.setProfessores(relatorioProfessor);

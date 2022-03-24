@@ -7,9 +7,9 @@ import com.ufcg.psoft.tccMatch.model.usuario.UsuarioTcc;
 public interface UsuarioService {
     void salvarUsuario (Usuario usuario);
 
-    boolean usuarioJaExiste (UsuarioDTO usuarioDTO);
+    void verificarUsuario(UsuarioDTO usuarioDTO);
 
-    boolean usuarioJaExiste (Usuario usuario, UsuarioDTO usuarioDTO);
+    void verificarUsuario (Usuario usuario, UsuarioDTO usuarioDTO);
 
     Usuario getUsuario(String email);
 

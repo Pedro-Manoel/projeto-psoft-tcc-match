@@ -46,9 +46,7 @@ public class AlunoServiceImpl implements AlunoService {
     }
 
     public AlunoDTO criarAluno (AlunoDTO alunoDTO) {
-        if (usuarioService.usuarioJaExiste(alunoDTO)) {
-            throw new EntidadeJaExisteException("Aluno", "email", alunoDTO.getEmail());
-        }
+        usuarioService.verificarUsuario(alunoDTO);
 
         Aluno aluno = alunoMapper.toEntity(alunoDTO);
         String senhaCriptografada = passwordEncoder.encode(alunoDTO.getSenha());
@@ -62,9 +60,7 @@ public class AlunoServiceImpl implements AlunoService {
     public AlunoDTO atualizarAluno (Long id, AlunoDTO alunoDTO) {
         Aluno aluno = getAluno(id);
 
-        if (usuarioService.usuarioJaExiste(aluno, alunoDTO)) {
-            throw new EntidadeJaExisteException("Aluno", "email", alunoDTO.getEmail());
-        }
+        usuarioService.verificarUsuario(aluno, alunoDTO);
 
         String senhaCriptografada = passwordEncoder.encode(alunoDTO.getSenha());
         alunoDTO.setSenha(senhaCriptografada);

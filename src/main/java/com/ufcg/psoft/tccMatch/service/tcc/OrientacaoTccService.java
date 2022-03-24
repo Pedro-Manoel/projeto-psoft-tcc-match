@@ -1,6 +1,7 @@
 package com.ufcg.psoft.tccMatch.service.tcc;
 
 import com.ufcg.psoft.tccMatch.dto.tcc.OrientacaoTccDTO;
+import com.ufcg.psoft.tccMatch.dto.tcc.relatorio.RelatorioOrientacaoTccDTO;
 import com.ufcg.psoft.tccMatch.model.tcc.OrientacaoTcc;
 
 import java.util.List;
@@ -16,5 +17,5 @@ public interface OrientacaoTccService {
 
     List<OrientacaoTccDTO> listarOrientacoesTcc (Boolean concluida, String semestre);
 
-    void gerarRelatorio ();
+    RelatorioOrientacaoTccDTO gerarRelatorio (String semestre);
 }
