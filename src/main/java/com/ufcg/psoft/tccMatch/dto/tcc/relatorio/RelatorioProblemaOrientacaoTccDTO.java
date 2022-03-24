@@ -10,6 +10,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RelatorioProblemaOrientacaoTccDTO {
+    private String semestre;
+
     private Integer totalProblemas;
 
     private RelatorioProblemaOrientacaoTccUsuarioDTO alunos;

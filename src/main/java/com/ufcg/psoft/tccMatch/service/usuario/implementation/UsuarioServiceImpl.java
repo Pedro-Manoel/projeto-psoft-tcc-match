@@ -1,6 +1,7 @@
 package com.ufcg.psoft.tccMatch.service.usuario.implementation;
 
 import com.ufcg.psoft.tccMatch.dto.usuario.UsuarioDTO;
+import com.ufcg.psoft.tccMatch.error.exception.EntidadeJaExisteException;
 import com.ufcg.psoft.tccMatch.error.exception.EntidadeNaoExisteException;
 import com.ufcg.psoft.tccMatch.model.usuario.Usuario;
 import com.ufcg.psoft.tccMatch.model.usuario.UsuarioTcc;
@@ -22,15 +23,16 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuarioRepository.save(usuario);
     }
 
-    public boolean usuarioJaExiste (UsuarioDTO usuarioDTO) {
-        return usuarioRepository.existsByEmail(usuarioDTO.getEmail());
+    public void verificarUsuario (UsuarioDTO usuarioDTO) {
+        if (usuarioRepository.existsByEmail(usuarioDTO.getEmail())) {
+            throw new EntidadeJaExisteException("Usuário", "email", usuarioDTO.getEmail());
+        }
     }
 
-    public boolean usuarioJaExiste (Usuario usuario, UsuarioDTO usuarioDTO) {
+    public void verificarUsuario (Usuario usuario, UsuarioDTO usuarioDTO) {
         if (!usuario.getEmail().equals(usuarioDTO.getEmail())) {
-            return usuarioJaExiste(usuarioDTO);
+            verificarUsuario(usuarioDTO);
         }
-        return false;
     }
 
     public Usuario getUsuario(String email) {

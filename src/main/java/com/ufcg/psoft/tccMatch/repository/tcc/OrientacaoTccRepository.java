@@ -9,4 +9,6 @@ public interface OrientacaoTccRepository extends JpaRepository<OrientacaoTcc, Lo
     List<OrientacaoTcc> findByConcluidaIsFalseAndTccProfessor_Id(Long id);
 
     List<OrientacaoTcc> findByConcluidaAndSemestre(Boolean concluida, String semestre);
+
+    List<OrientacaoTcc> findBySemestre(String semestre);
 }

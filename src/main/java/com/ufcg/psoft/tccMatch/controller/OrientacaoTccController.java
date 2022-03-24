@@ -1,6 +1,7 @@
 package com.ufcg.psoft.tccMatch.controller;
 
 import com.ufcg.psoft.tccMatch.dto.tcc.OrientacaoTccDTO;
+import com.ufcg.psoft.tccMatch.dto.tcc.relatorio.RelatorioOrientacaoTccDTO;
 import com.ufcg.psoft.tccMatch.security.service.AutenticacaoService;
 import com.ufcg.psoft.tccMatch.security.util.Role;
 import com.ufcg.psoft.tccMatch.service.tcc.OrientacaoTccService;
@@ -67,13 +68,12 @@ public class OrientacaoTccController {
         return new ResponseEntity<>(orinetacoesTccDTO, HttpStatus.CREATED);
     }
 
-    // Em construção
-    @GetMapping("/rele")
+    @GetMapping("/relatorio")
     @Operation(summary = "Gerar relatório de Orientações de TCC")
-    public ResponseEntity<?> gerarRelatorioOrientacoesTcc () {
+    public ResponseEntity<?> gerarRelatorioOrientacoesTcc (@RequestParam(defaultValue = "2022") String semestre) {
 
-        orientacaoTccService.gerarRelatorio();
+        RelatorioOrientacaoTccDTO relatorio =  orientacaoTccService.gerarRelatorio(semestre);
 
-        return new ResponseEntity<>("É nois" ,HttpStatus.CREATED);
+        return new ResponseEntity<>(relatorio, HttpStatus.OK);
     }
 }

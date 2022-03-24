@@ -46,9 +46,7 @@ public class ProfessorServiceImpl implements ProfessorService {
     }
     
     public ProfessorDTO criarProfessor(ProfessorDTO professorDTO) {
-        if (usuarioService.usuarioJaExiste(professorDTO)) {
-            throw new EntidadeJaExisteException("Professor", "email", professorDTO.getEmail());
-        }
+        usuarioService.verificarUsuario(professorDTO);
 
         Professor professor = professorMapper.toEntity(professorDTO);
         String senhaCriptografada = passwordEncoder.encode(professorDTO.getSenha());
@@ -61,9 +59,7 @@ public class ProfessorServiceImpl implements ProfessorService {
     public ProfessorDTO atualizarProfessor(Long id, ProfessorDTO professorDTO) {
         Professor professor = getProfessor(id);
 
-        if (usuarioService.usuarioJaExiste(professor, professorDTO)) {
-            throw new EntidadeJaExisteException("Professor", "email", professorDTO.getEmail());
-        }
+        usuarioService.verificarUsuario(professor, professorDTO);
 
         String senhaCriptografada = passwordEncoder.encode(professorDTO.getSenha());
         professorDTO.setSenha(senhaCriptografada);
