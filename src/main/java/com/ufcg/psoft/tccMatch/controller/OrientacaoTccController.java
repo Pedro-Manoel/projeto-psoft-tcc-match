@@ -69,6 +69,7 @@ public class OrientacaoTccController {
     }
 
     @GetMapping("/relatorio")
+    @RolesAllowed(Role.USER_ADMIN)
     @Operation(summary = "Gerar relatório de Orientações de TCC")
     public ResponseEntity<?> gerarRelatorioOrientacoesTcc (@RequestParam(defaultValue = "2022") String semestre) {
 
