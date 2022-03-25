@@ -2,7 +2,6 @@ package com.ufcg.psoft.tccMatch.dto.tcc.tema;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ufcg.psoft.tccMatch.dto.ModelDTO;
-import com.ufcg.psoft.tccMatch.dto.tcc.tema.TemaTccDTO;
 import com.ufcg.psoft.tccMatch.dto.usuario.UsuarioDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

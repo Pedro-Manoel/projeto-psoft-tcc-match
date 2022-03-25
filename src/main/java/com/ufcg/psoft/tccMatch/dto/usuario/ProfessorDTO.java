@@ -1,20 +1,16 @@
 package com.ufcg.psoft.tccMatch.dto.usuario;
 
-import com.ufcg.psoft.tccMatch.dto.usuario.UsuarioDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class ProfessorDTO extends UsuarioDTO {
-
 	private String laboratorios;
-	private Integer quota;
 
-    //private CaixaEmail caixaEmail;
-	//private List<AreaEstudo> areasEstudo;
-	//private List<SolicitacaoOrientacaoTcc> solicitacoesTcc;
-	//private List<TemaTcc> temasTcc;
+	private Integer quota;
 }

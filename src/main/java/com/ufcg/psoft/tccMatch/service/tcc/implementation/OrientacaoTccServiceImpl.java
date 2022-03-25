@@ -7,7 +7,6 @@ import com.ufcg.psoft.tccMatch.error.exception.*;
 import com.ufcg.psoft.tccMatch.mapper.tcc.OrientacaoTccMapper;
 import com.ufcg.psoft.tccMatch.model.AreaEstudo;
 import com.ufcg.psoft.tccMatch.model.tcc.OrientacaoTcc;
-import com.ufcg.psoft.tccMatch.model.tcc.ProblemaOrientacaoTcc;
 import com.ufcg.psoft.tccMatch.model.tcc.SolicitacaoOrientacaoTcc;
 import com.ufcg.psoft.tccMatch.model.tcc.Tcc;
 import com.ufcg.psoft.tccMatch.model.usuario.Professor;
@@ -113,9 +112,9 @@ public class OrientacaoTccServiceImpl implements OrientacaoTccService {
 
         for (OrientacaoTcc orientacaoTcc : orientacoesTcc) {
             if (orientacaoTcc.isConcluida()) {
-                computaOrientacaoTccRelatorio(orientacoesTccFinalizadas, contAreasEstudoOrientacoesTccFinalizadas, orientacaoTcc);
+                computarOrientacaoTccRelatorio(orientacoesTccFinalizadas, contAreasEstudoOrientacoesTccFinalizadas, orientacaoTcc);
             } else {
-                computaOrientacaoTccRelatorio(orientacoesTccEmCurso, contAreasEstudoOrientacoesTccEmCurso, orientacaoTcc);
+                computarOrientacaoTccRelatorio(orientacoesTccEmCurso, contAreasEstudoOrientacoesTccEmCurso, orientacaoTcc);
             }
         }
 
@@ -143,7 +142,7 @@ public class OrientacaoTccServiceImpl implements OrientacaoTccService {
         return relatorio;
     }
 
-    private void computaOrientacaoTccRelatorio(List<OrientacaoTcc> orientacoesTcc, Map<String, Integer> contAreasEstudo, OrientacaoTcc orientacaoTcc) {
+    private void computarOrientacaoTccRelatorio(List<OrientacaoTcc> orientacoesTcc, Map<String, Integer> contAreasEstudo, OrientacaoTcc orientacaoTcc) {
         orientacoesTcc.add(orientacaoTcc);
 
         for (AreaEstudo areaEstudo : orientacaoTcc.getTcc().getTema().getAreasEstudo()) {

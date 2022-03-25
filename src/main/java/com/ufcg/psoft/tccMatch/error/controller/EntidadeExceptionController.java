@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class EntidadeExceptionController {
     @ExceptionHandler(EntidadeJaExisteException.class)
-    public ResponseEntity<?> handleException(EntidadeJaExisteException exception){
+    public ResponseEntity<?> handleException (EntidadeJaExisteException exception){
         return AppError.responseBadRequest(exception);
     }
 
     @ExceptionHandler(EntidadeNaoExisteException.class)
-    public ResponseEntity<?> handleException(EntidadeNaoExisteException exception){
+    public ResponseEntity<?> handleException (EntidadeNaoExisteException exception){
         return AppError.responseNotFound(exception);
     }
 }

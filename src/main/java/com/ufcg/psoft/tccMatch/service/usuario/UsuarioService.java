@@ -7,13 +7,13 @@ import com.ufcg.psoft.tccMatch.model.usuario.UsuarioTcc;
 public interface UsuarioService {
     void salvarUsuario (Usuario usuario);
 
-    void verificarUsuario(UsuarioDTO usuarioDTO);
+    void verificarUsuario (UsuarioDTO usuarioDTO);
 
     void verificarUsuario (Usuario usuario, UsuarioDTO usuarioDTO);
 
-    Usuario getUsuario(String email);
+    Usuario getUsuario (String email);
 
-    Usuario getUsuario(Long id);
+    Usuario getUsuario (Long id);
 
-    UsuarioTcc getUsuarioTcc(Long id);
+    UsuarioTcc getUsuarioTcc (Long id);
 }

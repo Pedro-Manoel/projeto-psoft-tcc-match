@@ -2,7 +2,6 @@ package com.ufcg.psoft.tccMatch.model.tcc;
 
 import com.ufcg.psoft.tccMatch.model.Model;
 import com.ufcg.psoft.tccMatch.model.usuario.UsuarioTcc;
-import io.swagger.v3.oas.annotations.Hidden;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,12 +22,11 @@ public class OrientacaoTcc extends Model {
 
 	private String semestre;
 
-	@Hidden
 	private boolean concluida;
 
 	public void finalizar() { this.concluida = true; }
 
 	public boolean isUsuarioVinculado(UsuarioTcc usuarioTcc) {
-		return this.tcc.getAluno().equals(usuarioTcc) | this.tcc.getProfessor().equals(usuarioTcc);
+		return this.tcc.getAluno().equals(usuarioTcc) || this.tcc.getProfessor().equals(usuarioTcc);
 	}
 }

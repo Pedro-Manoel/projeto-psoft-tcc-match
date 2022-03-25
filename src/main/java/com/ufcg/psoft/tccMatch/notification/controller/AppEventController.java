@@ -32,8 +32,8 @@ public class AppEventController {
         Set<Aluno> alunos = new HashSet<>();
 
         for (AreaEstudo areaEstudo : temaTccProfessorCriadoEvent.getTemaTcc().getAreasEstudo()) {
-            List<Aluno> alunosTemaTcc = alunoService.getAlunos(areaEstudo);
-            alunos.addAll(alunosTemaTcc);
+            List<Aluno> alunosAreaEstudo = alunoService.getAlunos(areaEstudo);
+            alunos.addAll(alunosAreaEstudo);
         }
 
         String mensagem = String.format(

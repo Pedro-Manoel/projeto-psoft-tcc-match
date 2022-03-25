@@ -30,9 +30,12 @@ public class ProblemaOrientacaoTccController {
     @PostMapping()
     @RolesAllowed({Role.USER_ALUNO, Role.USER_PROF})
     @Operation(summary = "Reportar problema de orientação de TCC")
-    public ResponseEntity<?> reportarProblemaTcc (@RequestBody ProblemaOrientacaoTccDTO problemaOrientacaoTccDTO) {
+    public ResponseEntity<?> reportarProblemaOrientacaoTcc (
+            @RequestBody ProblemaOrientacaoTccDTO problemaOrientacaoTccDTO
+    ) {
         Long id = autenticacaoService.getIdUsuarioAutenticado();
-        ProblemaOrientacaoTccDTO problemaOrientacaoTcc = problemaOrientacaoTccService.reportarProblemaOrientacaoTcc(id, problemaOrientacaoTccDTO);
+        ProblemaOrientacaoTccDTO problemaOrientacaoTcc =
+                problemaOrientacaoTccService.reportarProblemaOrientacaoTcc(id, problemaOrientacaoTccDTO);
 
         return new ResponseEntity<>(problemaOrientacaoTcc, HttpStatus.CREATED);
     }
@@ -40,9 +43,11 @@ public class ProblemaOrientacaoTccController {
     @GetMapping("/relatorio")
     @RolesAllowed(Role.USER_ADMIN)
     @Operation(summary = "Gerar relatório dos problemas de orientação de TCC")
-    public ResponseEntity<?> reportarProblemaTcc (@RequestParam(defaultValue = "2022") String semestre) {
-        RelatorioProblemaOrientacaoTccDTO relatorio = problemaOrientacaoTccService.gerarRelatorio(semestre);
+    public ResponseEntity<?> gerarRelatorioProblemasOrientacaoTcc (
+            @RequestParam(defaultValue = "2022") String semestre
+    ) {
+        RelatorioProblemaOrientacaoTccDTO relatorioDTO = problemaOrientacaoTccService.gerarRelatorio(semestre);
 
-        return new ResponseEntity<>(relatorio, HttpStatus.CREATED);
+        return new ResponseEntity<>(relatorioDTO, HttpStatus.CREATED);
     }
 }

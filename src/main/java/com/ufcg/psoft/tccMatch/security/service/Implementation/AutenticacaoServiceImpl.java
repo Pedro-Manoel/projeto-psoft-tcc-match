@@ -20,8 +20,9 @@ import org.springframework.stereotype.Service;
 public class AutenticacaoServiceImpl implements AutenticacaoService {
 
     private final JwtUserDetailsService jwtUserDetailsService;
-    private final UsuarioService usuarioService;
+
     private final AuthenticationManager authenticationManager;
+
     private final JwtTokenUtil jwtTokenUtil;
 
     @Override

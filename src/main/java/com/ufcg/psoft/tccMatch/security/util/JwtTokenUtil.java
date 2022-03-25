@@ -40,7 +40,7 @@ public class JwtTokenUtil {
         return claims.getSubject();
     }
 
-    public boolean validateToken(String token) {
+    public boolean validToken(String token) {
         try {
             Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(token);
             return true;

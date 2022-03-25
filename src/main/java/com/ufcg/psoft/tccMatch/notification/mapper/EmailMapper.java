@@ -1,7 +1,5 @@
 package com.ufcg.psoft.tccMatch.notification.mapper;
 
-import com.ufcg.psoft.tccMatch.dto.AreaEstudoDTO;
-import com.ufcg.psoft.tccMatch.model.AreaEstudo;
 import com.ufcg.psoft.tccMatch.notification.dto.EmailDTO;
 import com.ufcg.psoft.tccMatch.notification.model.Email;
 import org.mapstruct.Mapper;

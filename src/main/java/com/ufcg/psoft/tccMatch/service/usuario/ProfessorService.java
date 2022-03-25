@@ -16,13 +16,13 @@ public interface ProfessorService {
 
     Professor getProfessor (Long id);
 
-    List<Professor> getProfessores();
+    List<Professor> getProfessores ();
 
     ProfessorDTO atualizarProfessor (Long id, ProfessorDTO professorDTO);
 
     MessageDTO removerProfessor (Long id);
 
-    ProfessorDTO atualizarQuotaProfessor(Long id, QuotaProfessorDTO quotaProfessorDTO);
+    ProfessorDTO atualizarQuotaProfessor (Long id, QuotaProfessorDTO quotaProfessorDTO);
 
     List<UsuarioDTO> listarProfessoresDisponiveisOrientacaoTcc (List<AreaEstudo> areasEstudo);
 }

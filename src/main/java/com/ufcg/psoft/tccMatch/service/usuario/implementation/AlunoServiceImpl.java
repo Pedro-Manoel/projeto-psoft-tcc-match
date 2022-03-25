@@ -2,7 +2,6 @@ package com.ufcg.psoft.tccMatch.service.usuario.implementation;
 
 import com.ufcg.psoft.tccMatch.dto.message.MessageDTO;
 import com.ufcg.psoft.tccMatch.dto.usuario.AlunoDTO;
-import com.ufcg.psoft.tccMatch.error.exception.EntidadeJaExisteException;
 import com.ufcg.psoft.tccMatch.error.exception.EntidadeNaoExisteException;
 import com.ufcg.psoft.tccMatch.mapper.usuario.AlunoMapper;
 import com.ufcg.psoft.tccMatch.model.AreaEstudo;

@@ -4,7 +4,6 @@ import com.ufcg.psoft.tccMatch.dto.message.MessageDTO;
 import com.ufcg.psoft.tccMatch.dto.usuario.ProfessorDTO;
 import com.ufcg.psoft.tccMatch.dto.usuario.QuotaProfessorDTO;
 import com.ufcg.psoft.tccMatch.dto.usuario.UsuarioDTO;
-import com.ufcg.psoft.tccMatch.error.exception.EntidadeJaExisteException;
 import com.ufcg.psoft.tccMatch.error.exception.EntidadeNaoExisteException;
 import com.ufcg.psoft.tccMatch.mapper.usuario.ProfessorMapper;
 import com.ufcg.psoft.tccMatch.mapper.usuario.UsuarioMapper;
@@ -45,7 +44,7 @@ public class ProfessorServiceImpl implements ProfessorService {
         professorRepository.save(professor);
     }
     
-    public ProfessorDTO criarProfessor(ProfessorDTO professorDTO) {
+    public ProfessorDTO criarProfessor (ProfessorDTO professorDTO) {
         usuarioService.verificarUsuario(professorDTO);
 
         Professor professor = professorMapper.toEntity(professorDTO);
@@ -56,7 +55,7 @@ public class ProfessorServiceImpl implements ProfessorService {
         return professorMapper.toDTO(professor);
     }
     
-    public ProfessorDTO atualizarProfessor(Long id, ProfessorDTO professorDTO) {
+    public ProfessorDTO atualizarProfessor (Long id, ProfessorDTO professorDTO) {
         Professor professor = getProfessor(id);
 
         usuarioService.verificarUsuario(professor, professorDTO);
@@ -69,7 +68,7 @@ public class ProfessorServiceImpl implements ProfessorService {
         return professorMapper.toDTO(professor);
     }
 
-    public MessageDTO removerProfessor(Long id) {
+    public MessageDTO removerProfessor (Long id) {
         Professor professor = getProfessor(id);
 
         professorRepository.delete(professor);
@@ -79,7 +78,7 @@ public class ProfessorServiceImpl implements ProfessorService {
         );
     }
     
-    public ProfessorDTO atualizarQuotaProfessor(Long id, QuotaProfessorDTO quotaProfessorDTO) {
+    public ProfessorDTO atualizarQuotaProfessor (Long id, QuotaProfessorDTO quotaProfessorDTO) {
         Professor professor = getProfessor(id);
 
         professor.setQuota(quotaProfessorDTO.getQuota());

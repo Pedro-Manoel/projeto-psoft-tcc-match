@@ -30,7 +30,7 @@ public class OrientacaoTccController {
 
     @PostMapping()
     @RolesAllowed(Role.USER_ADMIN)
-    @Operation(summary = "Criar Orientação de TCC")
+    @Operation(summary = "Criar orientação de TCC")
     public ResponseEntity<?> criarOrientacaoTcc (@RequestBody OrientacaoTccDTO orientacaoTccDTO) {
         OrientacaoTccDTO orientacaoTccCriadaDTO = orientacaoTccService.criarOrientacaoTcc(orientacaoTccDTO);
 
@@ -39,7 +39,7 @@ public class OrientacaoTccController {
 
     @PostMapping("/{id}/finalizar")
     @RolesAllowed(Role.USER_ADMIN)
-    @Operation(summary = "Finalizar Orientação de TCC")
+    @Operation(summary = "Finalizar orientação de TCC")
     public ResponseEntity<?> finalizarOrientacaoTcc (@PathVariable("id") Long id) {
         OrientacaoTccDTO orientacaoTccFinalizadaDTO = orientacaoTccService.finalizarOrientacaoTcc(id);
 
@@ -48,33 +48,36 @@ public class OrientacaoTccController {
 
     @GetMapping("/professor/in")
     @RolesAllowed(Role.USER_PROF)
-    @Operation(summary = "Listar Orientações de TCC em curso do professor")
+    @Operation(summary = "Listar orientações de TCC em curso do professor")
     public ResponseEntity<?> listarOrientacaoTccEmCursoProfessor () {
         Long id = autenticacaoService.getIdUsuarioAutenticado();
-        List<OrientacaoTccDTO> orinetacoesTccDTO =  orientacaoTccService.listarOrientacoesTccEmCursoProfessor(id);
+        List<OrientacaoTccDTO> orientacoesTccDTO =
+                orientacaoTccService.listarOrientacoesTccEmCursoProfessor(id);
 
-        return new ResponseEntity<>(orinetacoesTccDTO, HttpStatus.CREATED);
+        return new ResponseEntity<>(orientacoesTccDTO, HttpStatus.CREATED);
     }
 
     @GetMapping()
     @RolesAllowed(Role.USER_ADMIN)
-    @Operation(summary = "Listar Orientações de TCC")
+    @Operation(summary = "Listar orientações de TCC")
     public ResponseEntity<?> listarOrientacaoTccEmCursoPorSemestre (
             @RequestParam(defaultValue = "false") Boolean finalizada,
             @RequestParam(defaultValue = "2022") String semestre
     ) {
-        List<OrientacaoTccDTO> orinetacoesTccDTO =  orientacaoTccService.listarOrientacoesTcc(finalizada, semestre);
+        List<OrientacaoTccDTO> orientacoesTccDTO =
+                orientacaoTccService.listarOrientacoesTcc(finalizada, semestre);
 
-        return new ResponseEntity<>(orinetacoesTccDTO, HttpStatus.CREATED);
+        return new ResponseEntity<>(orientacoesTccDTO, HttpStatus.CREATED);
     }
 
     @GetMapping("/relatorio")
     @RolesAllowed(Role.USER_ADMIN)
-    @Operation(summary = "Gerar relatório de Orientações de TCC")
-    public ResponseEntity<?> gerarRelatorioOrientacoesTcc (@RequestParam(defaultValue = "2022") String semestre) {
+    @Operation(summary = "Gerar relatório de orientações de TCC")
+    public ResponseEntity<?> gerarRelatorioOrientacoesTcc (
+            @RequestParam(defaultValue = "2022") String semestre
+    ) {
+        RelatorioOrientacaoTccDTO relatorioDTO = orientacaoTccService.gerarRelatorio(semestre);
 
-        RelatorioOrientacaoTccDTO relatorio =  orientacaoTccService.gerarRelatorio(semestre);
-
-        return new ResponseEntity<>(relatorio, HttpStatus.OK);
+        return new ResponseEntity<>(relatorioDTO, HttpStatus.OK);
     }
 }

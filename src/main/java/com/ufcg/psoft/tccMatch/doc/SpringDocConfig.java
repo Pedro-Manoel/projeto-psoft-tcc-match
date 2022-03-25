@@ -9,7 +9,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@OpenAPIDefinition(info = @Info(title = "TCC Match", version = "v1"))
+@OpenAPIDefinition(
+        info = @Info(title = "TCC Match", version = "v1")
+)
 @SecurityScheme(
         name = "bearerAuth",
         type = SecuritySchemeType.HTTP,

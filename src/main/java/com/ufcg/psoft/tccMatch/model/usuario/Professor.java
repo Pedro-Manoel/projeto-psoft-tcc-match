@@ -1,6 +1,5 @@
 package com.ufcg.psoft.tccMatch.model.usuario;
 
-import com.ufcg.psoft.tccMatch.error.exception.EntidadeNaoExisteException;
 import com.ufcg.psoft.tccMatch.error.exception.SolicitacaoOrientacaoTccInvalidaProfessorException;
 import com.ufcg.psoft.tccMatch.model.tcc.SolicitacaoOrientacaoTcc;
 import com.ufcg.psoft.tccMatch.security.util.Role;
@@ -9,7 +8,6 @@ import lombok.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 import java.util.List;
 
 @Entity
@@ -18,7 +16,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Professor extends UsuarioTcc {
-    
 	private String laboratorios;
 	
 	private Integer quota;

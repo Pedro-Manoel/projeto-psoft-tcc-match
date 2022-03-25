@@ -34,8 +34,6 @@ public class SolicitacaoOrientacaoTcc extends Model {
         } else {
             return resposta.isAceita();
         }
-
-        // return !emAndamento() && resposta.isAceita();
     }
 
     @Override

@@ -8,11 +8,11 @@ import com.ufcg.psoft.tccMatch.model.usuario.UsuarioTcc;
 import java.util.List;
 
 public interface TemaTccService {
-    TemaTccDTO criarTemaTccUsuario(UsuarioTcc usuarioTcc, TemaTccDTO temaTccDTO);
+    TemaTccDTO criarTemaTccUsuario (UsuarioTcc usuarioTcc, TemaTccDTO temaTccDTO);
 
-    TemaTcc getTemaTcc(Long id);
+    TemaTcc getTemaTcc (Long id);
 
-    List<TemaTccDTO> listarTemasTccUsuario(UsuarioTcc usuarioTcc);
+    List<TemaTccDTO> listarTemasTccUsuario (UsuarioTcc usuarioTcc);
 
-    List<TemaTccUsuarioDTO> listarTemasTccUsuarios(List<UsuarioTcc> usuariosTcc);
+    List<TemaTccUsuarioDTO> listarTemasTccUsuarios (List<UsuarioTcc> usuariosTcc);
 }

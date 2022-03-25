@@ -2,7 +2,6 @@ package com.ufcg.psoft.tccMatch.mapper.usuario;
 
 import com.ufcg.psoft.tccMatch.dto.usuario.UsuarioDTO;
 import com.ufcg.psoft.tccMatch.model.usuario.Usuario;
-import com.ufcg.psoft.tccMatch.model.usuario.UsuarioTcc;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

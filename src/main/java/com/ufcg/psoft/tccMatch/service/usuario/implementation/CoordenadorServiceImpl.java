@@ -20,8 +20,4 @@ public class CoordenadorServiceImpl implements CoordenadorService {
         return coordenadorRepository.findById(COORDENADOR_ID)
                 .orElseThrow(() -> new EntidadeNaoExisteException("Coordenador", "id", COORDENADOR_ID.toString()));
     }
-
-    public void salvarCoordenador (Coordenador coordenador) {
-        coordenadorRepository.save(coordenador);
-    }
 }

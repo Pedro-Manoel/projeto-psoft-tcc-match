@@ -2,7 +2,6 @@ package com.ufcg.psoft.tccMatch.controller;
 
 import com.ufcg.psoft.tccMatch.model.usuario.Usuario;
 import com.ufcg.psoft.tccMatch.notification.dto.EmailDTO;
-import com.ufcg.psoft.tccMatch.notification.model.Email;
 import com.ufcg.psoft.tccMatch.notification.service.EmailService;
 import com.ufcg.psoft.tccMatch.security.dto.LoginDTO;
 import com.ufcg.psoft.tccMatch.security.service.AutenticacaoService;
@@ -28,9 +27,9 @@ import java.util.List;
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class UsuarioController {
 
-    private final AutenticacaoService autenticacaoService;
-    private final EmailService emailService;
     private final UsuarioService usuarioService;
+    private final EmailService emailService;
+    private final AutenticacaoService autenticacaoService;
 
     @PostMapping("/login")
     @Operation(summary = "Fazer login de usuário")
@@ -42,7 +41,10 @@ public class UsuarioController {
 
     @GetMapping("/in/emails")
     @RolesAllowed({Role.USER_ALUNO, Role.USER_PROF, Role.USER_ADMIN})
-    @Operation(summary = "Consultar caixa de E-mail de usuário", security = @SecurityRequirement(name = "bearerAuth"))
+    @Operation(
+            summary = "Consultar caixa de E-mail de usuário",
+            security = @SecurityRequirement(name = "bearerAuth")
+    )
     public ResponseEntity<?> consultarCaixaEmailUsuario ()  {
         Long id = autenticacaoService.getIdUsuarioAutenticado();
         Usuario usuario = usuarioService.getUsuario(id);

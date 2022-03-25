@@ -1,8 +1,6 @@
 package com.ufcg.psoft.tccMatch.controller;
 
 import com.ufcg.psoft.tccMatch.dto.AreaEstudoDTO;
-import com.ufcg.psoft.tccMatch.model.AreaEstudo;
-import com.ufcg.psoft.tccMatch.model.usuario.Aluno;
 import com.ufcg.psoft.tccMatch.security.util.Role;
 import com.ufcg.psoft.tccMatch.service.AreaEstudoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
-import java.util.List;
 
 @RestController
 @CrossOrigin

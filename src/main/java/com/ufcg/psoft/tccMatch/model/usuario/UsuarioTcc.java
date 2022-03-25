@@ -24,7 +24,7 @@ public abstract class UsuarioTcc extends Usuario {
     @ManyToMany(cascade = CascadeType.ALL)
     private List<TemaTcc> temasTcc;
 
-    public void adicionarTemaTcc(TemaTcc temaTcc) {
+    public void adicionarTemaTcc (TemaTcc temaTcc) {
         if (!this.temasTcc.contains(temaTcc)) {
             this.temasTcc.add(temaTcc);
         }

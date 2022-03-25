@@ -42,11 +42,11 @@ public class SolicitacaoOrientacaoTccServiceImpl implements SolicitacaoOrientaca
     private final SolicitacaoOrientacaoTccMapper solicitacaoOrientacaoTccMapper;
     private final RespostaSolicitacaoOrientacaoTccMapper respostaSolicitacaoOrientacaoTccMapper;
 
-    private void salvarSolicitacaoOrientacaoTcc(SolicitacaoOrientacaoTcc solicitacaoOrientacaoTcc) {
+    private void salvarSolicitacaoOrientacaoTcc (SolicitacaoOrientacaoTcc solicitacaoOrientacaoTcc) {
         solicitacaoOrientacaoTccRepository.save(solicitacaoOrientacaoTcc);
     }
 
-    public SolicitacaoOrientacaoTccDTO solicitarOrientacaoTcc(Long idAluno, SolicitacaoOrientacaoTccDTO solicitacaoOrientacaoTccDTO) {
+    public SolicitacaoOrientacaoTccDTO solicitarOrientacaoTcc (Long idAluno, SolicitacaoOrientacaoTccDTO solicitacaoOrientacaoTccDTO) {
         Aluno aluno = alunoService.getAluno(idAluno);
         Professor professor = professorService.getProfessor(solicitacaoOrientacaoTccDTO.getIdProfessor());
         TemaTcc temaTcc = professor.getTemaTcc(solicitacaoOrientacaoTccDTO.getTituloTemaTcc());
@@ -77,7 +77,7 @@ public class SolicitacaoOrientacaoTccServiceImpl implements SolicitacaoOrientaca
         return solicitacaoOrientacaoTccMapper.toDTOs(solicitacoesOrientacaoTcc);
     }
 
-    public SolicitacaoOrientacaoTccDTO responderSolicitacaoOrientacaoTccProfessor(
+    public SolicitacaoOrientacaoTccDTO responderSolicitacaoOrientacaoTccProfessor (
             Long idProfessor,
             Long idSolicitacao,
             RespostaSolicitacaoOrientacaoTccDTO respostaSolicitacaoOrientacaoTccDTO

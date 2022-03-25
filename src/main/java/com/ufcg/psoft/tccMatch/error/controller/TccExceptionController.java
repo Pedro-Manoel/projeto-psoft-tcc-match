@@ -8,48 +8,21 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class TccExceptionController {
-    @ExceptionHandler(TemaTccInvalidoUsuarioException.class)
-    public ResponseEntity<?> handleException(TemaTccInvalidoUsuarioException exception){
-        return AppError.responseBadRequest(exception);
-    }
+    @ExceptionHandler({
+            TemaTccInvalidoUsuarioException.class,
 
-    @ExceptionHandler(SolicitacaoOrientacaoTccInvalidaException.class)
-    public ResponseEntity<?> handleException(SolicitacaoOrientacaoTccInvalidaException exception){
-        return AppError.responseBadRequest(exception);
-    }
+            SolicitacaoOrientacaoTccInvalidaException.class,
+            SolicitacaoOrientacaoTccNaoAceitaException.class,
+            SolicitacaoOrientacaoTccJaRespondidaException.class,
+            SolicitacaoOrientacaoTccJaVinculadaComTccException.class,
+            SolicitacaoOrientacaoTccInvalidaProfessorException.class,
 
-    @ExceptionHandler(SolicitacaoOrientacaoTccNaoAceitaException.class)
-    public ResponseEntity<?> handleException(SolicitacaoOrientacaoTccNaoAceitaException exception){
-        return AppError.responseBadRequest(exception);
-    }
+            OrientacaoTccJaFinalizadaException.class,
+            OrientacaoTccUsuarioNaoVinculadoException.class,
 
-    @ExceptionHandler(SolicitacaoOrientacaoTccJaRespondidaException.class)
-    public ResponseEntity<?> handleException(SolicitacaoOrientacaoTccJaRespondidaException exception){
-        return AppError.responseBadRequest(exception);
-    }
-
-    @ExceptionHandler(OrientacaoTccJaFinalizadaException.class)
-    public ResponseEntity<?> handleException(OrientacaoTccJaFinalizadaException exception){
-        return AppError.responseBadRequest(exception);
-    }
-
-    @ExceptionHandler(ProfessorNaoDisponivelOrientacaoTccException.class)
-    public ResponseEntity<?> handleException(ProfessorNaoDisponivelOrientacaoTccException exception){
-        return AppError.responseBadRequest(exception);
-    }
-
-    @ExceptionHandler(SolicitacaoOrientacaoTccJaVinculadaComTccException.class)
-    public ResponseEntity<?> handleException(SolicitacaoOrientacaoTccJaVinculadaComTccException exception){
-        return AppError.responseBadRequest(exception);
-    }
-
-    @ExceptionHandler(SolicitacaoOrientacaoTccInvalidaProfessorException.class)
-    public ResponseEntity<?> handleException(SolicitacaoOrientacaoTccInvalidaProfessorException exception){
-        return AppError.responseBadRequest(exception);
-    }
-
-    @ExceptionHandler(OrientacaoTccUsuarioNaoVinculadoException.class)
-    public ResponseEntity<?> handleException(OrientacaoTccUsuarioNaoVinculadoException exception){
+            ProfessorNaoDisponivelOrientacaoTccException.class
+    })
+    public ResponseEntity<?> handleException (RuntimeException exception){
         return AppError.responseBadRequest(exception);
     }
 }

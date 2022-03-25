@@ -80,7 +80,8 @@ public class AlunoController {
         Long id = autenticacaoService.getIdUsuarioAutenticado();
         Aluno aluno = alunoService.getAluno(id);
 
-        List<AreaEstudoDTO> areasEstudoSelecionadasDTO = areaEstudoService.selecionarAreasEstudoUsuario(aluno, areasEstudoDTO);
+        List<AreaEstudoDTO> areasEstudoSelecionadasDTO =
+                areaEstudoService.selecionarAreasEstudoUsuario(aluno, areasEstudoDTO);
 
         return new ResponseEntity<>(areasEstudoSelecionadasDTO, HttpStatus.CREATED);
     }
@@ -112,15 +113,21 @@ public class AlunoController {
     @PostMapping("/{id}/temastcc/{idTemaTcc}/manifestar")
     @RolesAllowed(Role.USER_PROF)
     @Operation(summary = "Manifestar interesse em orientar um tema de TCC de aluno")
-    public ResponseEntity<?> manifestarInteresseOrientarTemaTCCAluno (@PathVariable("id") Long idAluno, @PathVariable("idTemaTcc") Long idTemaTcc) {
+    public ResponseEntity<?> manifestarInteresseOrientarTemaTCCAluno (
+            @PathVariable("id") Long idAluno,
+            @PathVariable("idTemaTcc") Long idTemaTcc
+    ) {
         Long id = autenticacaoService.getIdUsuarioAutenticado();
         Professor professor = professorService.getProfessor(id);
         Aluno aluno = alunoService.getAluno(idAluno);
         TemaTcc temaTcc = aluno.getTemaTcc(idTemaTcc);
 
-        applicationEventPublisher.publishEvent(new ManifestacaoOrientacaoTemaTccAlunoEvent(this, professor, aluno, temaTcc));
+        applicationEventPublisher.publishEvent(
+                new ManifestacaoOrientacaoTemaTccAlunoEvent(this, professor, aluno, temaTcc)
+        );
 
-        MessageDTO messageDTO = new MessageDTO("Manifestação de interesse notificada com sucesso para o aluno solicitado");
+        MessageDTO messageDTO =
+                new MessageDTO("Manifestação de interesse notificada com sucesso para o aluno solicitado");
 
         return new ResponseEntity<>(messageDTO, HttpStatus.OK);
     }

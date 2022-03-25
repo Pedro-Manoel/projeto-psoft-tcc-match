@@ -32,7 +32,7 @@ public class ProblemaOrientacaoTccServiceImpl implements ProblemaOrientacaoTccSe
 
     private final ProblemaOrientacaoTccMapper problemaOrientacaoTccMapper;
 
-    private void salvarProblemaOrientacaoTcc(ProblemaOrientacaoTcc problemaOrientacaoTcc) {
+    private void salvarProblemaOrientacaoTcc (ProblemaOrientacaoTcc problemaOrientacaoTcc) {
         problemaOrientacaoTccRepository.save(problemaOrientacaoTcc);
     }
 
@@ -51,15 +51,6 @@ public class ProblemaOrientacaoTccServiceImpl implements ProblemaOrientacaoTccSe
         salvarProblemaOrientacaoTcc(problemaOrientacaoTcc);
 
         return problemaOrientacaoTccMapper.toDTO(problemaOrientacaoTcc);
-    }
-
-    private RelatorioProblemaOrientacaoTccUsuarioDTO gerarRelatorioUsuario (List<ProblemaOrientacaoTcc> problemasOrientacaoTcc) {
-        RelatorioProblemaOrientacaoTccUsuarioDTO relatorio = new RelatorioProblemaOrientacaoTccUsuarioDTO();
-
-        relatorio.setTotalProblemas(problemasOrientacaoTcc.size());
-        relatorio.setProblemas(problemaOrientacaoTccMapper.toDTOs(problemasOrientacaoTcc));
-
-        return relatorio;
     }
 
     public RelatorioProblemaOrientacaoTccDTO gerarRelatorio (String semestre) {
@@ -85,6 +76,15 @@ public class ProblemaOrientacaoTccServiceImpl implements ProblemaOrientacaoTccSe
         relatorio.setTotalProblemas(relatorioAluno.getTotalProblemas() + relatorioProfessor.getTotalProblemas());
         relatorio.setAlunos(relatorioAluno);
         relatorio.setProfessores(relatorioProfessor);
+
+        return relatorio;
+    }
+
+    private RelatorioProblemaOrientacaoTccUsuarioDTO gerarRelatorioUsuario (List<ProblemaOrientacaoTcc> problemasOrientacaoTcc) {
+        RelatorioProblemaOrientacaoTccUsuarioDTO relatorio = new RelatorioProblemaOrientacaoTccUsuarioDTO();
+
+        relatorio.setTotalProblemas(problemasOrientacaoTcc.size());
+        relatorio.setProblemas(problemaOrientacaoTccMapper.toDTOs(problemasOrientacaoTcc));
 
         return relatorio;
     }

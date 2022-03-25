@@ -60,7 +60,10 @@ public class ProfessorController {
     @PutMapping("/{id}")
     @RolesAllowed(Role.USER_ADMIN)
     @Operation(summary = "Atualizar professor")
-    public ResponseEntity<?> atualizarProfessor (@PathVariable("id") Long id, @RequestBody ProfessorDTO professorDTO) {
+    public ResponseEntity<?> atualizarProfessor (
+            @PathVariable("id") Long id,
+            @RequestBody ProfessorDTO professorDTO
+    ) {
         ProfessorDTO professorAtualizadoDTO = professorService.atualizarProfessor(id, professorDTO);
 
         return new ResponseEntity<>(professorAtualizadoDTO, HttpStatus.OK);
@@ -80,7 +83,8 @@ public class ProfessorController {
     @Operation(summary = "Atualizar quota de professor")
     public ResponseEntity<?> atualizarQuotaProfessor (@RequestBody QuotaProfessorDTO quotaProfessorDTO) {
         Long id = autenticacaoService.getIdUsuarioAutenticado();
-        ProfessorDTO professorQuotaAtualizadaDTO = professorService.atualizarQuotaProfessor(id, quotaProfessorDTO);
+        ProfessorDTO professorQuotaAtualizadaDTO =
+                professorService.atualizarQuotaProfessor(id, quotaProfessorDTO);
 
         return new ResponseEntity<>(professorQuotaAtualizadaDTO, HttpStatus.OK);
     }
@@ -92,7 +96,8 @@ public class ProfessorController {
         Long id = autenticacaoService.getIdUsuarioAutenticado();
         Professor professor = professorService.getProfessor(id);
 
-        List<AreaEstudoDTO> areasEstudoSelecionadasDTO = areaEstudoService.selecionarAreasEstudoUsuario(professor, areasEstudoDTO);
+        List<AreaEstudoDTO> areasEstudoSelecionadasDTO =
+                areaEstudoService.selecionarAreasEstudoUsuario(professor, areasEstudoDTO);
 
         return new ResponseEntity<>(areasEstudoSelecionadasDTO, HttpStatus.CREATED);
     }
@@ -142,7 +147,8 @@ public class ProfessorController {
     public ResponseEntity<?> listarProfessoresDisponiveisOrientacao () {
         Long id = autenticacaoService.getIdUsuarioAutenticado();
         Aluno aluno = alunoService.getAluno(id);
-        List<UsuarioDTO> professoresDTO = professorService.listarProfessoresDisponiveisOrientacaoTcc(aluno.getAreasEstudo());
+        List<UsuarioDTO> professoresDTO =
+                professorService.listarProfessoresDisponiveisOrientacaoTcc(aluno.getAreasEstudo());
 
         return new ResponseEntity<>(professoresDTO, HttpStatus.OK);
     }

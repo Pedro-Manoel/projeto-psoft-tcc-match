@@ -4,7 +4,7 @@ import com.ufcg.psoft.tccMatch.dto.message.ErrorMessageDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-public class AppError {
+public abstract class AppError {
     public static ResponseEntity<ErrorMessageDTO> responseBadRequest (RuntimeException exception) {
         return new ResponseEntity<>(
                 new ErrorMessageDTO(exception.getMessage()),
@@ -23,6 +23,13 @@ public class AppError {
         return new ResponseEntity<>(
                 new ErrorMessageDTO(exception.getMessage()),
                 HttpStatus.UNAUTHORIZED
+        );
+    }
+
+    public static ResponseEntity<ErrorMessageDTO> responseInternalServerError (RuntimeException exception) {
+        return new ResponseEntity<>(
+                new ErrorMessageDTO(exception.getMessage()),
+                HttpStatus.INTERNAL_SERVER_ERROR
         );
     }
 }

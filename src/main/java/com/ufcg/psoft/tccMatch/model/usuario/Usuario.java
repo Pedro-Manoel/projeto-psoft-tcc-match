@@ -2,7 +2,6 @@ package com.ufcg.psoft.tccMatch.model.usuario;
 
 import com.ufcg.psoft.tccMatch.model.Model;
 import com.ufcg.psoft.tccMatch.notification.model.CaixaEmail;
-import com.ufcg.psoft.tccMatch.security.util.Role;
 import lombok.*;
 
 import javax.persistence.*;
