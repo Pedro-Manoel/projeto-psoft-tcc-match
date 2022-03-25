@@ -3,19 +3,12 @@
   <p>Projeto da disciplina de Projeto de Software - UFCG</p>
 </div>
 
-<p align="center">
-    <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/psoft-2021-1/projeto-psoft-grupo-10?style=flat-square">
-    <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/psoft-2021-1/projeto-psoft-grupo-10?style=flat-square">
-    <img alt="Repository size" src="https://img.shields.io/github/repo-size/psoft-2021-1/projeto-psoft-grupo-10?style=flat-square">
-    <img alt="GitHub license" src="https://img.shields.io/github/license/psoft-2021-1/projeto-psoft-grupo-10?style=flat-square"><br/>
-</p>
-
 ## Sumário ![#3899F2](https://via.placeholder.com/10/3899F2/ffffff?text=+) 
 
 - [Sobre](#sobre)
 - [User Stories](#userStories)
 - [Como executar ?](#usage)
-- [Tecnologias](#tech_stack)
+- [Tecnologias](#tecs)
 - [Autores](#authors)
 
 ## Sobre ![#3899F2](https://via.placeholder.com/10/3899F2/ffffff?text=+)  <a name = "sobre"></a>
@@ -62,6 +55,28 @@ US34. Eu, como coordenador e administrador, gostaria de gerar um relatório com 
 US35. Eu, como coordenador e administrador, gostaria de gerar um relatório com os problemas de orientação apresentados no período, com separação de problemas reportados por alunos e professores. </br></br>
 
 ## Como executar ? ![#3899F2](https://via.placeholder.com/10/3899F2/ffffff?text=+)  <a name="usage"></a>
+
+1. Git clone `https://github.com/psoft-2021-1/projeto-psoft-grupo-10` && `cd projeto-psoft-grupo-10` <br />
+2. Run `mvn spring-boot:run`.<br />
+3. Run and access `http://localhost:8080`.<br />
+
+  #### Documentação - Swagger
+
+  Coordenador </br> 
+  Email: fubica@ccc.ufcg.edu.br </br> 
+  Senha: fubccc
+
+  Remote (Online)
+  https://api-tcc-match.herokuapp.com/swagger-ui/index.html
+
+  Remote (Offline)
+  http://localhost:8080/swagger-ui/index.html
+
+  #### Banco de Dados - H2
+
+  JDBC URL: `jdbc:h2:mem:db` </br> 
+  User Name: `test` </br> 
+  Password: ` `
 
 ## Tecnologias ![#3899F2](https://via.placeholder.com/10/3899F2/ffffff?text=+) <a name="tecs"></a>
 
