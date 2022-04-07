@@ -3,6 +3,13 @@
   <p>Projeto da disciplina de Projeto de Software (Psoft) - UFCG</p>
 </div>
 
+<p align="center">
+    <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/Pedro-Manoel/projeto-psoft-tcc-match?style=flat-square">
+    <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/Pedro-Manoel/projeto-psoft-tcc-match?style=flat-square">
+    <img alt="Repository size" src="https://img.shields.io/github/repo-size/Pedro-Manoel/projeto-psoft-tcc-match?style=flat-square">
+    <img alt="GitHub license" src="https://img.shields.io/github/license/Pedro-Manoel/projeto-psoft-tcc-match?style=flat-square"><br/>   
+</p>
+
 ## 📑 Sumário
 
 - [Sobre](#sobre)
@@ -96,12 +103,12 @@ O sistema TCC Match tem o objetivo de permitir que alunos busquem e sugiram tema
 
 1. Faça o clone do repositório:
 	```sh
-	  $ git clone https://github.com/psoft-2021-1/projeto-psoft-grupo-10.git
+	  $ git clone https://github.com/Pedro-Manoel/projeto-psoft-tcc-match.git
 	```
 
 2. Entre na pasta do projeto:
 	```sh
-	  $ cd projeto-psoft-grupo-10
+	  $ cd projeto-psoft-tcc-match
 	```
 3. Execute o seguinte comando
 	```sh
@@ -111,12 +118,9 @@ O sistema TCC Match tem o objetivo de permitir que alunos busquem e sugiram tema
 ## 📗 Documentação (Swagger)
 
 ### 🔑 Login do Coordenador
-> **E-mail:** fubica@ccc.ufcg.edu.br <br/> **Senha:** fubccc
+> **E-mail:** admin@email.com.br <br/> **Senha:** admin123
 
-### 🔗 Acesso Remoto (Online)
-https://api-tcc-match.herokuapp.com/swagger-ui/index.html
-
-### 🔗 Acesso Local (Offline)
+### 🔗 Link
 https://localhost:8080/swagger-ui/index.html
 
 ## 🎲 Banco de Dados (H2)
@@ -124,18 +128,17 @@ https://localhost:8080/swagger-ui/index.html
 ### 🔑 Login
 > **JDBC URL:** jdbc:h2:mem:db <br/> **User Name:** test <br/> **Password:** test
 
-### 🔗 Acesso Remoto (Online)
-https://api-tcc-match.herokuapp.com/h2
-### 🔗 Acesso Local (Offline)
+### 🔗 Link
 https://localhost:8080/h2
 
 ## 🚀 Tecnologias <a name="tecs"></a>
 
-- [Spring Boot](https://spring.io/projects/spring-boot) - Framework 
-- [H2](https://www.h2database.com/html/main.html) - Banco de dados
+- [Spring Boot](https://spring.io/projects/spring-boot) - Framework
 - [Swagger](https://swagger.io/) - Documentação
+- [JWT](https://jwt.io/) - Autenticação e Autorização
+- [H2](https://www.h2database.com/html/main.html) - Banco de dados
 
-## 🙆‍♀️ Autores: <a name= "authors"></a>
+## 🔰 Autores: <a name= "authors"></a>
 
 - [@lucasarlim](https://github.com/lucasarlim)
 - [@viniciustrr](https://github.com/viniciustrr)

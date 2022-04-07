@@ -2,9 +2,9 @@
 insert into CAIXA_EMAIL(ID) values(0);
 
 -- Coordenador
--- Email: fubica@ccc.ufcg.edu.br
--- Senha: fubccc
+-- Email: admin@email.com.br
+-- Senha: admin
 INSERT INTO USUARIO(DTYPE, ID, EMAIL, NOME, SENHA, MATRICULA, PERIODO_PREVISTO_CONCLUSAO, LABORATORIOS, QUOTA, CAIXA_EMAIL_ID)
-    values
-           ('Coordenador', 0, 'fubica@ccc.ufcg.edu.br', 'Fubica', '$2a$10$/3DLKbuV76agb/OcBl9B4eRIKSl.EkPBm1diPgyIIJU39o1PCeyzK', null, null, null, null, 0);
+VALUES
+       ('Coordenador', 0, 'admin@email.com.br', 'Admin', '$2a$10$HXVZlUDHZF4B3taAqf3jtuL7aAyW4qb.fm14qyQOnsDoZOJbZkvJy', null, null, null, null, 0);
 
