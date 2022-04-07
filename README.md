@@ -118,7 +118,7 @@ O sistema TCC Match tem o objetivo de permitir que alunos busquem e sugiram tema
 ## 📗 Documentação (Swagger)
 
 ### 🔑 Login do Coordenador
-> **E-mail:** admin@email.com.br <br/> **Senha:** admin123
+> **E-mail:** admin@email.com.br <br/> **Senha:** admin
 
 ### 🔗 Link
 https://localhost:8080/swagger-ui/index.html
