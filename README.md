@@ -4,10 +4,11 @@
 </div>
 
 <p align="center">
-    <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/Pedro-Manoel/projeto-psoft-tcc-match?style=flat-square">
-    <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/Pedro-Manoel/projeto-psoft-tcc-match?style=flat-square">
-    <img alt="Repository size" src="https://img.shields.io/github/repo-size/Pedro-Manoel/projeto-psoft-tcc-match?style=flat-square">
-    <img alt="GitHub license" src="https://img.shields.io/github/license/Pedro-Manoel/projeto-psoft-tcc-match?style=flat-square"><br/>   
+    <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/Pedro-Manoel/projeto-psoft-tcc-match">
+    <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/Pedro-Manoel/projeto-psoft-tcc-match">
+    <img alt="Code size" src="https://img.shields.io/github/languages/code-size/Pedro-Manoel/projeto-psoft-tcc-match">
+    <img alt="Total lines" src="https://img.shields.io/tokei/lines/github/Pedro-Manoel/projeto-psoft-tcc-match">
+    <img alt="GitHub license" src="https://img.shields.io/github/license/Pedro-Manoel/projeto-psoft-tcc-match"><br/>   
 </p>
 
 ## 📑 Sumário
